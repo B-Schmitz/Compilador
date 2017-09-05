@@ -7,15 +7,45 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 public class Tela extends javax.swing.JFrame {
-    
-    
+
+    private final ImageIcon icone;
+
+    public Tela() {
+
+        // Configurações de Janela
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        icone = new ImageIcon("src/icones/source_code.png");
+        this.setIconImage(icone.getImage());
+
+        // Fechar no X
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
+                if (op == 0) {
+                    menu_salvar.doClick();
+                    System.exit(0);
+                }
+                if (op == 1) {
+                    System.exit(0);
+                }
+            }
+        });
+
+    }
+
     JFileChooser fc = new JFileChooser();
     private String arquivo, texto;
-    
+
     // Função Abrir
     private String Abrir(String nomeArquivo) {
         FileReader fileReader = null;
@@ -86,26 +116,6 @@ public class Tela extends javax.swing.JFrame {
             }
         }
     }
-    
-    
-
-    public Tela() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        
-        addWindowListener(new WindowAdapter() {
-        @Override
-	public void windowClosing(WindowEvent evt) {
-		 int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
-                if (op == 0) {
-                    menu_salvar.doClick();
-                    System.exit(0);
-                }
-                if (op == 1){ 
-                    System.exit(0);
-                }
-}});
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,11 +148,17 @@ public class Tela extends javax.swing.JFrame {
         Texto.setBackground(new java.awt.Color(246, 246, 246));
         Texto.setColumns(20);
         Texto.setRows(5);
+        Texto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TextoKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(Texto);
 
         tabela.setBackground(new java.awt.Color(204, 255, 204));
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -160,26 +176,28 @@ public class Tela extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tabela);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
         menu_arquivo.setText("Arquivo");
 
+        menu_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_empty.png"))); // NOI18N
         menu_novo.setText("Novo");
         menu_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +206,7 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_novo);
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_import.png"))); // NOI18N
         jMenuItem1.setText("Abrir");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +215,7 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(jMenuItem1);
 
+        menu_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/file_save_as.png"))); // NOI18N
         menu_salvar.setText("Salvar");
         menu_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,16 +229,20 @@ public class Tela extends javax.swing.JFrame {
 
         menu_bar.add(menu_arquivo);
 
+        menu_executar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application_lightning.png"))); // NOI18N
         menu_executar.setText("Executar");
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/compile.png"))); // NOI18N
         jMenuItem3.setText("Compilar");
         menu_executar.add(jMenuItem3);
 
         menu_bar.add(menu_executar);
 
+        menu_sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/support.png"))); // NOI18N
         menu_sobre.setText("Sobre");
 
+        menu_ajuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/help.png"))); // NOI18N
         menu_ajuda.setText("Ajuda");
         menu_ajuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,44 +270,45 @@ public class Tela extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menu_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_salvarActionPerformed
-              //Exibe o diálogo. Deve ser passado por parâmetro o JFrame de origem.
-                    fc.showSaveDialog(this);
-                    //Captura o objeto File que representa o arquivo selecionado.
-                    File selFile = fc.getSelectedFile();
-                    arquivo = selFile.getAbsolutePath();
-                    texto = Texto.getText();
-                    Salvar(arquivo, texto);
+        //Exibe o diálogo. Deve ser passado por parâmetro o JFrame de origem.
+        fc.showSaveDialog(this);
+        //Captura o objeto File que representa o arquivo selecionado.
+        File selFile = fc.getSelectedFile();
+        arquivo = selFile.getAbsolutePath();
+        texto = Texto.getText();
+        Salvar(arquivo, texto);
     }//GEN-LAST:event_menu_salvarActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-     //Exibe o diálogo. Deve ser passado por parâmetro o JFrame de origem.
-                fc.showOpenDialog(this);
-                File selFile = fc.getSelectedFile();
-                arquivo = selFile.getAbsolutePath();
-                String text = Abrir(arquivo);
-                Texto.setText(text);
+        //Exibe o diálogo. Deve ser passado por parâmetro o JFrame de origem.
+        fc.showOpenDialog(this);
+        File selFile = fc.getSelectedFile();
+        arquivo = selFile.getAbsolutePath();
+        String text = Abrir(arquivo);
+        Texto.setText(text);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menu_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_novoActionPerformed
-          int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Novo arquivo", 1);
-                if (op == 0) {
-                    menu_salvar.doClick();
-                    Texto.setText("");
-                }
-                if (op == 1) {
-                    Texto.setText("");
-                }
+        int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Novo arquivo", 1);
+        if (op == 0) {
+            menu_salvar.doClick();
+            Texto.setText("");
+        }
+        if (op == 1) {
+            Texto.setText("");
+        }
     }//GEN-LAST:event_menu_novoActionPerformed
 
     private void menu_ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ajudaActionPerformed
-       JOptionPane.showMessageDialog(rootPane, "EASY 1.0");
-               
-               
-               
+        JOptionPane.showMessageDialog(rootPane, "EASY 1.0");
+
+
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
-    
-    
+    private void TextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyPressed
+
+    }//GEN-LAST:event_TextoKeyPressed
+
     /**
      * @param args the command line arguments
      */

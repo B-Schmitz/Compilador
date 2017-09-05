@@ -6,11 +6,17 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menu_arquivo">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/folder_vertical_document.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Arquivo"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menu_novo">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/document_empty.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Novo"/>
               </Properties>
               <Events>
@@ -19,6 +25,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/document_import.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Abrir"/>
               </Properties>
               <Events>
@@ -27,6 +36,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menu_salvar">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/file_save_as.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Salvar"/>
               </Properties>
               <Events>
@@ -42,6 +54,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_executar">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/application_lightning.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Executar"/>
           </Properties>
           <SubComponents>
@@ -50,6 +65,9 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="F9"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/compile.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Compilar"/>
               </Properties>
             </MenuItem>
@@ -57,11 +75,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_sobre">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icones/support.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Sobre"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menu_ajuda">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icones/help.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Ajuda"/>
               </Properties>
               <Events>
@@ -112,17 +136,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-              <Component id="jScrollPane2" alignment="0" pref="673" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="1" pref="683" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="276" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="87" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" min="-2" pref="109" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,6 +166,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="TextoKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -159,7 +185,7 @@
                   <Color blue="cc" green="ff" red="cc" type="rgb"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="3" rowCount="4">
+                  <Table columnCount="3" rowCount="5">
                     <Column editable="true" title="Linha" type="java.lang.Integer"/>
                     <Column editable="true" title="Codigo" type="java.lang.Integer"/>
                     <Column editable="true" title="Token" type="java.lang.String"/>
@@ -185,7 +211,7 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                  <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
             </Component>
