@@ -1,4 +1,5 @@
 
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -11,11 +12,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import javax.swing.text.Element;
 
 public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
+    private final Tokens tokens = new Tokens();
 
     public Tela() {
 
@@ -25,6 +27,19 @@ public class Tela extends javax.swing.JFrame {
         this.setResizable(false);
         icone = new ImageIcon("src/icones/source_code.png");
         this.setIconImage(icone.getImage());
+
+        // Linhas do texto
+        TextLineNumber tln = new TextLineNumber(Texto);
+        javax.swing.JScrollPane sp = new javax.swing.JScrollPane(Texto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        sp.setRowHeaderView(tln);
+
+        this.setContentPane(sp);
+
+        // Pegar linha!
+        int rowStartOffset = Texto.viewToModel(new Point(0, 0));
+        Element root = Texto.getDocument().getDefaultRootElement();
+        int index = root.getElementIndex(rowStartOffset);
+        System.out.println("Linha: " + String.valueOf(index + 1));
 
         // Fechar no X
         addWindowListener(new WindowAdapter() {
@@ -126,6 +141,7 @@ public class Tela extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollBar1 = new javax.swing.JScrollBar();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
@@ -139,6 +155,7 @@ public class Tela extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         menu_executar = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
+        menu_tokens = new javax.swing.JMenuItem();
         menu_sobre = new javax.swing.JMenu();
         menu_ajuda = new javax.swing.JMenuItem();
 
@@ -196,9 +213,11 @@ public class Tela extends javax.swing.JFrame {
 
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
         menu_arquivo.setText("Arquivo");
+        menu_arquivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         menu_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_empty.png"))); // NOI18N
         menu_novo.setText("Novo");
+        menu_novo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_novo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_novoActionPerformed(evt);
@@ -208,6 +227,7 @@ public class Tela extends javax.swing.JFrame {
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_import.png"))); // NOI18N
         jMenuItem1.setText("Abrir");
+        jMenuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -217,6 +237,8 @@ public class Tela extends javax.swing.JFrame {
 
         menu_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/file_save_as.png"))); // NOI18N
         menu_salvar.setText("Salvar");
+        menu_salvar.setContentAreaFilled(false);
+        menu_salvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_salvarActionPerformed(evt);
@@ -224,26 +246,42 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_salvar);
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/door_out.png"))); // NOI18N
         jMenuItem2.setText("Sair");
+        jMenuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_arquivo.add(jMenuItem2);
 
         menu_bar.add(menu_arquivo);
 
         menu_executar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/application_lightning.png"))); // NOI18N
         menu_executar.setText("Executar");
+        menu_executar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/compile.png"))); // NOI18N
         jMenuItem3.setText("Compilar");
+        jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_executar.add(jMenuItem3);
+
+        menu_tokens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/token_comment.png"))); // NOI18N
+        menu_tokens.setText("Tokens");
+        menu_tokens.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_tokens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_tokensActionPerformed(evt);
+            }
+        });
+        menu_executar.add(menu_tokens);
 
         menu_bar.add(menu_executar);
 
         menu_sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/support.png"))); // NOI18N
         menu_sobre.setText("Sobre");
+        menu_sobre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         menu_ajuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/help.png"))); // NOI18N
         menu_ajuda.setText("Ajuda");
+        menu_ajuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_ajuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_ajudaActionPerformed(evt);
@@ -300,7 +338,7 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_novoActionPerformed
 
     private void menu_ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ajudaActionPerformed
-        JOptionPane.showMessageDialog(rootPane, "EASY 1.0");
+        JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 1.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
 
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
@@ -308,6 +346,10 @@ public class Tela extends javax.swing.JFrame {
     private void TextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyPressed
 
     }//GEN-LAST:event_TextoKeyPressed
+
+    private void menu_tokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tokensActionPerformed
+        tokens.setVisible(true);
+    }//GEN-LAST:event_menu_tokensActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +382,7 @@ public class Tela extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Tela().setVisible(true);
+
             }
         });
     }
@@ -350,6 +393,7 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem menu_ajuda;
@@ -359,6 +403,7 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_novo;
     private javax.swing.JMenuItem menu_salvar;
     private javax.swing.JMenu menu_sobre;
+    private javax.swing.JMenuItem menu_tokens;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
