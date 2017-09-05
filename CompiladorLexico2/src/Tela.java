@@ -18,6 +18,8 @@ public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
     private final Tokens tokens = new Tokens();
+    private final JFileChooser fc = new JFileChooser();
+    private String arquivo, texto;
 
     public Tela() {
 
@@ -27,6 +29,7 @@ public class Tela extends javax.swing.JFrame {
         this.setResizable(false);
         icone = new ImageIcon("src/icones/source_code.png");
         this.setIconImage(icone.getImage());
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         // Linhas do texto
         TextLineNumber tln = new TextLineNumber(Texto);
@@ -35,7 +38,7 @@ public class Tela extends javax.swing.JFrame {
 
         this.setContentPane(sp);
 
-        // Pegar linha!
+        // Pegar a linha (index + 1)
         int rowStartOffset = Texto.viewToModel(new Point(0, 0));
         Element root = Texto.getDocument().getDefaultRootElement();
         int index = root.getElementIndex(rowStartOffset);
@@ -52,14 +55,12 @@ public class Tela extends javax.swing.JFrame {
                 }
                 if (op == 1) {
                     System.exit(0);
+                } else {
+                    setVisible(true);
                 }
             }
         });
-
     }
-
-    JFileChooser fc = new JFileChooser();
-    private String arquivo, texto;
 
     // Função Abrir
     private String Abrir(String nomeArquivo) {
@@ -96,7 +97,6 @@ public class Tela extends javax.swing.JFrame {
             }
         }
         return null;
-
     }
 
     // Função Salvar
@@ -150,9 +150,9 @@ public class Tela extends javax.swing.JFrame {
         menu_bar = new javax.swing.JMenuBar();
         menu_arquivo = new javax.swing.JMenu();
         menu_novo = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menu_abrir = new javax.swing.JMenuItem();
         menu_salvar = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menu_sair = new javax.swing.JMenuItem();
         menu_executar = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         menu_tokens = new javax.swing.JMenuItem();
@@ -165,11 +165,6 @@ public class Tela extends javax.swing.JFrame {
         Texto.setBackground(new java.awt.Color(246, 246, 246));
         Texto.setColumns(20);
         Texto.setRows(5);
-        Texto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                TextoKeyPressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(Texto);
 
         tabela.setBackground(new java.awt.Color(204, 255, 204));
@@ -225,15 +220,15 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_novo);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_import.png"))); // NOI18N
-        jMenuItem1.setText("Abrir");
-        jMenuItem1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menu_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_import.png"))); // NOI18N
+        menu_abrir.setText("Abrir");
+        menu_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_abrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menu_abrirActionPerformed(evt);
             }
         });
-        menu_arquivo.add(jMenuItem1);
+        menu_arquivo.add(menu_abrir);
 
         menu_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/file_save_as.png"))); // NOI18N
         menu_salvar.setText("Salvar");
@@ -246,10 +241,15 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_salvar);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/door_out.png"))); // NOI18N
-        jMenuItem2.setText("Sair");
-        jMenuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_arquivo.add(jMenuItem2);
+        menu_sair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/door_out.png"))); // NOI18N
+        menu_sair.setText("Sair");
+        menu_sair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_sairActionPerformed(evt);
+            }
+        });
+        menu_arquivo.add(menu_sair);
 
         menu_bar.add(menu_arquivo);
 
@@ -317,14 +317,14 @@ public class Tela extends javax.swing.JFrame {
         Salvar(arquivo, texto);
     }//GEN-LAST:event_menu_salvarActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menu_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_abrirActionPerformed
         //Exibe o diálogo. Deve ser passado por parâmetro o JFrame de origem.
         fc.showOpenDialog(this);
         File selFile = fc.getSelectedFile();
         arquivo = selFile.getAbsolutePath();
         String text = Abrir(arquivo);
         Texto.setText(text);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menu_abrirActionPerformed
 
     private void menu_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_novoActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Novo arquivo", 1);
@@ -343,13 +343,22 @@ public class Tela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
-    private void TextoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TextoKeyPressed
-
-    }//GEN-LAST:event_TextoKeyPressed
-
     private void menu_tokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tokensActionPerformed
         tokens.setVisible(true);
     }//GEN-LAST:event_menu_tokensActionPerformed
+
+    private void menu_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sairActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
+        if (op == 0) {
+            menu_salvar.doClick();
+            System.exit(0);
+        }
+        if (op == 1) {
+            System.exit(0);
+        } else {
+            setVisible(true);
+        }
+    }//GEN-LAST:event_menu_sairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -389,18 +398,18 @@ public class Tela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Texto;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem menu_abrir;
     private javax.swing.JMenuItem menu_ajuda;
     private javax.swing.JMenu menu_arquivo;
     private javax.swing.JMenuBar menu_bar;
     private javax.swing.JMenu menu_executar;
     private javax.swing.JMenuItem menu_novo;
+    private javax.swing.JMenuItem menu_sair;
     private javax.swing.JMenuItem menu_salvar;
     private javax.swing.JMenu menu_sobre;
     private javax.swing.JMenuItem menu_tokens;

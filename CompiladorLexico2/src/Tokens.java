@@ -20,7 +20,7 @@ public class Tokens extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tabela");
         setResizable(false);
 
