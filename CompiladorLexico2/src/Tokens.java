@@ -1,9 +1,6 @@
 
 public class Tokens extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Tokens
-     */
     public Tokens() {
         initComponents();
     }

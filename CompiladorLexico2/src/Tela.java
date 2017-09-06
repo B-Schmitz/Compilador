@@ -35,14 +35,7 @@ public class Tela extends javax.swing.JFrame {
         TextLineNumber tln = new TextLineNumber(Texto);
         javax.swing.JScrollPane sp = new javax.swing.JScrollPane(Texto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         sp.setRowHeaderView(tln);
-
         this.setContentPane(sp);
-
-        // Pegar a linha (index + 1)
-        int rowStartOffset = Texto.viewToModel(new Point(0, 0));
-        Element root = Texto.getDocument().getDefaultRootElement();
-        int index = root.getElementIndex(rowStartOffset);
-        System.out.println("Linha: " + String.valueOf(index + 1));
 
         // Fechar no X
         addWindowListener(new WindowAdapter() {
@@ -99,6 +92,14 @@ public class Tela extends javax.swing.JFrame {
         return null;
     }
 
+    // Pegar a linha (index + 1)
+    public void PegarLinha() {
+        int rowStartOffset = Texto.viewToModel(new Point(0, 0));
+        Element root = Texto.getDocument().getDefaultRootElement();
+        int index = root.getElementIndex(rowStartOffset);
+        System.out.println("Linha: " + String.valueOf(index + 1));
+    }
+
     // Função Salvar
     private void Salvar(String nomeArquivo, String textoArquivo) {
 
@@ -107,7 +108,10 @@ public class Tela extends javax.swing.JFrame {
         try {
             fileWriter = new FileWriter(nomeArquivo, false);
             bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(textoArquivo);
+
+            String conteudo = textoArquivo.replaceAll("\n",
+                    System.getProperty("line.separator"));
+            bufferedWriter.write(conteudo);
             bufferedWriter.flush();
             JOptionPane.showMessageDialog(this, "Salvo com sucesso");
         } catch (IOException ex) {
@@ -145,8 +149,6 @@ public class Tela extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
         menu_bar = new javax.swing.JMenuBar();
         menu_arquivo = new javax.swing.JMenu();
         menu_novo = new javax.swing.JMenuItem();
@@ -167,43 +169,15 @@ public class Tela extends javax.swing.JFrame {
         Texto.setRows(5);
         jScrollPane1.setViewportView(Texto);
 
-        tabela.setBackground(new java.awt.Color(204, 255, 204));
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Linha", "Codigo", "Token"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tabela.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabela);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
         );
 
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
@@ -402,7 +376,6 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem menu_abrir;
     private javax.swing.JMenuItem menu_ajuda;
     private javax.swing.JMenu menu_arquivo;
@@ -413,6 +386,5 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_salvar;
     private javax.swing.JMenu menu_sobre;
     private javax.swing.JMenuItem menu_tokens;
-    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
