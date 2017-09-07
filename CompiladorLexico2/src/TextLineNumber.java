@@ -295,7 +295,6 @@ public class TextLineNumber extends JPanel
       Element root = component.getDocument().getDefaultRootElement();
       int index = root.getElementIndex( rowStartOffset );
       Element line = root.getElement( index );
-      System.out.println("Linha: "+ String.valueOf(index + 1));
  
       if (line.getStartOffset() == rowStartOffset)
          return String.valueOf(index + 1);

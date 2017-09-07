@@ -1,5 +1,4 @@
 
-import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.text.Element;
 
 public class Tela extends javax.swing.JFrame {
 
@@ -26,7 +24,6 @@ public class Tela extends javax.swing.JFrame {
         // Configurações de Janela
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
         icone = new ImageIcon("src/icones/source_code.png");
         this.setIconImage(icone.getImage());
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -92,25 +89,16 @@ public class Tela extends javax.swing.JFrame {
         return null;
     }
 
-    // Pegar a linha (index + 1)
-    public void PegarLinha() {
-        int rowStartOffset = Texto.viewToModel(new Point(0, 0));
-        Element root = Texto.getDocument().getDefaultRootElement();
-        int index = root.getElementIndex(rowStartOffset);
-        System.out.println("Linha: " + String.valueOf(index + 1));
-    }
-
     // Função Salvar
     private void Salvar(String nomeArquivo, String textoArquivo) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            fileWriter = new FileWriter(nomeArquivo, false);
+            fileWriter = new FileWriter(nomeArquivo+ ".txt", false);
             bufferedWriter = new BufferedWriter(fileWriter);
-
             String conteudo = textoArquivo.replaceAll("\n",
-                    System.getProperty("line.separator"));
+            System.getProperty("line.separator"));
             bufferedWriter.write(conteudo);
             bufferedWriter.flush();
             JOptionPane.showMessageDialog(this, "Salvo com sucesso");
