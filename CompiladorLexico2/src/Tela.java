@@ -18,6 +18,7 @@ public class Tela extends javax.swing.JFrame {
     private final Tokens tokens = new Tokens();
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto;
+    private Automato automato = new Automato();
 
     public Tela() {
 
@@ -223,6 +224,11 @@ public class Tela extends javax.swing.JFrame {
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/compile.png"))); // NOI18N
         jMenuItem3.setText("Compilar");
         jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         menu_executar.add(jMenuItem3);
 
         menu_tokens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/token_comment.png"))); // NOI18N
@@ -321,6 +327,13 @@ public class Tela extends javax.swing.JFrame {
             setVisible(true);
         }
     }//GEN-LAST:event_menu_sairActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+        
+        automato.inicio(Texto.getText(), 0, "");
+        
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

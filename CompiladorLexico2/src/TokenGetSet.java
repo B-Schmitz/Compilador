@@ -14,7 +14,7 @@ public class TokenGetSet {
         return Codigo;
     }
     
-    public void  getCodigo(Integer Codigo) {
+    public void  setCodigo(Integer Codigo) {
         
         this.Codigo.add(Codigo);
         
