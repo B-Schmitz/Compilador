@@ -1,84 +1,155 @@
 
 public class Automato {
 
-    public void inicio(String texto, int i) {
+    public void inicio(String Sentenca, int i, String token) {
 
-        if (texto.charAt(i) == '#') {
+        if (Sentenca.charAt(i) == '#') {
 
-            //código
-        } else if (Character.isLetter(texto.charAt(i))) {
+            LetraVar(Sentenca, i, token);
 
-            //código
-        } else if (Character.isDigit(texto.charAt(i))) {
+        } 
+        
+        
+        else if (Character.isLetter(Sentenca.charAt(i))) {
 
-            //código
-        } else if (texto.charAt(i) == '$') {
+            Letra(Sentenca, i, token);
 
-            //código
-        } else if (texto.charAt(i) == '"') {
+        } 
+        
+        
+        else if (Character.isDigit(Sentenca.charAt(i))) {
 
-            //código
-        } //Precisa ver se isso funciona
-        else if (String.valueOf(texto.charAt(i)).equals("'")) {
+            Digit(Sentenca, i, token);
 
-            //código
-        } else if (texto.charAt(i) == '=') {
-
-            //código
-        } else if (texto.charAt(i) == '+') {
-
-            //código
-        } else if (texto.charAt(i) == '*') {
-
-            //código
-        } else if (texto.charAt(i) == '/') {
-
-            //códgo
-        } else if (texto.charAt(i) == '>') {
-
-            //código
-        } else if (texto.charAt(i) == '<') {
-
-            //código
-        } else if (texto.charAt(i) == '{') {
-
-            //código
-        } else if (texto.charAt(i) == '}') {
-
-            //código
-        } else if (texto.charAt(i) == '(') {
-
-            //código
-        } else if (texto.charAt(i) == ',') {
-
-            //código
-        } else if (texto.charAt(i) == ':') {
-
-            //código
-        } else if (texto.charAt(i) == ';') {
-
-            //código
-        } else if (texto.charAt(i) == '-') {
-
-            //código
-        } else if (texto.charAt(i) == '!') {
-
-            //código
         }
         
-        else if(texto.charAt(i) == '['){
+        
+        else if (Sentenca.charAt(i) == '$') {
+
+            cifrao(Sentenca, i, token);
+
+        } 
+        
+        
+        else if (Sentenca.charAt(i) == '"') {
+
+            aspasDuplas(Sentenca, i, token);
+
+        } 
+
+         //Precisa ver se isso funciona
+        else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
+
+            LetraAspas(Sentenca, i, token);
+
+        } 
+        
+        
+        else if (Sentenca.charAt(i) == '=') {
+          
+            Igual(Sentenca, i, token);
             
+        } 
+        else if (Sentenca.charAt(i) == '+') {
+
+            Mais(Sentenca, i, token);
+            
+        } 
+        else if (Sentenca.charAt(i) == '*') {
+
             //código
+            //retorna *
             
+        } 
+        else if (Sentenca.charAt(i) == '/') {
+
+            //códgo
+            //retorna /
+            
+        }
+        else if (Sentenca.charAt(i) == '>') {
+
+            MaiorOuIgual(Sentenca, i, token);
+            
+        } 
+        else if (Sentenca.charAt(i) == '<') {
+
+            MenorOuIgual(Sentenca, i, token);
+            
+        } 
+        else if (Sentenca.charAt(i) == '{') {
+
+            //código
+        } else if (Sentenca.charAt(i) == '}') {
+
+            //código
+        } else if (Sentenca.charAt(i) == '(') {
+
+            //código
+        } else if (Sentenca.charAt(i) == ',') {
+
+            //código
+        } else if (Sentenca.charAt(i) == ':') {
+
+            //código
+        } else if (Sentenca.charAt(i) == ';') {
+
+            //código
+        } else if (Sentenca.charAt(i) == '-') {
+
+            //código
+        } else if (Sentenca.charAt(i) == '!') {
+
+            //código
+        } else if (Sentenca.charAt(i) == '[') {
+
+            //código
         }
 
     }
 
     //verifica letra de uma possivel variavel
     //Obs: Acredito que precise ser separado a parte da variavel dos outros. Ex: while, if, etc...
-    public void LetraVar(String texto, int i) {
+    public void LetraVar(String Sentenca, int i, String token) {
 
-        if (Character.isLetter(texto.charAt(i))) {
+        if (Character.isLetter(Sentenca.charAt(i))) {
+
+            LetraDigitVar(Sentenca, i, token);
+        } else {
+
+            //código
+        }
+
+    }
+
+    public void LetraDigitVar(String Sentenca, int i, String token) {
+
+        if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
+
+            LetraDigitVar(Sentenca, i, token);
+        } else {
+
+            //código
+        }
+
+    }
+
+    public void Letra(String Sentenca, int i, String token) {
+
+        if (Character.isLetter(Sentenca.charAt(i))) {
+
+            LetraDigit(Sentenca, i, token);
+
+        } else {
+
+            //código
+        }
+
+    }
+
+    public void LetraDigit(String Sentenca, int i, String token) {
+
+        if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
 
             //código
         } else {
@@ -88,9 +159,25 @@ public class Automato {
 
     }
 
-    public void LetraDigitVar(String texto, int i) {
+    public void Digit(String Sentenca, int i, String token) {
 
-        if (Character.isDigit(texto.charAt(i)) || Character.isLetter(texto.charAt(i))) {
+        if (Character.isDigit(Sentenca.charAt(i))) {
+
+            Digit(Sentenca, i, token);
+            
+        } else if (Sentenca.charAt(i) == ',') {
+
+            DigitFloat(Sentenca, i, token);
+        } else {
+
+            //código
+        }
+
+    }
+
+    public void DigitFloat(String Sentenca, int i, String token) {
+
+        if (Character.isDigit(Sentenca.charAt(i))) {
 
             //código
         } else {
@@ -100,11 +187,11 @@ public class Automato {
 
     }
 
-    public void LetraID(String texto, int i) {
+    public void aspasDuplas(String Sentenca, int i, String token) {
 
-        if (Character.isLetter(texto.charAt(i))) {
+        if ('"' != Sentenca.charAt(i)) {
 
-            //código
+            aspasDuplas(Sentenca, i, token);
         } else {
 
             //código
@@ -112,62 +199,11 @@ public class Automato {
 
     }
 
-    public void LetraDigitID(String texto, int i) {
+    public void cifrao(String Sentenca, int i, String token) {
 
-        if (Character.isDigit(texto.charAt(i)) || Character.isLetter(texto.charAt(i))) {
+        if ('$' != Sentenca.charAt(i)) {
 
-            //código
-        } else {
-
-            //código
-        }
-
-    }
-
-    public void Digit(String texto, int i) {
-
-        if (Character.isDigit(texto.charAt(i))) {
-
-            //código
-        } else if (texto.charAt(i) == ',') {
-
-            //código
-        } else {
-
-            //código
-        }
-
-    }
-
-    public void DigitFloat(String texto, int i) {
-
-        if (Character.isDigit(texto.charAt(i))) {
-
-            //código
-        } else {
-
-            //código
-        }
-
-    }
-
-    public void aspasDuplas(String texto, int i) {
-
-        if (texto.charAt(i) == '"') {
-
-            //código
-        } else {
-
-            //código
-        }
-
-    }
-
-    public void cifrao(String texto, int i) {
-
-        if (texto.charAt(i) == '$') {
-
-            //código
+            cifrao(Sentenca, i, token);
         } else {
 
             //código
@@ -176,11 +212,12 @@ public class Automato {
     }
     //Char
 
-    public void LetraAspas(String texto, int i) {
+    public void LetraAspas(String Sentenca, int i, String token) {
 
-        if (Character.isLetter(texto.charAt(i))) {
+        if (Character.isLetter(Sentenca.charAt(i))) {
 
-            //código
+            Aspas(Sentenca, i, token);
+            
         } else {
 
             //código
@@ -188,11 +225,13 @@ public class Automato {
 
     }
 
-    public void Aspas(String texto, int i) {
+    public void Aspas(String Sentenca, int i, String token) {
 
-        if (String.valueOf(texto.charAt(i)).equals("'")) {
+        if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
 
+            
             //código
+            
         } else {
 
             //código
@@ -200,45 +239,36 @@ public class Automato {
 
     }
 
-    public void Igual(String texto, int i) {
+    public void Igual(String Sentenca, int i, String token) {
 
-        if (texto.charAt(i) == '=') {
+        if (Sentenca.charAt(i) == '=') {
 
             //código
+            //Retorna ==
+            
         } else {
 
             //código
+            //retorna =
         }
     }
 
-    public void Mais(String texto, int i) {
+    public void Mais(String Sentenca, int i, String token) {
 
-        if (texto.charAt(i) == '+') {
+        if (Sentenca.charAt(i) == '+') {
 
             //código
+            //retorna ++
         } else {
 
             //código
+            //retorna +
         }
     }
 
-    public void Menos(String texto, int i) {
+    public void Menos(String Sentenca, int i, String token) {
 
-        if (texto.charAt(i) == '-') {
-
-            //código
-        } else {
-
-            //código
-        }
-    }
-
-    public void MaiorOuIgual(String texto, int i) {
-
-        if (texto.charAt(i) == '>') {
-
-            //código
-        } else if (texto.charAt(i) == '=') {
+        if (Sentenca.charAt(i) == '-') {
 
             //código
         } else {
@@ -247,63 +277,74 @@ public class Automato {
         }
     }
 
-    public void MenorOuIgual(String texto, int i) {
+    public void MaiorOuIgual(String Sentenca, int i, String token) {
 
-        if (texto.charAt(i) == '<') {
+        if (Sentenca.charAt(i) == '>') {
 
             //código
-        } else if (texto.charAt(i) == '=') {
+            //Retorna >>
+            
+        } else if (Sentenca.charAt(i) == '=') {
+
+            //código
+            //retorna >=
+        } else {
 
             //código
         }
     }
 
+    public void MenorOuIgual(String Sentenca, int i, String token) {
 
-public void Difernte(String texto, int i){
-   
-    if(texto.charAt(i) == '='){
-        
-        //código
-        
-    }
-    else{
-        
-        //código
-        //vai para o comentario de linha
-        
-    }
-    
-}
+        if (Sentenca.charAt(i) == '<') {
 
-public void ComentarioLinha(String texto, int i){
-    
-    if(texto.charAt(i) != '\n'){
-        
-        //código
-        
-    }
-    else{
-        
-        //código
-        
-    }
-    
-}
+            //código
+            //retorna <<
+        } else if (Sentenca.charAt(i) == '=') {
 
-public void ComentarioBloco(String texto, int i){
-    
-  if(texto.charAt(i) == ']')  {
-      
-      //código
-      
-  }
-  else{
-      
-      //código
-      
-  }
-    
-}
+            //código
+            //retorna <=
+        }
+    }
 
+    public void Difernte(String Sentenca, int i, String token) {
+
+        if (Sentenca.charAt(i) == '=') {
+
+            //código
+            //retorna !=
+            //codigo 45
+        } else {
+
+            //código
+            //vai para o comentario de linha
+            ComentarioLinha(Sentenca, i, token);
+        }
+
+    }
+
+    public void ComentarioLinha(String Sentenca, int i, String token) {
+
+        if (Sentenca.charAt(i) != '\n') {
+
+            ComentarioLinha(Sentenca, i, token);
+        } else {
+
+            //código
+        }
+
+    }
+
+    public void ComentarioBloco(String Sentenca, int i, String token) {
+
+        if (Sentenca.charAt(i) != ']') {
+
+            ComentarioBloco(Sentenca, i, token);
+        } else {
+
+            //código
+        }
+
+    }
 
 }
