@@ -1,8 +1,24 @@
 
+import javax.swing.table.DefaultTableModel;
+
+
 public class Tokens extends javax.swing.JFrame {
 
     public Tokens() {
         initComponents();
+    }
+    
+    public void setToken(TokenGetSet t){
+        
+          //Apenas para teste
+          DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        for(int i = 0; i < t.getCodigo().size(); i++){
+            
+           // System.out.println(t.getCodigo().get(i) + "|" + t.getLinha().get(i) + "|" + t.getToken().get(i));
+           modelo.addRow(new Object[]{t.getLinha().get(i),t.getCodigo().get(i),t.getToken().get(i)});
+          
+            
+        }
     }
 
     /**
@@ -26,30 +42,12 @@ public class Tokens extends javax.swing.JFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Linha", "Codigo", "Token"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         tabela.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tabela);
 

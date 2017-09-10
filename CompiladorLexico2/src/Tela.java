@@ -333,12 +333,10 @@ public class Tela extends javax.swing.JFrame {
         
         TokenGetSet t = automato.getToken(Texto.getText()+"@");
         
-        //Apenas para teste
-        for(int i = 0; i < t.getCodigo().size(); i++){
-            
-            System.out.println(t.getCodigo().get(i) + "|" + t.getLinha().get(i) + "|" + t.getToken().get(i));
-            
-        }
+      
+        Tokens tok = new Tokens();
+        tok.setVisible(true);
+        tok.setToken(t);
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

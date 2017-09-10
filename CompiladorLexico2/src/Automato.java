@@ -374,7 +374,7 @@ public class Automato {
             i++;
             DigitFloat(Sentenca, token);
         } else {
-            i++;
+            
             t.setCodigo(5);
             t.setToken(token);
             t.setLinha(cont);
@@ -576,6 +576,7 @@ public class Automato {
             t.setCodigo(31);
             t.setToken(token);
             t.setLinha(cont);
+            i++;
 
         } else if (Sentenca.charAt(i) == '=') {
 
@@ -595,7 +596,7 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
 
-            i++;
+            
             //verificar final de arquivo?
             inicio(Sentenca, token);
 
