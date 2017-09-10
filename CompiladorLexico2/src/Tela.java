@@ -331,7 +331,14 @@ public class Tela extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
        
         
-        automato.inicio(Texto.getText()+"@", "");
+        TokenGetSet t = automato.getToken(Texto.getText()+"@");
+        
+        //Apenas para teste
+        for(int i = 0; i < t.getCodigo().size(); i++){
+            
+            System.out.println(t.getCodigo().get(i) + "|" + t.getLinha().get(i) + "|" + t.getToken().get(i));
+            
+        }
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 

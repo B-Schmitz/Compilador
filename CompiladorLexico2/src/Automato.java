@@ -12,6 +12,13 @@ public class Automato {
 
     }
 
+    public TokenGetSet getToken(String Sentenca) {
+
+        inicio(Sentenca, "");
+
+        return t;
+    }
+
     public void inicio(String Sentenca, String token) {
 
         token = "";
@@ -121,10 +128,22 @@ public class Automato {
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
-            } else if (Sentenca.charAt(i) == ',') {
+            }else if(Sentenca.charAt(i) == ')'){
+                
+                t.setCodigo(42);
+                t.setToken(token);
+                t.setLinha(cont);
+                i++;
+                //verificar final de arquivo?
+                inicio(Sentenca, token);
+                
+                
+            }
+            else if (Sentenca.charAt(i) == ',') {
 
                 t.setCodigo(40);
-                t.setToken(token);t.setLinha(cont);
+                t.setToken(token);
+                t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
@@ -132,7 +151,8 @@ public class Automato {
             } else if (Sentenca.charAt(i) == ':') {
 
                 t.setCodigo(38);
-                t.setToken(token);t.setLinha(cont);
+                t.setToken(token);
+                t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
@@ -140,7 +160,8 @@ public class Automato {
             } else if (Sentenca.charAt(i) == ';') {
 
                 t.setCodigo(37);
-                t.setToken(token);t.setLinha(cont);
+                t.setToken(token);
+                t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
@@ -189,7 +210,8 @@ public class Automato {
 
             //código
             t.setCodigo(7);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             //verificar final de arquivo?
 
             inicio(Sentenca, token);
@@ -237,87 +259,104 @@ public class Automato {
         if (token.equals("while")) {
 
             t.setCodigo(1);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("void")) {
 
             t.setCodigo(2);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("string")) {
 
             t.setCodigo(3);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("return")) {
 
             t.setCodigo(4);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("main")) {
 
             t.setCodigo(10);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("integer")) {
 
             t.setCodigo(12);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("inicio")) {
 
             t.setCodigo(13);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("if")) {
 
             t.setCodigo(14);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("for")) {
 
             t.setCodigo(16);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("float")) {
 
             t.setCodigo(17);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("fim")) {
 
             t.setCodigo(18);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("else")) {
 
             t.setCodigo(19);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("do")) {
 
             t.setCodigo(20);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("cout")) {
 
             t.setCodigo(21);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("cin")) {
 
             t.setCodigo(22);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("char")) {
 
             t.setCodigo(23);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (token.equals("callfuncao")) {
 
             t.setCodigo(24);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
 
         }
 
@@ -337,7 +376,8 @@ public class Automato {
         } else {
             i++;
             t.setCodigo(5);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             //verificar final de arquivo?
             inicio(Sentenca, token);
         }
@@ -353,7 +393,8 @@ public class Automato {
         } else {
 
             t.setCodigo(6);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -367,7 +408,8 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(9);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -415,7 +457,8 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(8);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -433,14 +476,16 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(28);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
         } else {
 
             t.setCodigo(29);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -453,14 +498,16 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(34);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
         } else {
 
             t.setCodigo(33);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -473,14 +520,16 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(47);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
         } else {
 
             t.setCodigo(46);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -493,7 +542,8 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(25);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -502,14 +552,16 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(26);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
         } else {
 
             t.setCodigo(27);
-            t.setToken(token);t.setLinha(cont);
+            t.setToken(token);
+            t.setLinha(cont);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca, token);
@@ -522,13 +574,15 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(31);
-            t.setToken(token);            t.setToken(token);
+            t.setToken(token);
+            t.setLinha(cont);
 
         } else if (Sentenca.charAt(i) == '=') {
 
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(30);
-            t.setToken(token);            t.setToken(token);
+            t.setToken(token);
+            t.setLinha(cont);
 
             i++;
             //verificar final de arquivo?
@@ -538,7 +592,8 @@ public class Automato {
             //Código
             //retorna <
             t.setCodigo(32);
-            t.setToken(token);            t.setToken(token);
+            t.setToken(token);
+            t.setLinha(cont);
 
             i++;
             //verificar final de arquivo?
@@ -554,8 +609,8 @@ public class Automato {
             //código
             //retorna !=
             t.setCodigo(45);
-            t.setToken(token);            
             t.setToken(token);
+            t.setLinha(cont);
 
             i++;
             //verificar final de arquivo?

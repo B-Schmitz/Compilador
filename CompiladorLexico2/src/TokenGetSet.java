@@ -26,7 +26,7 @@ public class TokenGetSet {
     
      public void setLinha(Integer Linha) {
          
-         this.Codigo.add(Linha);
+         this.Linha.add(Linha);
          
     }
 
