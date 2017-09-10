@@ -11,12 +11,18 @@ public class Tokens extends javax.swing.JFrame {
     public void setToken(TokenGetSet t){
         
           //Apenas para teste
-          DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+          DefaultTableModel modeloTok = (DefaultTableModel) tabela.getModel();
         for(int i = 0; i < t.getCodigo().size(); i++){
             
-           // System.out.println(t.getCodigo().get(i) + "|" + t.getLinha().get(i) + "|" + t.getToken().get(i));
-           modelo.addRow(new Object[]{t.getLinha().get(i),t.getCodigo().get(i),t.getToken().get(i)});
+           modeloTok.addRow(new Object[]{t.getLinha().get(i),t.getCodigo().get(i),t.getToken().get(i)});
           
+            
+        }
+        ErroGetSet err =  t.getErr();
+        DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
+        for(int i = 0; i < err.getErro().size(); i++){
+            
+             modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
             
         }
     }
@@ -34,7 +40,7 @@ public class Tokens extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabela = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TabelaErro = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tabela");
@@ -53,19 +59,9 @@ public class Tokens extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Tabela", jScrollPane2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaErro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Linha", "Erro"
@@ -79,10 +75,10 @@ public class Tokens extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(10);
+        jScrollPane1.setViewportView(TabelaErro);
+        if (TabelaErro.getColumnModel().getColumnCount() > 0) {
+            TabelaErro.getColumnModel().getColumn(0).setResizable(false);
+            TabelaErro.getColumnModel().getColumn(0).setPreferredWidth(10);
         }
 
         jTabbedPane2.addTab("Erros", jScrollPane1);
@@ -140,10 +136,10 @@ public class Tokens extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaErro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

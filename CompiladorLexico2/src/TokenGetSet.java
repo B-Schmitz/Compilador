@@ -8,10 +8,19 @@ public class TokenGetSet {
      private final List<Integer> Codigo = new ArrayList<>();
      private final List<Integer> Linha = new ArrayList<>();
      private final List<String> Token = new ArrayList<>();
+     private ErroGetSet err;
 
     
     public List<Integer> getCodigo() {
         return Codigo;
+    }
+
+    public ErroGetSet getErr() {
+        return err;
+    }
+
+    public void setErr(ErroGetSet err) {
+        this.err = err;
     }
     
     public void  setCodigo(Integer Codigo) {

@@ -2,7 +2,9 @@
 public class Automato {
 
     private TokenGetSet t;
+    private  ErroGetSet err;
     private Integer i, cont;
+    private String teste = "";
 
 
     public TokenGetSet getToken(String Sentenca) {
@@ -10,6 +12,7 @@ public class Automato {
         i = 0;
         cont = 1;
          t = new TokenGetSet();
+         err = new ErroGetSet();
         inicio(Sentenca, "");
 
         return t;
@@ -37,7 +40,8 @@ public class Automato {
             
         }else if (Sentenca.charAt(i) == '@') {
 
-            System.out.println("ERRRRRR");
+            System.out.println("Fim");
+            
 
         } else {
 
@@ -197,11 +201,42 @@ public class Automato {
             LetraDigitVar(Sentenca, token);
         } else {
 
-            //Erro
+            err.setLinha(cont);
+            err.setErro("Declaração de variavel errada");
+            t.setErr(err);
+            i++;
+            brancoString(Sentenca, token);
+            //inicio(Sentenca, token);
+            
         }
 
+           
     }
 
+    //teste
+    public void brancoString(String Sentenca, String token){
+        
+        teste = String.valueOf(Sentenca.charAt(i));
+        
+      if(Sentenca.charAt(i) == '\n'){
+           
+           cont++;
+           i++;
+           inicio(Sentenca, token);
+       }
+      else if(Sentenca.charAt(i) != ' '){
+           
+           i++;
+           brancoString(Sentenca, token);
+           
+       } 
+       else{
+           
+           inicio(Sentenca, token);
+           
+       }
+        
+    }
     public void LetraDigitVar(String Sentenca, String token) {
         //Não sei se isso é para estar dentro do if
 
@@ -237,7 +272,7 @@ public class Automato {
 
         } else {
 
-            //código
+            tokens(Sentenca,token);
         }
 
     }
@@ -251,13 +286,13 @@ public class Automato {
             LetraDigit(Sentenca, token);
         } else {
 
-            tokens(token);
+            tokens(Sentenca,token);
         }
 
         inicio(Sentenca, token);
     }
 
-    public void tokens(String token) {
+    public void tokens(String Sentenca, String token) {
 
         if (token.equals("while")) {
 
@@ -361,6 +396,13 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
 
+        }
+        else{
+            err.setLinha(cont);
+            err.setErro("Declaração de variavel errada");
+            t.setErr(err);
+            inicio(Sentenca, token);
+           
         }
 
     }

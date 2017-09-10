@@ -1,24 +1,32 @@
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ErroGetSet {
     
     
-    private String erro;
+    private final List<Integer> Linha = new ArrayList<>();
+    private final List<String> Erro = new ArrayList<>();
 
-    public String getErro() {
-        return erro;
+    public List<Integer> getLinha() {
+        return Linha;
+    }
+    
+    public void setLinha(Integer Linha){
+        
+        this.Linha.add(Linha);
+        
     }
 
-    public void setErro(String erro) {
-        this.erro = erro;
+    public List<String> getErro() {
+        return Erro;
     }
-
-    public Integer getLinha() {
-        return linha;
+    
+    public void setErro(String Token){
+        
+        this.Erro.add(Token);
+        
     }
-
-    public void setLinha(Integer linha) {
-        this.linha = linha;
-    }
-    private  Integer linha;
     
 }

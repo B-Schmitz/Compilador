@@ -19,6 +19,7 @@ public class Tela extends javax.swing.JFrame {
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto;
     private Automato automato = new Automato();
+    
 
     public Tela() {
 
