@@ -2,7 +2,7 @@
 public class Automato {
 
     private TokenGetSet t;
-    private int i, cont;
+    private Integer i, cont;
 
 
     public TokenGetSet getToken(String Sentenca) {
