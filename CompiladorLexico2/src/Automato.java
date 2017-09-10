@@ -1,367 +1,581 @@
 
 public class Automato {
-    
-    TokenGetSet t;
-    
-    public Automato() {
-        
-        t = new TokenGetSet();
-        
-    }
-    
-    public void inicio(String Sentenca, int i, String token) {
 
-         token += String.valueOf(Sentenca.charAt(i));
+    private TokenGetSet t;
+    private int i = 0;
+
+    public Automato() {
+
+        t = new TokenGetSet();
+
+    }
+
+    public void inicio(String Sentenca, String token) {
+
+        token = "";
+        token += String.valueOf(Sentenca.charAt(i));
+        
+        if(Sentenca.charAt(i) == ' '){
+            i++;
+            inicio(Sentenca, token);
+        }
+        else if(i > Sentenca.length()){
+            
+        }else{
+    
         //esse if é especifico para uma variavel
         if (Sentenca.charAt(i) == '#') {
-
+            i++;
             //vai para o metodo LetraVar verificar se o proximo é letra
-            LetraVar(Sentenca, i++, token);
-            
+            LetraVar(Sentenca, token);
+
         } //esse vai verificar if, while, for, etc...
         else if (Character.isLetter(Sentenca.charAt(i))) {
-
+            i++;
             //esse metodo vai verificar se o proximo é letra
-            Letra(Sentenca, i++, token);
-            
+            Letra(Sentenca, token);
+
         } else if (Character.isDigit(Sentenca.charAt(i))) {
-            
-            Digit(Sentenca, i++, token);
-            
+            i++;
+            Digit(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '$') {
-            
-            cifrao(Sentenca, i++, token);
-            
+            i++;
+            cifrao(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '"') {
-            
-            aspasDuplas(Sentenca, i, token);
-            
+            i++;
+            aspasDuplas(Sentenca, token);
+
         } //Precisa ver se isso funciona
         else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
-            
-            LetraAspas(Sentenca, i++, token);
-            
+            i++;
+            LetraAspas(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '=') {
-            
-            Igual(Sentenca, i++, token);
-            
+            i++;
+            Igual(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '+') {
-            
-            Mais(Sentenca, i++, token);
-            
+            i++;
+            Mais(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '*') {
 
             //Ainda falta linha
             t.setToken(token);
             t.setCodigo(41);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '/') {
 
             //Ainda falta coisa
             t.setCodigo(39);
             t.setToken(token);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '>') {
-            
-            MaiorOuIgual(Sentenca, i++, token);
-            
-        } else if (Sentenca.charAt(i++) == '<') {
-            
-            MenorOuIgual(Sentenca, i++, token);
-            
+            i++;
+            MaiorOuIgual(Sentenca, token);
+
+        } else if (Sentenca.charAt(i) == '<') {
+            i++;
+            MenorOuIgual(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '{') {
-            
+
             t.setCodigo(36);
             t.setToken(token);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '}') {
-            
+
             t.setCodigo(35);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else if (Sentenca.charAt(i) == '(') {
-            
+
             t.setCodigo(43);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else if (Sentenca.charAt(i) == ',') {
-            
+
             t.setCodigo(40);
             t.setToken(token);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == ':') {
-            
+
             t.setCodigo(38);
             t.setToken(token);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == ';') {
-            
+
             t.setCodigo(37);
             t.setToken(token);
-            
-        } else if (Sentenca.charAt(i) == '-') {
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
 
-            Menos(Sentenca, i++, token);
+        } else if (Sentenca.charAt(i) == '-') {
+            i++;
+            Menos(Sentenca, token);
         } else if (Sentenca.charAt(i) == '!') {
-            
-            Difernte(Sentenca, i, token);
-            
+
+            i++;
+            Difernte(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '[') {
 
-            ComentarioBloco(Sentenca, i++, token);
-            
+            i++;
+            ComentarioBloco(Sentenca, token);
+
         }
-        
+        }
     }
 
     //verifica letra de uma possivel variavel
     //Obs: Acredito que precise ser separado a parte da variavel dos outros. Ex: while, if, etc...
-    public void LetraVar(String Sentenca, int i, String token) {
-        
+    public void LetraVar(String Sentenca, String token) {
+
+        token += String.valueOf(Sentenca.charAt(i));
+
         if (Character.isLetter(Sentenca.charAt(i))) {
-            
-            LetraDigitVar(Sentenca, i++, token);
+
+            i++;
+            LetraDigitVar(Sentenca, token);
         } else {
 
-            //código
+            //Erro
         }
-        
+
     }
-    
-    public void LetraDigitVar(String Sentenca, int i, String token) {
-        
+
+    public void LetraDigitVar(String Sentenca, String token) {
+        //Não sei se isso é para estar dentro do if
+
         if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
-            
-            LetraDigitVar(Sentenca, i++, token);
+            token += String.valueOf(Sentenca.charAt(i));
+            i++;
+            LetraDigitVar(Sentenca, token);
         } else {
 
             //código
+            t.setCodigo(7);
+            t.setToken(token);
+            //verificar final de arquivo?
+            i++;
+            inicio(Sentenca, token);
         }
-        
+
     }
 
     //Aqui não sei se ta certo, apenas fiz como tava o nosso automato
     //mas nessa parte ele verifica se é letra
-    public void Letra(String Sentenca, int i, String token) {
-        
+    public void Letra(String Sentenca, String token) {
+
         if (Character.isLetter(Sentenca.charAt(i))) {
 
+            token += String.valueOf(Sentenca.charAt(i));
             //E esse é o problema, o método a baixo vai verificar se o proximo é letra ou numero
             //mas só faria sentido se fosse uma variavel Ex; n2; mas se chegar até aqui ja não pode 
             //ser uma variavel, mas fiz igual tava no automato que entregamos
-            LetraDigit(Sentenca, i++, token);
-            
+            i++;
+            LetraDigit(Sentenca, token);
+
         } else {
 
             //código
         }
-        
+
     }
-    
-    public void LetraDigit(String Sentenca, int i, String token) {
-        
+
+    public void LetraDigit(String Sentenca, String token) {
+
         if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
-            
-            LetraDigit(Sentenca, i++, token);
+
+            token += String.valueOf(Sentenca.charAt(i));
+            i++;
+            LetraDigit(Sentenca, token);
         } else {
 
-            //código
+            tokens(token);
         }
-        
+
+        inicio(Sentenca, token);
     }
-    
-    public void Digit(String Sentenca, int i, String token) {
-        
+
+    public void tokens(String token) {
+
+        if (token.equals("while")) {
+
+            t.setCodigo(1);
+            t.setToken(token);
+
+        } else if (token.equals("void")) {
+
+            t.setCodigo(2);
+            t.setToken(token);
+
+        } else if (token.equals("string")) {
+
+            t.setCodigo(3);
+            t.setToken(token);
+
+        } else if (token.equals("return")) {
+
+            t.setCodigo(4);
+            t.setToken(token);
+
+        } else if (token.equals("main")) {
+
+            t.setCodigo(10);
+            t.setToken(token);
+
+        } else if (token.equals("integer")) {
+
+            t.setCodigo(12);
+            t.setToken(token);
+
+        } else if (token.equals("inicio")) {
+
+            t.setCodigo(13);
+            t.setToken(token);
+
+        } else if (token.equals("if")) {
+
+            t.setCodigo(14);
+            t.setToken(token);
+
+        } else if (token.equals("for")) {
+
+            t.setCodigo(16);
+            t.setToken(token);
+
+        } else if (token.equals("float")) {
+
+            t.setCodigo(17);
+            t.setToken(token);
+
+        } else if (token.equals("fim")) {
+
+            t.setCodigo(18);
+            t.setToken(token);
+
+        } else if (token.equals("else")) {
+
+            t.setCodigo(19);
+            t.setToken(token);
+
+        } else if (token.equals("do")) {
+
+            t.setCodigo(20);
+            t.setToken(token);
+
+        } else if (token.equals("cout")) {
+
+            t.setCodigo(21);
+            t.setToken(token);
+
+        } else if (token.equals("cin")) {
+
+            t.setCodigo(22);
+            t.setToken(token);
+
+        } else if (token.equals("char")) {
+
+            t.setCodigo(23);
+            t.setToken(token);
+
+        } else if (token.equals("callfuncao")) {
+
+            t.setCodigo(24);
+            t.setToken(token);
+
+        }
+
+    }
+
+    public void Digit(String Sentenca, String token) {
+
         if (Character.isDigit(Sentenca.charAt(i))) {
-            
-            Digit(Sentenca, i++, token);
-            
+            i++;
+            Digit(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == ',') {
-            
-            DigitFloat(Sentenca, i++, token);
+            i++;
+            DigitFloat(Sentenca, token);
         } else {
-            
+            i++;
             t.setCodigo(5);
             t.setToken(token);
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
-        
+
     }
-    
-    public void DigitFloat(String Sentenca, int i, String token) {
-        
+
+    public void DigitFloat(String Sentenca, String token) {
+
         if (Character.isDigit(Sentenca.charAt(i))) {
-            
-            DigitFloat(Sentenca, i++, token);
+
+            DigitFloat(Sentenca, token);
         } else {
-            
+
             t.setCodigo(6);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
-        
+
     }
-    
-    public void aspasDuplas(String Sentenca, int i, String token) {
-        
+
+    public void aspasDuplas(String Sentenca, String token) {
+
         if ('"' == Sentenca.charAt(i)) {
-            
+
             t.setCodigo(9);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else if (Sentenca.charAt(i) == '@') {
-            
+
         } else {
-            
-            inicio(Sentenca, i++, token);
+            i++;
+            inicio(Sentenca, token);
         }
-        
+
     }
-    
-    public void cifrao(String Sentenca, int i, String token) {
-        
+
+    public void cifrao(String Sentenca, String token) {
+
         if ('$' != Sentenca.charAt(i)) {
-            
-            cifrao(Sentenca, i++, token);
+            i++;
+            cifrao(Sentenca, token);
         } else {
 
             //código
         }
-        
+
     }
     //Char
 
-    public void LetraAspas(String Sentenca, int i, String token) {
-        
+    public void LetraAspas(String Sentenca, String token) {
+
         if (Character.isLetter(Sentenca.charAt(i))) {
-            
-            Aspas(Sentenca, i++, token);
-            
+            i++;
+            Aspas(Sentenca, token);
+
         } else {
 
             //Erro
         }
-        
+
     }
-    
-    public void Aspas(String Sentenca, int i, String token) {
-        
+
+    public void Aspas(String Sentenca, String token) {
+
         if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
 
             t.setCodigo(8);
             t.setToken(token);
-            
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else {
 
             //Erro
-          
         }
-        
+
     }
-    
-    public void Igual(String Sentenca, int i, String token) {
-        
+
+    public void Igual(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '=') {
 
-           
             t.setCodigo(28);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else {
 
             t.setCodigo(29);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
     }
-    
-    public void Mais(String Sentenca, int i, String token) {
-        
+
+    public void Mais(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '+') {
 
-            
             t.setCodigo(34);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else {
 
             t.setCodigo(33);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
     }
-    
-    public void Menos(String Sentenca, int i, String token) {
-        
+
+    public void Menos(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '-') {
 
             t.setCodigo(47);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else {
 
             t.setCodigo(46);
             t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
     }
-    
-    public void MaiorOuIgual(String Sentenca, int i, String token) {
-        
+
+    public void MaiorOuIgual(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '>') {
 
             //código
             //Retorna >>
+            t.setCodigo(25);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         } else if (Sentenca.charAt(i) == '=') {
 
             //código
             //retorna >=
+            t.setCodigo(26);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else {
 
             //código
+            //Retorna >
+            t.setCodigo(27);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         }
     }
-    
-    public void MenorOuIgual(String Sentenca, int i, String token) {
-        
+
+    public void MenorOuIgual(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '<') {
 
             //código
             //retorna <<
+            t.setCodigo(31);
+            t.setToken(token);
         } else if (Sentenca.charAt(i) == '=') {
 
             //código
             //retorna <=
+            t.setCodigo(30);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+        } else {
+
+            //Código
+            //retorna <
+            t.setCodigo(32);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
+
         }
     }
-    
-    public void Difernte(String Sentenca, int i, String token) {
-        
+
+    public void Difernte(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) == '=') {
 
             //código
             //retorna !=
-            //codigo 45
+            t.setCodigo(45);
+            t.setToken(token);
+            i++;
+            //verificar final de arquivo?
+            inicio(Sentenca, token);
         } else {
 
             //código
+            i++;
             //vai para o comentario de linha
-            ComentarioLinha(Sentenca, i++, token);
+            ComentarioLinha(Sentenca, token);
         }
-        
+
     }
-    
-    public void ComentarioLinha(String Sentenca, int i, String token) {
-        
+
+    public void ComentarioLinha(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) != '\n') {
-            
-            ComentarioLinha(Sentenca, i++, token);
+
+            i++;
+            ComentarioLinha(Sentenca, token);
         } else {
 
             //código
+            i++;
+            inicio(Sentenca, token);
         }
-        
+
     }
-    
-    public void ComentarioBloco(String Sentenca, int i, String token) {
-        
+
+    public void ComentarioBloco(String Sentenca, String token) {
+
         if (Sentenca.charAt(i) != ']') {
-            
-            ComentarioBloco(Sentenca, i++, token);
+
+            i++;
+            ComentarioBloco(Sentenca, token);
         } else {
 
             //código
+            i++;
+            inicio(Sentenca, token);
         }
-        
+
     }
-    
+
 }
