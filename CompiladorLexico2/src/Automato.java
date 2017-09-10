@@ -489,7 +489,7 @@ public class Automato {
             t.setCodigo(29);
             t.setToken(token);
             t.setLinha(cont);
-            i++;
+            
             //verificar final de arquivo?
             inicio(Sentenca, token);
         }
