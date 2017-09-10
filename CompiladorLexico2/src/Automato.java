@@ -4,16 +4,12 @@ public class Automato {
     private TokenGetSet t;
     private int i, cont;
 
-    public Automato() {
-
-        t = new TokenGetSet();
-        i = 0;
-        cont = 1;
-
-    }
 
     public TokenGetSet getToken(String Sentenca) {
 
+        i = 0;
+        cont = 1;
+         t = new TokenGetSet();
         inicio(Sentenca, "");
 
         return t;
@@ -31,8 +27,15 @@ public class Automato {
 
             cont++;
             i++;
+            inicio(Sentenca, token);
 
-        } else if (Sentenca.charAt(i) == '@') {
+        }
+        else if(Sentenca.charAt(i) == '\t'){
+        
+            i++;
+            inicio(Sentenca, token);
+            
+        }else if (Sentenca.charAt(i) == '@') {
 
             System.out.println("ERRRRRR");
 
