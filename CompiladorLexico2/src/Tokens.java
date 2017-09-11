@@ -18,12 +18,14 @@ public class Tokens extends javax.swing.JFrame {
           
             
         }
+        if(t.getErr() != null){
         ErroGetSet err =  t.getErr();
         DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
         for(int i = 0; i < err.getErro().size(); i++){
             
              modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
             
+        }
         }
     }
 

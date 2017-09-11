@@ -4,7 +4,6 @@ public class Automato {
     private TokenGetSet t;
     private  ErroGetSet err;
     private Integer i, cont;
-    private String teste = "";
 
 
     public TokenGetSet getToken(String Sentenca) {
@@ -216,7 +215,6 @@ public class Automato {
     //teste
     public void brancoString(String Sentenca, String token){
         
-        teste = String.valueOf(Sentenca.charAt(i));
         
       if(Sentenca.charAt(i) == '\n'){
            
