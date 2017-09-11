@@ -16,10 +16,9 @@ public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
     private final Tokens tokens = new Tokens();
+    private final Automato automato = new Automato();
     private final JFileChooser fc = new JFileChooser();
-    private String arquivo, texto;
-    private Automato automato = new Automato();
-    
+    private String arquivo, texto, textobackup;
 
     public Tela() {
 
@@ -29,6 +28,7 @@ public class Tela extends javax.swing.JFrame {
         icone = new ImageIcon("src/icones/source_code.png");
         this.setIconImage(icone.getImage());
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        textobackup = Texto.getText();
 
         // Linhas do texto
         TextLineNumber tln = new TextLineNumber(Texto);
@@ -40,15 +40,20 @@ public class Tela extends javax.swing.JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent evt) {
-                int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
-                if (op == 0) {
-                    menu_salvar.doClick();
-                    System.exit(0);
-                }
-                if (op == 1) {
+                if (textobackup.equals(Texto.getText())) {
+                    //Não aparece a tela e simplesmente fecha
                     System.exit(0);
                 } else {
-                    setVisible(true);
+                    int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
+                    if (op == 0) {
+                        menu_salvar.doClick();
+                        System.exit(0);
+                    }
+                    if (op == 1) {
+                        System.exit(0);
+                    } else {
+                        setVisible(true);
+                    }
                 }
             }
         });
@@ -97,13 +102,14 @@ public class Tela extends javax.swing.JFrame {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try {
-            fileWriter = new FileWriter(nomeArquivo+ ".txt", false);
+            fileWriter = new FileWriter(nomeArquivo + ".txt", false);
             bufferedWriter = new BufferedWriter(fileWriter);
             String conteudo = textoArquivo.replaceAll("\n",
-            System.getProperty("line.separator"));
+                    System.getProperty("line.separator"));
             bufferedWriter.write(conteudo);
             bufferedWriter.flush();
             JOptionPane.showMessageDialog(this, "Salvo com sucesso");
+            textobackup = Texto.getText();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar o arquivo: " + ex.getMessage());
         } finally {
@@ -146,7 +152,7 @@ public class Tela extends javax.swing.JFrame {
         menu_salvar = new javax.swing.JMenuItem();
         menu_sair = new javax.swing.JMenuItem();
         menu_executar = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menu_compilar = new javax.swing.JMenuItem();
         menu_tokens = new javax.swing.JMenuItem();
         menu_sobre = new javax.swing.JMenu();
         menu_ajuda = new javax.swing.JMenuItem();
@@ -163,11 +169,14 @@ public class Tela extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
         );
 
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
@@ -221,16 +230,16 @@ public class Tela extends javax.swing.JFrame {
         menu_executar.setText("Executar");
         menu_executar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/compile.png"))); // NOI18N
-        jMenuItem3.setText("Compilar");
-        jMenuItem3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menu_compilar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
+        menu_compilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/compile.png"))); // NOI18N
+        menu_compilar.setText("Compilar");
+        menu_compilar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_compilar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menu_compilarActionPerformed(evt);
             }
         });
-        menu_executar.add(jMenuItem3);
+        menu_executar.add(menu_compilar);
 
         menu_tokens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/token_comment.png"))); // NOI18N
         menu_tokens.setText("Tokens");
@@ -318,28 +327,28 @@ public class Tela extends javax.swing.JFrame {
 
     private void menu_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sairActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
-        if (op == 0) {
-            menu_salvar.doClick();
-            System.exit(0);
-        }
-        if (op == 1) {
+        if (textobackup.equals(Texto.getText())) {
+            //Não aparece a tela e simplesmente fecha
             System.exit(0);
         } else {
-            setVisible(true);
-        }
+            if (op == 0) {
+                menu_salvar.doClick();
+                System.exit(0);
+            }
+            if (op == 1) {
+                System.exit(0);
+            } else {
+                setVisible(true);
+            }
     }//GEN-LAST:event_menu_sairActionPerformed
+    }
+    private void menu_compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compilarActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       
-        
-        TokenGetSet t = automato.getToken(Texto.getText()+"@");
-        
-      
-        Tokens tok = new Tokens();
-        tok.setVisible(true);
-        tok.setToken(t);
-        
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        TokenGetSet t = automato.getToken(Texto.getText() + "@");
+        tokens.setVisible(true);
+        tokens.setToken(t);
+
+    }//GEN-LAST:event_menu_compilarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,17 +378,13 @@ public class Tela extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tela().setVisible(true);
-
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Tela().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Texto;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -387,6 +392,7 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_ajuda;
     private javax.swing.JMenu menu_arquivo;
     private javax.swing.JMenuBar menu_bar;
+    private javax.swing.JMenuItem menu_compilar;
     private javax.swing.JMenu menu_executar;
     private javax.swing.JMenuItem menu_novo;
     private javax.swing.JMenuItem menu_sair;

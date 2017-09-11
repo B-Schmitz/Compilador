@@ -2,16 +2,15 @@
 public class Automato {
 
     private TokenGetSet t;
-    private  ErroGetSet err;
+    private ErroGetSet err;
     private Integer i, cont;
-
 
     public TokenGetSet getToken(String Sentenca) {
 
         i = 0;
         cont = 1;
-         t = new TokenGetSet();
-         err = new ErroGetSet();
+        t = new TokenGetSet();
+        err = new ErroGetSet();
         inicio(Sentenca, "");
 
         return t;
@@ -31,16 +30,14 @@ public class Automato {
             i++;
             inicio(Sentenca, token);
 
-        }
-        else if(Sentenca.charAt(i) == '\t'){
-        
+        } else if (Sentenca.charAt(i) == '\t') {
+
             i++;
             inicio(Sentenca, token);
-            
-        }else if (Sentenca.charAt(i) == '@') {
+
+        } else if (Sentenca.charAt(i) == '@') {
 
             System.out.println("Fim");
-            
 
         } else {
 
@@ -134,18 +131,16 @@ public class Automato {
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
-            }else if(Sentenca.charAt(i) == ')'){
-                
+            } else if (Sentenca.charAt(i) == ')') {
+
                 t.setCodigo(42);
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
                 inicio(Sentenca, token);
-                
-                
-            }
-            else if (Sentenca.charAt(i) == ',') {
+
+            } else if (Sentenca.charAt(i) == ',') {
 
                 t.setCodigo(40);
                 t.setToken(token);
@@ -178,7 +173,7 @@ public class Automato {
             } else if (Sentenca.charAt(i) == '!') {
 
                 i++;
-                Difernte(Sentenca, token);
+                Diferente(Sentenca, token);
 
             } else if (Sentenca.charAt(i) == '[') {
 
@@ -189,8 +184,7 @@ public class Automato {
         }
     }
 
-    //verifica letra de uma possivel variavel
-    //Obs: Acredito que precise ser separado a parte da variavel dos outros. Ex: while, if, etc...
+    // Verifica letra de uma possivel variavel
     public void LetraVar(String Sentenca, String token) {
 
         if (Character.isLetter(Sentenca.charAt(i))) {
@@ -201,40 +195,33 @@ public class Automato {
         } else {
 
             err.setLinha(cont);
-            err.setErro("Declaração de variavel errada");
+            err.setErro("Declaração de variável errada");
             t.setErr(err);
             i++;
             brancoString(Sentenca, token);
             //inicio(Sentenca, token);
-            
         }
-
-           
     }
 
     //teste
-    public void brancoString(String Sentenca, String token){
-        
-        
-      if(Sentenca.charAt(i) == '\n'){
-           
-           cont++;
-           i++;
-           inicio(Sentenca, token);
-       }
-      else if(Sentenca.charAt(i) != ' '){
-           
-           i++;
-           brancoString(Sentenca, token);
-           
-       } 
-       else{
-           
-           inicio(Sentenca, token);
-           
-       }
-        
+    public void brancoString(String Sentenca, String token) {
+
+        if (Sentenca.charAt(i) == '\n') {
+
+            cont++;
+            i++;
+            inicio(Sentenca, token);
+        } else if (Sentenca.charAt(i) != ' ') {
+
+            i++;
+            brancoString(Sentenca, token);
+
+        } else {
+
+            inicio(Sentenca, token);
+        }
     }
+
     public void LetraDigitVar(String Sentenca, String token) {
         //Não sei se isso é para estar dentro do if
 
@@ -270,7 +257,7 @@ public class Automato {
 
         } else {
 
-            tokens(Sentenca,token);
+            tokens(Sentenca, token);
         }
 
     }
@@ -284,7 +271,7 @@ public class Automato {
             LetraDigit(Sentenca, token);
         } else {
 
-            tokens(Sentenca,token);
+            tokens(Sentenca, token);
         }
 
         inicio(Sentenca, token);
@@ -321,6 +308,7 @@ public class Automato {
             t.setCodigo(10);
             t.setToken(token);
             t.setLinha(cont);
+            
 
         } else if (token.equals("integer")) {
 
@@ -394,13 +382,12 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
 
-        }
-        else{
+        } else {
             err.setLinha(cont);
-            err.setErro("Declaração de variavel errada");
+            err.setErro("Declaração de variável errada");
             t.setErr(err);
             inicio(Sentenca, token);
-           
+
         }
 
     }
@@ -417,7 +404,7 @@ public class Automato {
             i++;
             DigitFloat(Sentenca, token);
         } else {
-            
+
             t.setCodigo(5);
             t.setToken(token);
             t.setLinha(cont);
@@ -529,7 +516,7 @@ public class Automato {
             t.setCodigo(29);
             t.setToken(token);
             t.setLinha(cont);
-            
+
             //verificar final de arquivo?
             inicio(Sentenca, token);
         }
@@ -639,14 +626,13 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
 
-            
             //verificar final de arquivo?
             inicio(Sentenca, token);
 
         }
     }
 
-    public void Difernte(String Sentenca, String token) {
+    public void Diferente(String Sentenca, String token) {
 
         if (Sentenca.charAt(i) == '=') {
             token += String.valueOf(Sentenca.charAt(i));
@@ -699,7 +685,5 @@ public class Automato {
             i++;
             inicio(Sentenca, token);
         }
-
     }
-
 }

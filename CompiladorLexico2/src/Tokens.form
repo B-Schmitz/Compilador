@@ -25,16 +25,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane2" pref="573" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
+          <Component id="jTabbedPane2" alignment="0" pref="593" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane2" alignment="1" pref="225" max="32767" attributes="0"/>
+          <Component id="jTabbedPane2" alignment="0" pref="225" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -57,12 +53,12 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tabela">
+            <Component class="javax.swing.JTable" name="TabelaTokens">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="3" rowCount="0">
                     <Column editable="true" title="Linha" type="java.lang.Object"/>
-                    <Column editable="true" title="Codigo" type="java.lang.Object"/>
+                    <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
                     <Column editable="true" title="Token" type="java.lang.Object"/>
                   </Table>
                 </Property>
@@ -110,13 +106,13 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="2" rowCount="0">
-                    <Column editable="true" title="Linha" type="java.lang.Integer"/>
-                    <Column editable="true" title="Erro" type="java.lang.String"/>
+                    <Column editable="false" title="Linha" type="java.lang.Integer"/>
+                    <Column editable="false" title="Erro" type="java.lang.String"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="10" resizable="false">
+                    <Column maxWidth="200" minWidth="-1" prefWidth="100" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

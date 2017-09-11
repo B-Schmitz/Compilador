@@ -1,31 +1,33 @@
 
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
-
 public class Tokens extends javax.swing.JFrame {
+    
+     private final ImageIcon icone;
 
     public Tokens() {
         initComponents();
+        icone = new ImageIcon("src/icones/table.png");
+        this.setIconImage(icone.getImage());
     }
-    
-    public void setToken(TokenGetSet t){
-        
-          //Apenas para teste
-          DefaultTableModel modeloTok = (DefaultTableModel) tabela.getModel();
-        for(int i = 0; i < t.getCodigo().size(); i++){
-            
-           modeloTok.addRow(new Object[]{t.getLinha().get(i),t.getCodigo().get(i),t.getToken().get(i)});
-          
-            
+
+    public void setToken(TokenGetSet t) {
+
+        //Apenas para teste
+        DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
+        for (int i = 0; i < t.getCodigo().size(); i++) {
+
+            modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
         }
-        if(t.getErr() != null){
-        ErroGetSet err =  t.getErr();
-        DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
-        for(int i = 0; i < err.getErro().size(); i++){
-            
-             modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
-            
-        }
+        if (t.getErr() != null) {
+            ErroGetSet err = t.getErr();
+            DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
+            for (int i = 0; i < err.getErro().size(); i++) {
+
+                modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
+
+            }
         }
     }
 
@@ -40,7 +42,7 @@ public class Tokens extends javax.swing.JFrame {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
+        TabelaTokens = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaErro = new javax.swing.JTable();
 
@@ -48,16 +50,16 @@ public class Tokens extends javax.swing.JFrame {
         setTitle("Tabela");
         setResizable(false);
 
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Linha", "Codigo", "Token"
+                "Linha", "Código", "Token"
             }
         ));
-        tabela.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabela);
+        TabelaTokens.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(TabelaTokens);
 
         jTabbedPane2.addTab("Tabela", jScrollPane2);
 
@@ -72,15 +74,22 @@ public class Tokens extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(TabelaErro);
         if (TabelaErro.getColumnModel().getColumnCount() > 0) {
-            TabelaErro.getColumnModel().getColumn(0).setResizable(false);
-            TabelaErro.getColumnModel().getColumn(0).setPreferredWidth(10);
+            TabelaErro.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TabelaErro.getColumnModel().getColumn(0).setMaxWidth(200);
         }
 
         jTabbedPane2.addTab("Erros", jScrollPane1);
@@ -89,14 +98,11 @@ public class Tokens extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
         );
 
         pack();
@@ -130,18 +136,16 @@ public class Tokens extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tokens().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Tokens().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaErro;
+    private javax.swing.JTable TabelaTokens;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }
