@@ -3,8 +3,8 @@ public class Automato {
 
     private TokenGetSet t;
     private ErroGetSet err;
-    private Integer i, cont;
-    private String  token;
+    private Integer i, cont, contAux;
+    private String token;
 
     public TokenGetSet getToken(String Sentenca) {
 
@@ -36,48 +36,48 @@ public class Automato {
             i++;
             inicio(Sentenca);
 
-        } else if (Sentenca.charAt(i) == '@') {
-
-            System.out.println("Fim");
-
-        } else {
+        } else if (Sentenca.charAt(i) != '@') {
 
             //esse if é especifico para uma variavel
             if (Sentenca.charAt(i) == '#') {
                 i++;
                 //vai para o metodo LetraVar verificar se o proximo é letra
-                LetraVar(Sentenca, token);
+                LetraVar(Sentenca);
 
             } //esse vai verificar if, while, for, etc...
             else if (Character.isLetter(Sentenca.charAt(i))) {
                 i++;
                 //esse metodo vai verificar se o proximo é letra
-                Letra(Sentenca, token);
+                Letra(Sentenca);
 
             } else if (Character.isDigit(Sentenca.charAt(i))) {
                 i++;
-                Digit(Sentenca, token);
+                Digit(Sentenca);
 
             } else if (Sentenca.charAt(i) == '$') {
                 i++;
-                cifrao(Sentenca, token);
+                token = "";
+                contAux = cont;
+                cifrao(Sentenca);
 
             } else if (Sentenca.charAt(i) == '"') {
                 i++;
-                aspasDuplas(Sentenca, token);
+                aspasDuplas(Sentenca);
 
             } //Precisa ver se isso funciona
             else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
+                token = "";
+                contAux = cont;
                 i++;
-                LetraAspas(Sentenca, token);
+                LetraAspas(Sentenca);
 
             } else if (Sentenca.charAt(i) == '=') {
                 i++;
-                Igual(Sentenca, token);
+                Igual(Sentenca);
 
             } else if (Sentenca.charAt(i) == '+') {
                 i++;
-                Mais(Sentenca, token);
+                Mais(Sentenca);
 
             } else if (Sentenca.charAt(i) == '*') {
 
@@ -101,11 +101,11 @@ public class Automato {
 
             } else if (Sentenca.charAt(i) == '>') {
                 i++;
-                MaiorOuIgual(Sentenca, token);
+                MaiorOuIgual(Sentenca);
 
             } else if (Sentenca.charAt(i) == '<') {
                 i++;
-                MenorOuIgual(Sentenca, token);
+                MenorOuIgual(Sentenca);
 
             } else if (Sentenca.charAt(i) == '{') {
 
@@ -170,29 +170,29 @@ public class Automato {
 
             } else if (Sentenca.charAt(i) == '-') {
                 i++;
-                Menos(Sentenca, token);
+                Menos(Sentenca);
             } else if (Sentenca.charAt(i) == '!') {
 
                 i++;
-                Diferente(Sentenca, token);
+                Diferente(Sentenca);
 
             } else if (Sentenca.charAt(i) == '[') {
 
                 i++;
-                ComentarioBloco(Sentenca, token);
+                ComentarioBloco(Sentenca);
 
             }
         }
     }
 
     // Verifica letra de uma possivel variavel
-    public void LetraVar(String Sentenca, String token) {
+    public void LetraVar(String Sentenca) {
 
         if (Character.isLetter(Sentenca.charAt(i))) {
             token += String.valueOf(Sentenca.charAt(i));
 
             i++;
-            LetraDigitVar(Sentenca, token);
+            LetraDigitVar(Sentenca);
         } else {
 
             err.setLinha(cont);
@@ -200,11 +200,9 @@ public class Automato {
             t.setErr(err);
             i++;
             brancoString(Sentenca);
-            //inicio(Sentenca, token);
         }
     }
 
-    //teste
     public void brancoString(String Sentenca) {
 
         if (Sentenca.charAt(i) == '\n') {
@@ -223,13 +221,13 @@ public class Automato {
         }
     }
 
-    public void LetraDigitVar(String Sentenca, String token) {
+    public void LetraDigitVar(String Sentenca) {
         //Não sei se isso é para estar dentro do if
 
         if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            LetraDigitVar(Sentenca, token);
+            LetraDigitVar(Sentenca);
         } else {
 
             //código
@@ -245,7 +243,7 @@ public class Automato {
 
     //Aqui não sei se ta certo, apenas fiz como tava o nosso automato
     //mas nessa parte ele verifica se é letra
-    public void Letra(String Sentenca, String token) {
+    public void Letra(String Sentenca) {
 
         if (Character.isLetter(Sentenca.charAt(i))) {
 
@@ -254,31 +252,31 @@ public class Automato {
             //mas só faria sentido se fosse uma variavel Ex; n2; mas se chegar até aqui ja não pode 
             //ser uma variavel, mas fiz igual tava no automato que entregamos
             i++;
-            LetraDigit(Sentenca, token);
+            LetraDigit(Sentenca);
 
         } else {
 
-            tokens(Sentenca, token);
+            tokens(Sentenca);
         }
 
     }
 
-    public void LetraDigit(String Sentenca, String token) {
+    public void LetraDigit(String Sentenca) {
 
         if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            LetraDigit(Sentenca, token);
+            LetraDigit(Sentenca);
         } else {
 
-            tokens(Sentenca, token);
+            tokens(Sentenca);
         }
 
         inicio(Sentenca);
     }
 
-    public void tokens(String Sentenca, String token) {
+    public void tokens(String Sentenca) {
 
         if (token.equals("while")) {
 
@@ -309,7 +307,6 @@ public class Automato {
             t.setCodigo(10);
             t.setToken(token);
             t.setLinha(cont);
-            
 
         } else if (token.equals("integer")) {
 
@@ -393,17 +390,17 @@ public class Automato {
 
     }
 
-    public void Digit(String Sentenca, String token) {
+    public void Digit(String Sentenca) {
 
         if (Character.isDigit(Sentenca.charAt(i))) {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            Digit(Sentenca, token);
+            Digit(Sentenca);
 
         } else if (Sentenca.charAt(i) == ',') {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            DigitFloat(Sentenca, token);
+            DigitFloat(Sentenca);
         } else {
 
             t.setCodigo(5);
@@ -415,12 +412,12 @@ public class Automato {
 
     }
 
-    public void DigitFloat(String Sentenca, String token) {
+    public void DigitFloat(String Sentenca) {
 
         if (Character.isDigit(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
-            DigitFloat(Sentenca, token);
+            DigitFloat(Sentenca);
         } else {
 
             t.setCodigo(6);
@@ -433,34 +430,59 @@ public class Automato {
 
     }
 
-    public void aspasDuplas(String Sentenca, String token) {
+    public void aspasDuplas(String Sentenca) {
 
-        if ('"' == Sentenca.charAt(i)) {
+        if (Sentenca.charAt(i) == '@') {
+
+            err.setLinha(contAux);
+            err.setErro("Erro nome string");
+            t.setErr(err);
+            inicio(Sentenca);
+
+        } else if ('"' != Sentenca.charAt(i)) {
 
             token += String.valueOf(Sentenca.charAt(i));
+            if (Sentenca.charAt(i) == '\n') {
+                cont++;
+            }
+            i++;
+            aspasDuplas(Sentenca);
+
+        } else {
+
             t.setCodigo(9);
             t.setToken(token);
-            t.setLinha(cont);
+            t.setLinha(contAux);
             i++;
             //verificar final de arquivo?
             inicio(Sentenca);
-        } else if (Sentenca.charAt(i) == '@') {
-//???????????????????
-        } else {
-            i++;
-            inicio(Sentenca);
+
         }
 
     }
 
-    public void cifrao(String Sentenca, String token) {
+    public void cifrao(String Sentenca) {
 
-        if ('$' != Sentenca.charAt(i)) {
+        if (Sentenca.charAt(i) == '@') {
+
+            err.setLinha(contAux);
+            err.setErro("Erro Comentario de bloco");
+            t.setErr(err);
+            inicio(Sentenca);
+
+        } else if ('$' != Sentenca.charAt(i)) {
+
             token += String.valueOf(Sentenca.charAt(i));
+            if (Sentenca.charAt(i) == '\n') {
+                cont++;
+            }
             i++;
-            cifrao(Sentenca, token);
+            cifrao(Sentenca);
         } else {
 
+            t.setCodigo(11);
+            t.setLinha(contAux);
+            t.setToken(token);
             i++;
             inicio(Sentenca);
         }
@@ -468,40 +490,54 @@ public class Automato {
     }
     //Char
 
-    public void LetraAspas(String Sentenca, String token) {
+    public void LetraAspas(String Sentenca) {
 
-        if (Character.isLetter(Sentenca.charAt(i))) {
+        //precisa pergunatar pra professoara, no automato qur fizemos ta que só pode letra no char
+        //Não sei se podemos mudar mais
+        if (Character.isLetter(Sentenca.charAt(i)) /*|| Character.isLetter(Sentenca.charAt(i))*/) {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            Aspas(Sentenca, token);
+            Aspas(Sentenca);
 
-        } else {
-
-            //Erro
         }
 
+        /* else{
+            //Erro?
+        }*/
     }
 
-    public void Aspas(String Sentenca, String token) {
+    public void Aspas(String Sentenca) {
 
-        if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
+        if (Sentenca.charAt(i) == '@') {
+
+            err.setErro("Erro no nome do char");
+            err.setLinha(contAux);
+            t.setErr(err);
+
+        } else if (!String.valueOf(Sentenca.charAt(i)).equals("'")) {
 
             token += String.valueOf(Sentenca.charAt(i));
+            i++;
+            Aspas(Sentenca);
+
+        } else {
+            if (token.length() > 1) {
+
+                err.setErro("Erro no tamanho do no nome do char");
+                err.setLinha(contAux);
+                t.setErr(err);
+            }
             t.setCodigo(8);
             t.setToken(token);
-            t.setLinha(cont);
+            t.setLinha(contAux);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
 
-        } else {
-
-            //Erro
         }
 
     }
 
-    public void Igual(String Sentenca, String token) {
+    public void Igual(String Sentenca) {
 
         if (Sentenca.charAt(i) == '=') {
 
@@ -523,7 +559,7 @@ public class Automato {
         }
     }
 
-    public void Mais(String Sentenca, String token) {
+    public void Mais(String Sentenca) {
 
         if (Sentenca.charAt(i) == '+') {
 
@@ -545,7 +581,7 @@ public class Automato {
         }
     }
 
-    public void Menos(String Sentenca, String token) {
+    public void Menos(String Sentenca) {
 
         if (Sentenca.charAt(i) == '-') {
 
@@ -567,7 +603,7 @@ public class Automato {
         }
     }
 
-    public void MaiorOuIgual(String Sentenca, String token) {
+    public void MaiorOuIgual(String Sentenca) {
 
         if (Sentenca.charAt(i) == '>') {
 
@@ -599,7 +635,7 @@ public class Automato {
         }
     }
 
-    public void MenorOuIgual(String Sentenca, String token) {
+    public void MenorOuIgual(String Sentenca) {
 
         if (Sentenca.charAt(i) == '<') {
 
@@ -633,7 +669,7 @@ public class Automato {
         }
     }
 
-    public void Diferente(String Sentenca, String token) {
+    public void Diferente(String Sentenca) {
 
         if (Sentenca.charAt(i) == '=') {
             token += String.valueOf(Sentenca.charAt(i));
@@ -651,17 +687,17 @@ public class Automato {
             //código
             i++;
             //vai para o comentario de linha
-            ComentarioLinha(Sentenca, token);
+            ComentarioLinha(Sentenca);
         }
 
     }
 
-    public void ComentarioLinha(String Sentenca, String token) {
+    public void ComentarioLinha(String Sentenca) {
 
         if (Sentenca.charAt(i) != '\n') {
 
             i++;
-            ComentarioLinha(Sentenca, token);
+            ComentarioLinha(Sentenca);
         } else {
 
             cont++;
@@ -671,18 +707,24 @@ public class Automato {
 
     }
 
-    public void ComentarioBloco(String Sentenca, String token) {
+    public void ComentarioBloco(String Sentenca) {
 
-        if (Sentenca.charAt(i) != ']') {
+        if (Sentenca.charAt(i) == '@') {
+
+            err.setLinha(cont);
+            err.setErro("Erro Comentario de bloco");
+            t.setErr(err);
+            inicio(Sentenca);
+
+        } else if (Sentenca.charAt(i) != ']') {
 
             if (Sentenca.charAt(i) == '\n') {
                 cont++;
             }
             i++;
-            ComentarioBloco(Sentenca, token);
+            ComentarioBloco(Sentenca);
         } else {
 
-            //código
             i++;
             inicio(Sentenca);
         }
