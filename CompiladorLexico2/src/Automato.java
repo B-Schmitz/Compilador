@@ -4,6 +4,7 @@ public class Automato {
     private TokenGetSet t;
     private ErroGetSet err;
     private Integer i, cont;
+    private String  token;
 
     public TokenGetSet getToken(String Sentenca) {
 
@@ -11,29 +12,29 @@ public class Automato {
         cont = 1;
         t = new TokenGetSet();
         err = new ErroGetSet();
-        inicio(Sentenca, "");
+        inicio(Sentenca);
 
         return t;
     }
 
-    public void inicio(String Sentenca, String token) {
+    public void inicio(String Sentenca) {
 
         token = "";
         token += String.valueOf(Sentenca.charAt(i));
 
         if (Sentenca.charAt(i) == ' ') {
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else if (Sentenca.charAt(i) == '\n') {
 
             cont++;
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         } else if (Sentenca.charAt(i) == '\t') {
 
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         } else if (Sentenca.charAt(i) == '@') {
 
@@ -86,7 +87,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '/') {
 
@@ -96,7 +97,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '>') {
                 i++;
@@ -113,7 +114,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '}') {
 
@@ -122,7 +123,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
             } else if (Sentenca.charAt(i) == '(') {
 
                 t.setCodigo(43);
@@ -130,7 +131,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
             } else if (Sentenca.charAt(i) == ')') {
 
                 t.setCodigo(42);
@@ -138,7 +139,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ',') {
 
@@ -147,7 +148,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ':') {
 
@@ -156,7 +157,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ';') {
 
@@ -165,7 +166,7 @@ public class Automato {
                 t.setLinha(cont);
                 i++;
                 //verificar final de arquivo?
-                inicio(Sentenca, token);
+                inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '-') {
                 i++;
@@ -198,27 +199,27 @@ public class Automato {
             err.setErro("Declaração de variável errada");
             t.setErr(err);
             i++;
-            brancoString(Sentenca, token);
+            brancoString(Sentenca);
             //inicio(Sentenca, token);
         }
     }
 
     //teste
-    public void brancoString(String Sentenca, String token) {
+    public void brancoString(String Sentenca) {
 
         if (Sentenca.charAt(i) == '\n') {
 
             cont++;
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else if (Sentenca.charAt(i) != ' ') {
 
             i++;
-            brancoString(Sentenca, token);
+            brancoString(Sentenca);
 
         } else {
 
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 
@@ -237,7 +238,7 @@ public class Automato {
             t.setLinha(cont);
             //verificar final de arquivo?
 
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -274,7 +275,7 @@ public class Automato {
             tokens(Sentenca, token);
         }
 
-        inicio(Sentenca, token);
+        inicio(Sentenca);
     }
 
     public void tokens(String Sentenca, String token) {
@@ -386,7 +387,7 @@ public class Automato {
             err.setLinha(cont);
             err.setErro("Declaração de variável errada");
             t.setErr(err);
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         }
 
@@ -409,7 +410,7 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -427,7 +428,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -442,12 +443,12 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else if (Sentenca.charAt(i) == '@') {
 //???????????????????
         } else {
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -461,7 +462,7 @@ public class Automato {
         } else {
 
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -491,7 +492,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         } else {
 
@@ -510,7 +511,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             t.setCodigo(29);
@@ -518,7 +519,7 @@ public class Automato {
             t.setLinha(cont);
 
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 
@@ -532,7 +533,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             t.setCodigo(33);
@@ -540,7 +541,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 
@@ -554,7 +555,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             t.setCodigo(46);
@@ -562,7 +563,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 
@@ -576,7 +577,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         } else if (Sentenca.charAt(i) == '=') {
 
@@ -586,7 +587,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             t.setCodigo(27);
@@ -594,7 +595,7 @@ public class Automato {
             t.setLinha(cont);
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 
@@ -617,7 +618,7 @@ public class Automato {
 
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             //Código
@@ -627,7 +628,7 @@ public class Automato {
             t.setLinha(cont);
 
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
 
         }
     }
@@ -644,7 +645,7 @@ public class Automato {
 
             i++;
             //verificar final de arquivo?
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         } else {
 
             //código
@@ -665,7 +666,7 @@ public class Automato {
 
             cont++;
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
 
     }
@@ -683,7 +684,7 @@ public class Automato {
 
             //código
             i++;
-            inicio(Sentenca, token);
+            inicio(Sentenca);
         }
     }
 }

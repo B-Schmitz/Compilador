@@ -1,5 +1,6 @@
 
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Tokens extends javax.swing.JFrame {
@@ -14,8 +15,14 @@ public class Tokens extends javax.swing.JFrame {
 
     public void setToken(TokenGetSet t) {
 
-        //Apenas para teste
+        
+
+      
+
         DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
+        
+       
+      
         for (int i = 0; i < t.getCodigo().size(); i++) {
 
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});

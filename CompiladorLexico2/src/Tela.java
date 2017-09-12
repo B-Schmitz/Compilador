@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
-    private final Tokens tokens = new Tokens();
+    private Tokens tokens;
     private final Automato automato = new Automato();
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto, textobackup;
@@ -345,6 +345,11 @@ public class Tela extends javax.swing.JFrame {
     private void menu_compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compilarActionPerformed
 
         TokenGetSet t = automato.getToken(Texto.getText() + "@");
+        
+        if(tokens != null){
+            tokens.dispose();
+        }
+        tokens = new Tokens();
         tokens.setVisible(true);
         tokens.setToken(t);
 
