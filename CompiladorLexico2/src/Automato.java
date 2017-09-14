@@ -62,6 +62,8 @@ public class Automato {
 
             } else if (Sentenca.charAt(i) == '"') {
                 i++;
+                token = "";
+                contAux = cont;
                 aspasDuplas(Sentenca);
 
             } //Precisa ver se isso funciona

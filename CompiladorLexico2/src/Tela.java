@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
-    private Tokens tokens;
+    private Tokens tokens = new Tokens();
     private final Automato automato = new Automato();
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto, textobackup;
@@ -317,7 +317,6 @@ public class Tela extends javax.swing.JFrame {
 
     private void menu_ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ajudaActionPerformed
         JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 1.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
-
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
