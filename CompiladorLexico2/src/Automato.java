@@ -233,9 +233,16 @@ public class Automato {
         } else {
 
             //código
-            t.setCodigo(7);
-            t.setToken(token);
-            t.setLinha(cont);
+            if (token.length() < 129) {
+                t.setCodigo(7);
+                t.setToken(token);
+                t.setLinha(cont);
+            } else {
+                err.setLinha(cont);
+                err.setErro("Variável Muito grande");
+                t.setErr(err);
+                inicio(Sentenca);
+            }
             //verificar final de arquivo?
 
             inicio(Sentenca);
@@ -405,10 +412,15 @@ public class Automato {
             DigitFloat(Sentenca);
         } else {
 
-            t.setCodigo(5);
-            t.setToken(token);
-            t.setLinha(cont);
-            //verificar final de arquivo?
+            if (token.length() < 11) {
+                t.setCodigo(5);
+                t.setToken(token);
+                t.setLinha(cont);
+            } else {
+                err.setLinha(cont);
+                err.setErro("Integer muito grande");
+                t.setErr(err);
+            }
             inicio(Sentenca);
         }
 
@@ -419,14 +431,20 @@ public class Automato {
         if (Character.isDigit(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
+            i++;
             DigitFloat(Sentenca);
         } else {
 
-            t.setCodigo(6);
-            t.setToken(token);
-            t.setLinha(cont);
-            i++;
-            //verificar final de arquivo?
+            if (token.length() < 12) {
+                t.setCodigo(6);
+                t.setToken(token);
+                t.setLinha(cont);
+            } else {
+                err.setLinha(cont);
+                err.setErro("Float muito grande");
+                t.setErr(err);
+
+            }
             inicio(Sentenca);
         }
 
@@ -439,7 +457,6 @@ public class Automato {
             err.setLinha(contAux);
             err.setErro("Erro nome string");
             t.setErr(err);
-            inicio(Sentenca);
 
         } else if ('"' != Sentenca.charAt(i)) {
 
@@ -452,12 +469,15 @@ public class Automato {
 
         } else {
 
-            t.setCodigo(9);
-            t.setToken(token);
-            t.setLinha(contAux);
-            i++;
-            //verificar final de arquivo?
-            inicio(Sentenca);
+            if (token.length() < 129) {
+                t.setCodigo(9);
+                t.setToken(token);
+                t.setLinha(contAux);
+            } else {
+                err.setLinha(cont);
+                err.setErro("String muito grande");
+                t.setErr(err);
+            }
 
         }
 
@@ -528,6 +548,7 @@ public class Automato {
                 err.setErro("Erro no tamanho do no nome do char");
                 err.setLinha(contAux);
                 t.setErr(err);
+                return;
             }
             t.setCodigo(8);
             t.setToken(token);
