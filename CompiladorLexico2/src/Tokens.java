@@ -1,39 +1,33 @@
 
 import javax.swing.ImageIcon;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Tokens extends javax.swing.JFrame {
     
-     private final ImageIcon icone;
-
+    private final ImageIcon icone;
+    
     public Tokens() {
         initComponents();
         icone = new ImageIcon("src/icones/table.png");
         this.setIconImage(icone.getImage());
+        this.setLocationRelativeTo(null);
     }
-
+    
     public void setToken(TokenGetSet t) {
-
         
-
-      
-
         DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
         
-       
-      
         for (int i = 0; i < t.getCodigo().size(); i++) {
-
+            
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
         }
         if (t.getErr() != null) {
             ErroGetSet err = t.getErr();
             DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
             for (int i = 0; i < err.getErro().size(); i++) {
-
+                
                 modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
-
+                
             }
         }
     }
@@ -55,7 +49,6 @@ public class Tokens extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tabela");
-        setResizable(false);
 
         TabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

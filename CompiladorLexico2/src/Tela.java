@@ -51,8 +51,6 @@ public class Tela extends javax.swing.JFrame {
                     }
                     if (op == 1) {
                         System.exit(0);
-                    } else {
-                        setVisible(true);
                     }
                 }
             }
@@ -142,7 +140,6 @@ public class Tela extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollBar1 = new javax.swing.JScrollBar();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
         menu_bar = new javax.swing.JMenuBar();
@@ -157,7 +154,7 @@ public class Tela extends javax.swing.JFrame {
         menu_sobre = new javax.swing.JMenu();
         menu_ajuda = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Compilador Léxico HUE+-");
 
         Texto.setBackground(new java.awt.Color(246, 246, 246));
@@ -165,24 +162,11 @@ public class Tela extends javax.swing.JFrame {
         Texto.setRows(5);
         jScrollPane1.setViewportView(Texto);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
-        );
-
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
         menu_arquivo.setText("Arquivo");
         menu_arquivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        menu_novo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         menu_novo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_empty.png"))); // NOI18N
         menu_novo.setText("Novo");
         menu_novo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -193,6 +177,7 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_novo);
 
+        menu_abrir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         menu_abrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/document_import.png"))); // NOI18N
         menu_abrir.setText("Abrir");
         menu_abrir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -203,6 +188,7 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_arquivo.add(menu_abrir);
 
+        menu_salvar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         menu_salvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/file_save_as.png"))); // NOI18N
         menu_salvar.setText("Salvar");
         menu_salvar.setContentAreaFilled(false);
@@ -275,11 +261,11 @@ public class Tela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
         );
 
         pack();
@@ -316,7 +302,7 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_novoActionPerformed
 
     private void menu_ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ajudaActionPerformed
-        JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 1.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
+        JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 2.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
@@ -336,18 +322,14 @@ public class Tela extends javax.swing.JFrame {
             }
             if (op == 1) {
                 System.exit(0);
-            } else {
-                setVisible(true);
             }
     }//GEN-LAST:event_menu_sairActionPerformed
     }
     private void menu_compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compilarActionPerformed
 
         TokenGetSet t = automato.getToken(Texto.getText() + "@");
-        
-        if(tokens != null){
-            tokens.dispose();
-        }
+
+        tokens.dispose();
         tokens = new Tokens();
         tokens.setVisible(true);
         tokens.setToken(t);
@@ -389,7 +371,6 @@ public class Tela extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Texto;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem menu_abrir;

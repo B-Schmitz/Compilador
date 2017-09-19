@@ -181,8 +181,13 @@ public class Automato {
             } else if (Sentenca.charAt(i) == '[') {
 
                 i++;
+                token = "";
+                contAux = cont;
                 ComentarioBloco(Sentenca);
 
+            } else {
+                i++;
+                tokens(Sentenca);
             }
         }
     }
@@ -207,6 +212,20 @@ public class Automato {
 
     public void brancoString(String Sentenca) {
 
+        if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
+
+            i++;
+            brancoString(Sentenca);
+
+        } else if (Sentenca.charAt(i) == '\n') {
+
+            cont++;
+            i++;
+            inicio(Sentenca);
+        } else {
+            inicio(Sentenca);
+        }
+        /*
         if (Sentenca.charAt(i) == '\n') {
 
             cont++;
@@ -220,11 +239,10 @@ public class Automato {
         } else {
 
             inicio(Sentenca);
-        }
+        }*/
     }
 
     public void LetraDigitVar(String Sentenca) {
-        //Não sei se isso é para estar dentro do if
 
         if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
             token += String.valueOf(Sentenca.charAt(i));
@@ -232,7 +250,6 @@ public class Automato {
             LetraDigitVar(Sentenca);
         } else {
 
-            //código
             if (token.length() < 129) {
                 t.setCodigo(7);
                 t.setToken(token);
@@ -243,36 +260,28 @@ public class Automato {
                 t.setErr(err);
                 inicio(Sentenca);
             }
-            //verificar final de arquivo?
 
             inicio(Sentenca);
         }
 
     }
 
-    //Aqui não sei se ta certo, apenas fiz como tava o nosso automato
-    //mas nessa parte ele verifica se é letra
     public void Letra(String Sentenca) {
 
         if (Character.isLetter(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
-            //E esse é o problema, o método a baixo vai verificar se o proximo é letra ou numero
-            //mas só faria sentido se fosse uma variavel Ex; n2; mas se chegar até aqui ja não pode 
-            //ser uma variavel, mas fiz igual tava no automato que entregamos
             i++;
             LetraDigit(Sentenca);
 
         } else {
-
             tokens(Sentenca);
         }
-
     }
 
     public void LetraDigit(String Sentenca) {
 
-        if (Character.isDigit(Sentenca.charAt(i)) || Character.isLetter(Sentenca.charAt(i))) {
+        if (/*Character.isDigit(Sentenca.charAt(i)) ||*/Character.isLetter(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
@@ -391,7 +400,7 @@ public class Automato {
 
         } else {
             err.setLinha(cont);
-            err.setErro("Declaração de variável errada");
+            err.setErro("Palavra  '" + token + "'  desconhecida");
             t.setErr(err);
             inicio(Sentenca);
 
@@ -488,7 +497,7 @@ public class Automato {
         if (Sentenca.charAt(i) == '@') {
 
             err.setLinha(contAux);
-            err.setErro("Erro Comentario de bloco");
+            err.setErro("Erro comentário de bloco");
             t.setErr(err);
             inicio(Sentenca);
 
@@ -510,8 +519,8 @@ public class Automato {
         }
 
     }
-    //Char
 
+    //Char
     public void LetraAspas(String Sentenca) {
 
         //precisa pergunatar pra professoara, no automato qur fizemos ta que só pode letra no char
@@ -569,7 +578,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         } else {
 
@@ -577,7 +585,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
 
-            //verificar final de arquivo?
             inicio(Sentenca);
         }
     }
@@ -591,7 +598,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         } else {
 
@@ -599,7 +605,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         }
     }
@@ -613,7 +618,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         } else {
 
@@ -621,7 +625,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         }
     }
@@ -734,8 +737,8 @@ public class Automato {
 
         if (Sentenca.charAt(i) == '@') {
 
-            err.setLinha(cont);
-            err.setErro("Erro Comentario de bloco");
+            err.setLinha(contAux);
+            err.setErro("Erro comentário de bloco");
             t.setErr(err);
             inicio(Sentenca);
 
