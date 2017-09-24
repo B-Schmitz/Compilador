@@ -296,7 +296,7 @@ public class Automato {
         } else {
 
             tokens(Sentenca);
-            inicio(Sentenca);
+           // inicio(Sentenca);
         }
 
     }
@@ -506,7 +506,7 @@ public class Automato {
         if (Sentenca.charAt(i) == '@') {
 
             err.setLinha(contAux);
-            err.setErro("Erro comentário de bloco");
+            err.setErro("Erro literal");
             t.setErr(err);
             inicio(Sentenca);
 
