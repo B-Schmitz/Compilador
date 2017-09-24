@@ -19,6 +19,7 @@ public class Automato {
 
     public void inicio(String Sentenca) {
 
+        if(token != "@"){
         token = "";
         token += String.valueOf(Sentenca.charAt(i));
 
@@ -197,6 +198,7 @@ public class Automato {
             t.setLinha(cont);
             System.out.println("Fim");
         }
+        }
     }
 
     // Verifica letra de uma possivel variavel
@@ -288,7 +290,7 @@ public class Automato {
 
     public void LetraDigit(String Sentenca) {
 
-        if (/*Character.isDigit(Sentenca.charAt(i)) ||*/Character.isLetter(Sentenca.charAt(i))) {
+        if (Character.isDigit(Sentenca.charAt(i)) ||Character.isLetter(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
@@ -296,7 +298,7 @@ public class Automato {
         } else {
 
             tokens(Sentenca);
-           // inicio(Sentenca);
+            inicio(Sentenca);
         }
 
     }
@@ -409,7 +411,7 @@ public class Automato {
             err.setLinha(cont);
             err.setErro("Palavra  '" + token + "'  desconhecida");
             t.setErr(err);
-            inicio(Sentenca);
+           // inicio(Sentenca);
 
         }
 
@@ -506,9 +508,9 @@ public class Automato {
         if (Sentenca.charAt(i) == '@') {
 
             err.setLinha(contAux);
-            err.setErro("Erro literal");
+            err.setErro("Erro comentário de bloco");
             t.setErr(err);
-            inicio(Sentenca);
+           // inicio(Sentenca);
 
         } else if ('$' != Sentenca.charAt(i)) {
 
@@ -566,7 +568,6 @@ public class Automato {
                 err.setErro("Erro no tamanho do no nome do char");
                 err.setLinha(contAux);
                 t.setErr(err);
-                return;
             }
             t.setCodigo(8);
             t.setToken(token);
