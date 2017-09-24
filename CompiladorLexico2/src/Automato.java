@@ -189,6 +189,13 @@ public class Automato {
                 i++;
                 tokens(Sentenca);
             }
+
+        } else {
+        
+            t.setCodigo(44);
+            t.setToken(token);
+            t.setLinha(cont);
+            System.out.println("Fim");
         }
     }
 
@@ -289,9 +296,9 @@ public class Automato {
         } else {
 
             tokens(Sentenca);
+            inicio(Sentenca);
         }
 
-        inicio(Sentenca);
     }
 
     public void tokens(String Sentenca) {
@@ -488,6 +495,8 @@ public class Automato {
                 t.setErr(err);
             }
 
+            i++;
+            inicio(Sentenca);
         }
 
     }
