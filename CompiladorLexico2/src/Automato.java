@@ -10,6 +10,7 @@ public class Automato {
 
         i = 0;
         cont = 1;
+        token = "";
         t = new TokenGetSet();
         err = new ErroGetSet();
         inicio(Sentenca);
@@ -19,7 +20,7 @@ public class Automato {
 
     public void inicio(String Sentenca) {
 
-        if(token != "@"){
+        if(!"@".equals(token)){
         token = "";
         token += String.valueOf(Sentenca.charAt(i));
 
@@ -197,6 +198,7 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             System.out.println("Fim");
+            //token = "";
         }
         }
     }
@@ -305,114 +307,98 @@ public class Automato {
 
     public void tokens(String Sentenca) {
 
-        if (token.equals("while")) {
-
-            t.setCodigo(1);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("void")) {
-
-            t.setCodigo(2);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("string")) {
-
-            t.setCodigo(3);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("return")) {
-
-            t.setCodigo(4);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("main")) {
-
-            t.setCodigo(10);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("integer")) {
-
-            t.setCodigo(12);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("inicio")) {
-
-            t.setCodigo(13);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("if")) {
-
-            t.setCodigo(14);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("for")) {
-
-            t.setCodigo(16);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("float")) {
-
-            t.setCodigo(17);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("fim")) {
-
-            t.setCodigo(18);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("else")) {
-
-            t.setCodigo(19);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("do")) {
-
-            t.setCodigo(20);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("cout")) {
-
-            t.setCodigo(21);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("cin")) {
-
-            t.setCodigo(22);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("char")) {
-
-            t.setCodigo(23);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else if (token.equals("callfuncao")) {
-
-            t.setCodigo(24);
-            t.setToken(token);
-            t.setLinha(cont);
-
-        } else {
-            err.setLinha(cont);
-            err.setErro("Palavra  '" + token + "'  desconhecida");
-            t.setErr(err);
-           // inicio(Sentenca);
-
+        switch (token) {
+            case "while":
+                t.setCodigo(1);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "void":
+                t.setCodigo(2);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "string":
+                t.setCodigo(3);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "return":
+                t.setCodigo(4);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "main":
+                t.setCodigo(10);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "integer":
+                t.setCodigo(12);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "inicio":
+                t.setCodigo(13);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "if":
+                t.setCodigo(14);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "for":
+                t.setCodigo(16);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "float":
+                t.setCodigo(17);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "fim":
+                t.setCodigo(18);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "else":
+                t.setCodigo(19);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "do":
+                t.setCodigo(20);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "cout":
+                t.setCodigo(21);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "cin":
+                t.setCodigo(22);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "char":
+                t.setCodigo(23);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            case "callfuncao":
+                t.setCodigo(24);
+                t.setToken(token);
+                t.setLinha(cont);
+                break;
+            default:
+                err.setLinha(cont);
+                err.setErro("Palavra  '" + token + "'  desconhecida");
+                t.setErr(err);
+                inicio(Sentenca);
+                break;
         }
 
     }
@@ -508,7 +494,7 @@ public class Automato {
         if (Sentenca.charAt(i) == '@') {
 
             err.setLinha(contAux);
-            err.setErro("Erro comentário de bloco");
+            err.setErro("Erro de literal");
             t.setErr(err);
            // inicio(Sentenca);
 
@@ -641,67 +627,66 @@ public class Automato {
 
     public void MaiorOuIgual(String Sentenca) {
 
-        if (Sentenca.charAt(i) == '>') {
-
-            token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(25);
-            t.setToken(token);
-            t.setLinha(cont);
-            i++;
-            //verificar final de arquivo?
-            inicio(Sentenca);
-
-        } else if (Sentenca.charAt(i) == '=') {
-
-            token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(26);
-            t.setToken(token);
-            t.setLinha(cont);
-            i++;
-            //verificar final de arquivo?
-            inicio(Sentenca);
-        } else {
-
-            t.setCodigo(27);
-            t.setToken(token);
-            t.setLinha(cont);
-            i++;
-            //verificar final de arquivo?
-            inicio(Sentenca);
+        switch (Sentenca.charAt(i)) {
+            case '>':
+                token += String.valueOf(Sentenca.charAt(i));
+                t.setCodigo(25);
+                t.setToken(token);
+                t.setLinha(cont);
+                i++;
+                //verificar final de arquivo?
+                inicio(Sentenca);
+                break;
+            case '=':
+                token += String.valueOf(Sentenca.charAt(i));
+                t.setCodigo(26);
+                t.setToken(token);
+                t.setLinha(cont);
+                i++;
+                //verificar final de arquivo?
+                inicio(Sentenca);
+                break;
+            default:
+                t.setCodigo(27);
+                t.setToken(token);
+                t.setLinha(cont);
+             
+                //verificar final de arquivo?
+                inicio(Sentenca);
+                break;
         }
     }
 
     public void MenorOuIgual(String Sentenca) {
 
-        if (Sentenca.charAt(i) == '<') {
-
-            token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(31);
-            t.setToken(token);
-            t.setLinha(cont);
-            i++;
-
-        } else if (Sentenca.charAt(i) == '=') {
-
-            token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(30);
-            t.setToken(token);
-            t.setLinha(cont);
-
-            i++;
-            //verificar final de arquivo?
-            inicio(Sentenca);
-        } else {
-
-            //Código
-            //retorna <
-            t.setCodigo(32);
-            t.setToken(token);
-            t.setLinha(cont);
-
-            //verificar final de arquivo?
-            inicio(Sentenca);
-
+        switch (Sentenca.charAt(i)) {
+            case '<':
+                token += String.valueOf(Sentenca.charAt(i));
+                t.setCodigo(31);
+                t.setToken(token);
+                t.setLinha(cont);
+                i++;
+                inicio(Sentenca);
+                break;
+            case '=':
+                token += String.valueOf(Sentenca.charAt(i));
+                t.setCodigo(30);
+                t.setToken(token);
+                t.setLinha(cont);
+                i++;
+                //verificar final de arquivo?
+                inicio(Sentenca);
+                break;
+            default:
+                //Código
+                //retorna <
+                t.setCodigo(32);
+                t.setToken(token);
+                t.setLinha(cont);
+             
+                //verificar final de arquivo?
+                inicio(Sentenca);
+                break;
         }
     }
 
@@ -716,13 +701,11 @@ public class Automato {
             t.setLinha(cont);
 
             i++;
-            //verificar final de arquivo?
             inicio(Sentenca);
         } else {
 
             //código
             i++;
-            //vai para o comentario de linha
             ComentarioLinha(Sentenca);
         }
 

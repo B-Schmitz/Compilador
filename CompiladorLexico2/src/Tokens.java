@@ -57,7 +57,15 @@ public class Tokens extends javax.swing.JFrame {
             new String [] {
                 "Linha", "Código", "Token"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         TabelaTokens.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(TabelaTokens);
 
