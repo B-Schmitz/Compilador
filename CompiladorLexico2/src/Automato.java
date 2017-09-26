@@ -14,8 +14,8 @@ public class Automato {
         t = new TokenGetSet();
         err = new ErroGetSet();
         inicio(Sentenca);
-
         return t;
+        
     }
 
     public void inicio(String Sentenca) {
@@ -68,7 +68,7 @@ public class Automato {
                 contAux = cont;
                 aspasDuplas(Sentenca);
 
-            } //Precisa ver se isso funciona
+            } 
             else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
                 token = "";
                 contAux = cont;
@@ -85,22 +85,18 @@ public class Automato {
 
             } else if (Sentenca.charAt(i) == '*') {
 
-                //Ainda falta linha
                 t.setToken(token);
                 t.setCodigo(41);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '/') {
 
-                //Ainda falta coisa
                 t.setCodigo(39);
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '>') {
@@ -117,7 +113,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '}') {
@@ -126,7 +121,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
             } else if (Sentenca.charAt(i) == '(') {
 
@@ -134,7 +128,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
             } else if (Sentenca.charAt(i) == ')') {
 
@@ -142,7 +135,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ',') {
@@ -151,7 +143,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ':') {
@@ -160,7 +151,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == ';') {
@@ -169,7 +159,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(cont);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
 
             } else if (Sentenca.charAt(i) == '-') {
@@ -198,7 +187,6 @@ public class Automato {
             t.setToken(token);
             t.setLinha(cont);
             System.out.println("Fim");
-            //token = "";
         }
         }
     }
@@ -216,7 +204,6 @@ public class Automato {
             err.setLinha(cont);
             err.setErro("Declaração de variável errada");
             t.setErr(err);
-            i++;
             brancoString(Sentenca);
         }
     }
@@ -236,21 +223,6 @@ public class Automato {
         } else {
             inicio(Sentenca);
         }
-        /*
-        if (Sentenca.charAt(i) == '\n') {
-
-            cont++;
-            i++;
-            inicio(Sentenca);
-        } else if (Sentenca.charAt(i) != ' ') {
-
-            i++;
-            brancoString(Sentenca);
-
-        } else {
-
-            inicio(Sentenca);
-        }*/
     }
 
     public void LetraDigitVar(String Sentenca) {
@@ -400,7 +372,6 @@ public class Automato {
                 inicio(Sentenca);
                 break;
         }
-
     }
 
     public void Digit(String Sentenca) {
@@ -410,7 +381,7 @@ public class Automato {
             i++;
             Digit(Sentenca);
 
-        } else if (Sentenca.charAt(i) == ',') {
+        } else if (Sentenca.charAt(i) == '.') {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             DigitFloat(Sentenca);
@@ -496,7 +467,6 @@ public class Automato {
             err.setLinha(contAux);
             err.setErro("Erro de literal");
             t.setErr(err);
-           // inicio(Sentenca);
 
         } else if ('$' != Sentenca.charAt(i)) {
 
@@ -529,9 +499,6 @@ public class Automato {
 
         }
 
-        /* else{
-            //Erro?
-        }*/
     }
 
     public void Aspas(String Sentenca) {
@@ -600,7 +567,6 @@ public class Automato {
             t.setCodigo(33);
             t.setToken(token);
             t.setLinha(cont);
-            i++;
             inicio(Sentenca);
         }
     }
@@ -620,7 +586,6 @@ public class Automato {
             t.setCodigo(46);
             t.setToken(token);
             t.setLinha(cont);
-            i++;
             inicio(Sentenca);
         }
     }
