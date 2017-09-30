@@ -490,14 +490,14 @@ public class Automato {
     //Char
     public void LetraAspas(String Sentenca) {
 
-        //precisa pergunatar pra professoara, no automato qur fizemos ta que só pode letra no char
-        //Não sei se podemos mudar mais
-        if (Character.isLetter(Sentenca.charAt(i)) /*|| Character.isLetter(Sentenca.charAt(i))*/) {
+        
+        if (!String.valueOf(Sentenca.charAt(i)).equals("'")) {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             Aspas(Sentenca);
 
         }
+      
 
     }
 
