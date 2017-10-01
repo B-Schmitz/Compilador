@@ -29,6 +29,7 @@ public class Tela extends javax.swing.JFrame {
         this.setIconImage(icone.getImage());
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         textobackup = Texto.getText();
+        Texto.setDocument(new BloqFimArquivo());
 
         // Linhas do texto
         TextLineNumber tln = new TextLineNumber(Texto);
