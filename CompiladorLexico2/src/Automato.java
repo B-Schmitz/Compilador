@@ -255,20 +255,20 @@ public class Automato {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            LetraDigit(Sentenca);
+            LetraToken(Sentenca);
 
         } else {
             tokens(Sentenca);
         }
     }
 
-    public void LetraDigit(String Sentenca) {
+    public void LetraToken(String Sentenca) {
 
-        if (Character.isDigit(Sentenca.charAt(i)) ||Character.isLetter(Sentenca.charAt(i))) {
+        if (Character.isLetter(Sentenca.charAt(i))) {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
-            LetraDigit(Sentenca);
+            LetraToken(Sentenca);
         } else {
 
             tokens(Sentenca);
