@@ -381,7 +381,7 @@ public class Automato {
             i++;
             Digit(Sentenca);
 
-        } else if (Sentenca.charAt(i) == '.') {
+        } else if (Sentenca.charAt(i) == ',') {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             DigitFloat(Sentenca);
