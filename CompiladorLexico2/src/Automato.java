@@ -23,7 +23,6 @@ public class Automato {
         if(!"@".equals(token)){
         token = "";
         token += String.valueOf(Sentenca.charAt(i));
-
         if (Sentenca.charAt(i) == ' ') {
             i++;
             inicio(Sentenca);
@@ -57,14 +56,14 @@ public class Automato {
                 Digit(Sentenca);
 
             } else if (Sentenca.charAt(i) == '$') {
+                
                 i++;
-                token = "";
                 contAux = cont;
                 cifrao(Sentenca);
 
             } else if (Sentenca.charAt(i) == '"') {
+                
                 i++;
-                token = "";
                 contAux = cont;
                 aspasDuplas(Sentenca);
 
@@ -444,7 +443,8 @@ public class Automato {
 
         } else {
 
-            if (token.length() < 129) {
+            token += String.valueOf(Sentenca.charAt(i));
+            if (token.length() < 131) {
                 t.setCodigo(9);
                 t.setToken(token);
                 t.setLinha(contAux);
@@ -477,7 +477,8 @@ public class Automato {
             i++;
             cifrao(Sentenca);
         } else {
-
+            
+            token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(11);
             t.setLinha(contAux);
             t.setToken(token);
