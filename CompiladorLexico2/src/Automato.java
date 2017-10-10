@@ -384,11 +384,15 @@ public class Automato {
             DigitFloat(Sentenca);
         } else {
 
-            if (token.length() < 11) {
+            //O L depois do numero converte para long. Obs: não sabia disso kk
+            if (token.length() < 11 && 2147483649L > Long.parseLong(token) ) {
+                
+                    
                 t.setCodigo(5);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
                  inicio(Sentenca);
+                
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Integer muito grande");
