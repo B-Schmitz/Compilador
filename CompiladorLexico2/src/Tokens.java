@@ -77,6 +77,8 @@ public class Tokens extends javax.swing.JFrame {
 
         TabelaPainel.addTab("Tabela", jScrollPane2);
 
+        TabelaErro.setBackground(new java.awt.Color(255, 0, 0));
+        TabelaErro.setForeground(new java.awt.Color(255, 255, 255));
         TabelaErro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

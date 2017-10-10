@@ -5,22 +5,23 @@ public class Automato {
     private ErroGetSet err;
     private Integer i, qtd_linha, contAux;
     private String token;
-    private Integer encerra = 0;
+    private Integer encerra;
 
     public TokenGetSet getToken(String Sentenca) {
 
         i = 0;
         qtd_linha = 1;
         token = "";
-        t = new TokenGetSet();
+        encerra = 0;
         err = new ErroGetSet();
+        t = new TokenGetSet();
         inicio(Sentenca);
         return t;
 
     }
 
     public void inicio(String Sentenca) {
-
+        
         if (!"@".equals(token)) {
             token = "";
             token += String.valueOf(Sentenca.charAt(i));
@@ -59,7 +60,6 @@ public class Automato {
                     cifrao(Sentenca);
 
                 } else if (Sentenca.charAt(i) == '"') {
-
                     i++;
                     contAux = qtd_linha;
                     aspasDuplas(Sentenca);
@@ -232,6 +232,7 @@ public class Automato {
                 t.setCodigo(7);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                inicio(Sentenca);
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Variável muito grande");
@@ -239,7 +240,6 @@ public class Automato {
                 //  inicio(Sentenca);
             }
 
-            inicio(Sentenca);
         }
 
     }
@@ -266,10 +266,9 @@ public class Automato {
             LetraToken(Sentenca);
         } else {
             tokens(Sentenca);
-
-            if (encerra == 1) {
+            if (encerra == 0) {
+                inicio(Sentenca);
             }
-            inicio(Sentenca);
         }
 
     }
@@ -389,12 +388,12 @@ public class Automato {
                 t.setCodigo(5);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                 inicio(Sentenca);
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Integer muito grande");
                 t.setErr(err);
             }
-            //inicio(Sentenca);
         }
 
     }
@@ -412,13 +411,13 @@ public class Automato {
                 t.setCodigo(6);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                inicio(Sentenca);
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Float muito grande");
                 t.setErr(err);
 
             }
-            // inicio(Sentenca);
         }
 
     }
@@ -447,6 +446,7 @@ public class Automato {
                 t.setCodigo(9);
                 t.setToken(token);
                 t.setLinha(contAux);
+                
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("String muito grande");
@@ -504,14 +504,13 @@ public class Automato {
             err.setErro("Erro no nome do char");
             err.setLinha(contAux);
             t.setErr(err);
-        }
-
-        else if (token.length() > 1) {
+            
+        } else if (token.length() > 1) {
             err.setErro("Erro no tamanho do nome do char");
             err.setLinha(contAux);
             t.setErr(err);
-        }
-        else if (!String.valueOf(Sentenca.charAt(i)).equals("'")) {
+            
+        } else if (!String.valueOf(Sentenca.charAt(i)).equals("'")) {
 
             token += String.valueOf(Sentenca.charAt(i));
             i++;
@@ -541,7 +540,6 @@ public class Automato {
             t.setCodigo(29);
             t.setToken(token);
             t.setLinha(qtd_linha);
-
             inicio(Sentenca);
         }
     }
@@ -568,15 +566,14 @@ public class Automato {
     public void Menos(String Sentenca) {
 
         if (Sentenca.charAt(i) == '-') {
-
             token += String.valueOf(Sentenca.charAt(i));
             t.setCodigo(47);
             t.setToken(token);
             t.setLinha(qtd_linha);
             i++;
             inicio(Sentenca);
+            
         } else {
-
             t.setCodigo(46);
             t.setToken(token);
             t.setLinha(qtd_linha);
@@ -593,7 +590,6 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(qtd_linha);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
                 break;
             case '=':
@@ -602,15 +598,12 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(qtd_linha);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
                 break;
             default:
                 t.setCodigo(27);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
-
-                //verificar final de arquivo?
                 inicio(Sentenca);
                 break;
         }
@@ -633,17 +626,12 @@ public class Automato {
                 t.setToken(token);
                 t.setLinha(qtd_linha);
                 i++;
-                //verificar final de arquivo?
                 inicio(Sentenca);
                 break;
             default:
-                //Código
-                //retorna <
                 t.setCodigo(32);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
-
-                //verificar final de arquivo?
                 inicio(Sentenca);
                 break;
         }
@@ -653,8 +641,6 @@ public class Automato {
 
         if (Sentenca.charAt(i) == '=') {
             token += String.valueOf(Sentenca.charAt(i));
-            //código
-            //retorna !=
             t.setCodigo(45);
             t.setToken(token);
             t.setLinha(qtd_linha);
@@ -662,8 +648,6 @@ public class Automato {
             i++;
             inicio(Sentenca);
         } else {
-
-            //código
             i++;
             ComentarioLinha(Sentenca);
         }
@@ -702,7 +686,6 @@ public class Automato {
             i++;
             ComentarioBloco(Sentenca);
         } else {
-
             i++;
             inicio(Sentenca);
         }

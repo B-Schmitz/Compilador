@@ -303,7 +303,7 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_novoActionPerformed
 
     private void menu_ajudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ajudaActionPerformed
-        JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 2.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
+        JOptionPane.showMessageDialog(null, "Compilador Léxico da Linguaguem HUE+-\n\nEquipe: Bernardo e Michael\nVersão: 3.0\nData: 05/09/2017\n\nUNESC (Universidade do Extremo Sul Catarinense)", "Ajuda", JOptionPane.PLAIN_MESSAGE, new ImageIcon("src/icones/support.png"));
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
