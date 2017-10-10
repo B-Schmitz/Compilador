@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 public class Tokens extends javax.swing.JFrame {
     
     private final ImageIcon icone;
+    private int cont;
     
     public Tokens() {
         initComponents();
@@ -29,6 +30,11 @@ public class Tokens extends javax.swing.JFrame {
                 modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
                 
             }
+            cont = modeloErr.getRowCount();
+        }
+        if(cont>0){
+            TabelaPainel.setSelectedIndex(1);
+            
         }
     }
 
@@ -41,7 +47,7 @@ public class Tokens extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        TabelaPainel = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelaTokens = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,7 +75,7 @@ public class Tokens extends javax.swing.JFrame {
         TabelaTokens.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(TabelaTokens);
 
-        jTabbedPane2.addTab("Tabela", jScrollPane2);
+        TabelaPainel.addTab("Tabela", jScrollPane2);
 
         TabelaErro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,17 +106,17 @@ public class Tokens extends javax.swing.JFrame {
             TabelaErro.getColumnModel().getColumn(0).setMaxWidth(200);
         }
 
-        jTabbedPane2.addTab("Erros", jScrollPane1);
+        TabelaPainel.addTab("Erros", jScrollPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+            .addComponent(TabelaPainel, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+            .addComponent(TabelaPainel, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
         );
 
         pack();
@@ -151,9 +157,9 @@ public class Tokens extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelaErro;
+    private javax.swing.JTabbedPane TabelaPainel;
     private javax.swing.JTable TabelaTokens;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 }
