@@ -51,7 +51,7 @@ public class TextLineNumber extends JPanel
      * @param component the related text component
      */
     public TextLineNumber(JTextComponent component) {
-        this(component, 3);
+        this(component, 2);
     }
 
     /**
@@ -156,7 +156,7 @@ public class TextLineNumber extends JPanel
      * <li>TextLineNumber.RIGHT (default)
      * </ul>
      *
-     * @param currentLineForeground the Color used to render the current line
+     * @param digitAlignment
      */
     public void setDigitAlignment(float digitAlignment) {
         this.digitAlignment
@@ -242,7 +242,7 @@ public class TextLineNumber extends JPanel
 
                 //  Move to the next row
                 rowStartOffset = Utilities.getRowEnd(component, rowStartOffset) + 1;
-            } catch (Exception e) {
+            } catch (BadLocationException e) {
                 break;
             }
         }
@@ -256,11 +256,7 @@ public class TextLineNumber extends JPanel
         int caretPosition = component.getCaretPosition();
         Element root = component.getDocument().getDefaultRootElement();
 
-        if (root.getElementIndex(rowStartOffset) == root.getElementIndex(caretPosition)) {
-            return true;
-        } else {
-            return false;
-        }
+        return root.getElementIndex(rowStartOffset) == root.getElementIndex(caretPosition);
     }
 
     /*
@@ -306,7 +302,7 @@ public class TextLineNumber extends JPanel
         } else // We need to check all the attributes for font changes
         {
             if (fonts == null) {
-                fonts = new HashMap<String, FontMetrics>();
+                fonts = new HashMap<>();
             }
 
             Element root = component.getDocument().getDefaultRootElement();
@@ -379,22 +375,18 @@ public class TextLineNumber extends JPanel
         //  View of the component has not been updated at the time
         //  the DocumentEvent is fired
 
-        SwingUtilities.invokeLater(
-                new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    int endPos = component.getDocument().getLength();
-                    java.awt.Rectangle rect = component.modelToView(endPos);
-
-                    if (rect != null && rect.y != lastHeight) {
-                        setPreferredWidth();
-                        repaint();
-                        lastHeight = rect.y;
-                    }
-                } catch (BadLocationException ex) {
-                    /* nothing to do */ }
-            }
+        SwingUtilities.invokeLater(() -> {
+            try {
+                int endPos = component.getDocument().getLength();
+                java.awt.Rectangle rect = component.modelToView(endPos);
+                
+                if (rect != null && rect.y != lastHeight) {
+                    setPreferredWidth();
+                    repaint();
+                    lastHeight = rect.y;
+                }
+            } catch (BadLocationException ex) {
+            /* nothing to do */ }
         });
     }
 

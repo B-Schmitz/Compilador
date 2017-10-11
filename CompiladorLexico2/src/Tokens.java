@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 public class Tokens extends javax.swing.JFrame {
     
     private final ImageIcon icone;
-    private int cont;
     
     public Tokens() {
         initComponents();
@@ -28,13 +27,8 @@ public class Tokens extends javax.swing.JFrame {
             for (int i = 0; i < err.getErro().size(); i++) {
                 
                 modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
-                
+                  TabelaPainel.setSelectedIndex(1);
             }
-            cont = modeloErr.getRowCount();
-        }
-        if(cont>0){
-            TabelaPainel.setSelectedIndex(1);
-            
         }
     }
 

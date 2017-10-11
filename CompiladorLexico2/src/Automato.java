@@ -21,7 +21,7 @@ public class Automato {
     }
 
     public void inicio(String Sentenca) {
-        
+
         if (!"@".equals(token)) {
             token = "";
             token += String.valueOf(Sentenca.charAt(i));
@@ -159,6 +159,7 @@ public class Automato {
                 } else if (Sentenca.charAt(i) == '-') {
                     i++;
                     Menos(Sentenca);
+
                 } else if (Sentenca.charAt(i) == '!') {
 
                     i++;
@@ -385,14 +386,13 @@ public class Automato {
         } else {
 
             //O L depois do numero converte para long. Obs: não sabia disso kk
-            if (token.length() < 11 && 2147483649L > Long.parseLong(token) ) {
-                
-                    
+            if (token.length() < 11 && 2147483649L > Long.parseLong(token)) {
+
                 t.setCodigo(5);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
-                 inicio(Sentenca);
-                
+                inicio(Sentenca);
+
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Integer muito grande");
@@ -450,7 +450,7 @@ public class Automato {
                 t.setCodigo(9);
                 t.setToken(token);
                 t.setLinha(contAux);
-                
+
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("String muito grande");
@@ -508,12 +508,12 @@ public class Automato {
             err.setErro("Erro no nome do char");
             err.setLinha(contAux);
             t.setErr(err);
-            
+
         } else if (token.length() > 1) {
             err.setErro("Erro no tamanho do nome do char");
             err.setLinha(contAux);
             t.setErr(err);
-            
+
         } else if (!String.valueOf(Sentenca.charAt(i)).equals("'")) {
 
             token += String.valueOf(Sentenca.charAt(i));
@@ -576,7 +576,7 @@ public class Automato {
             t.setLinha(qtd_linha);
             i++;
             inicio(Sentenca);
-            
+
         } else {
             t.setCodigo(46);
             t.setToken(token);
@@ -648,11 +648,10 @@ public class Automato {
             t.setCodigo(45);
             t.setToken(token);
             t.setLinha(qtd_linha);
-
             i++;
             inicio(Sentenca);
         } else {
-            i++;
+            // i++;
             ComentarioLinha(Sentenca);
         }
 
@@ -661,16 +660,15 @@ public class Automato {
     public void ComentarioLinha(String Sentenca) {
 
         if (Sentenca.charAt(i) != '\n') {
-
-            i++;
-            ComentarioLinha(Sentenca);
+            if (Sentenca.charAt(i) != '@') {
+                i++;
+                ComentarioLinha(Sentenca);
+            }
         } else {
-
             qtd_linha++;
             i++;
             inicio(Sentenca);
         }
-
     }
 
     public void ComentarioBloco(String Sentenca) {
