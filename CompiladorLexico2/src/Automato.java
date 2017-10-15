@@ -6,6 +6,8 @@ public class Automato {
     private Integer i, qtd_linha, contAux;
     private String token;
     private Integer encerra;
+    private ListaProducoes lis = new ListaProducoes();
+    private NaoTerminais[] Nterminais;
 
     public TokenGetSet getToken(String Sentenca) {
 
@@ -15,6 +17,8 @@ public class Automato {
         encerra = 0;
         err = new ErroGetSet();
         t = new TokenGetSet();
+        lis.IniciarLista();
+        Nterminais = lis.getNterminal();
         inicio(Sentenca);
         return t;
 

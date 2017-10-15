@@ -19,6 +19,8 @@ public class Tela extends javax.swing.JFrame {
     private final Automato automato = new Automato();
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto, textobackup;
+  
+
 
     public Tela() {
 
@@ -328,6 +330,7 @@ public class Tela extends javax.swing.JFrame {
     }
     private void menu_compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compilarActionPerformed
 
+      
         TokenGetSet t = automato.getToken(Texto.getText() + "@");
 
         tokens.dispose();
@@ -336,6 +339,8 @@ public class Tela extends javax.swing.JFrame {
         tokens.setToken(t);
 
     }//GEN-LAST:event_menu_compilarActionPerformed
+
+   
 
     /**
      * @param args the command line arguments
