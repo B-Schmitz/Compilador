@@ -8,6 +8,7 @@ public class Automato {
     private Integer encerra;
     private ListaProducoes lis = new ListaProducoes();
     private NaoTerminais[] Nterminais;
+    private TabelaDeParsing tabParsing;
 
     public TokenGetSet getToken(String Sentenca) {
 
@@ -19,6 +20,7 @@ public class Automato {
         t = new TokenGetSet();
         lis.IniciarLista();
         Nterminais = lis.getNterminal();
+        tabParsing = new TabelaDeParsing();
         inicio(Sentenca);
         return t;
 
