@@ -1,4 +1,8 @@
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class Automato {
 
     private TokenGetSet t;
@@ -9,6 +13,102 @@ public class Automato {
     private ListaProducoes lis = new ListaProducoes();
     private NaoTerminais[] Nterminais;
     private TabelaDeParsing tabParsing;
+    private Integer parsing[][];
+    private Stack pilha;
+    private List<Integer> producao = new ArrayList<>();
+    Integer X, a;
+
+    public Automato() {
+
+        tabParsing = new TabelaDeParsing();
+        parsing = tabParsing.getParsing();
+        pilha = new Stack();
+        lis.IniciarLista();
+        Nterminais = lis.getNterminal();
+        pilha.push(44);//44 final de arquivo
+        iniciaTeste();
+
+    }
+
+    public void iniciaTeste() {
+
+        pilha.push(Nterminais[0].getNaoTerminais());
+
+    }
+
+    public void teste() {
+
+        //Início
+        //X recebe o topo da pilha
+        X = (Integer) pilha.peek();
+        //a  recebe o símbolo da entrada
+        a = t.getCodigo().get(t.getCodigo().size() - 1);
+        System.out.println("Token: " + a);
+        //Repita
+        do {
+            //Se X== vazio então
+            if (X == 15) {
+                //Retire o elemento do topo da pilha
+                pilha.pop();
+                //X recebe o topo da pilha
+                X = (Integer) pilha.peek();
+            } //Senão
+            else {
+                //Se X == terminal então
+                if (X < 48) {
+                    //Se X==a então
+                    if (X == a) {
+
+                        //Retire o elemento do topo da pilha
+                        pilha.pop();
+                        //Volta para o Léxico
+                        break;
+                    } //Senão 
+                    else {
+
+                        //Erro. Encerra o programa 
+                        //Falta coisa
+                        System.out.println("Erro");
+                        break;
+                    }
+                } //Senão 
+                else {
+
+                    //e M(X,a) <> null então
+                    if (parsing[X - 48][a - 1] != null) {
+
+                        int pos = parsing[X - 48][a - 1];
+                        //Retire o elemento do topo da pilha 
+                        pilha.pop();
+
+                        producao = Nterminais[pos-1].getProducao();
+                        //Coloque o conteúdo da regra na pilha
+                        for (int i = 0; i < producao.size(); i++) {
+
+                            //Coloquando o conteúdo da regra na pilha
+                            pilha.push(producao.get(i));
+
+                        }
+                            //X recebe o topo da pilha
+                            X = (Integer) pilha.peek();
+
+                    } //Senão
+                    else {
+
+                        //Erro. Encerra o programa
+                        //Falta coisa
+                        System.out.println("Erro2");
+                        break;
+                    }
+
+                }
+
+            }
+
+        } while (X != 44);
+        //Enquanto for diferende do simbolo de final de arquivo
+
+    }
 
     public TokenGetSet getToken(String Sentenca) {
 
@@ -18,9 +118,7 @@ public class Automato {
         encerra = 0;
         err = new ErroGetSet();
         t = new TokenGetSet();
-        lis.IniciarLista();
-        Nterminais = lis.getNterminal();
-        tabParsing = new TabelaDeParsing();
+
         inicio(Sentenca);
         return t;
 
@@ -89,6 +187,7 @@ public class Automato {
                     t.setToken(token);
                     t.setCodigo(41);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -97,6 +196,7 @@ public class Automato {
                     t.setCodigo(39);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -113,6 +213,7 @@ public class Automato {
                     t.setCodigo(36);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -121,6 +222,7 @@ public class Automato {
                     t.setCodigo(35);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
                 } else if (Sentenca.charAt(i) == '(') {
@@ -128,6 +230,7 @@ public class Automato {
                     t.setCodigo(43);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
                 } else if (Sentenca.charAt(i) == ')') {
@@ -135,6 +238,7 @@ public class Automato {
                     t.setCodigo(42);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -143,6 +247,7 @@ public class Automato {
                     t.setCodigo(40);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -151,6 +256,7 @@ public class Automato {
                     t.setCodigo(38);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -159,6 +265,7 @@ public class Automato {
                     t.setCodigo(37);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    teste();
                     i++;
                     inicio(Sentenca);
 
@@ -183,6 +290,7 @@ public class Automato {
                     tokens(Sentenca);
                 }
 
+              
             } else {
 
                 t.setCodigo(44);
@@ -239,12 +347,12 @@ public class Automato {
                 t.setCodigo(7);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 inicio(Sentenca);
             } else {
                 err.setLinha(qtd_linha);
                 err.setErro("Variável muito grande");
                 t.setErr(err);
-                //  inicio(Sentenca);
             }
 
         }
@@ -376,6 +484,7 @@ public class Automato {
                 // inicio(Sentenca);
                 break;
         }
+        teste();
     }
 
     public void Digit(String Sentenca) {
@@ -397,6 +506,7 @@ public class Automato {
                 t.setCodigo(5);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 inicio(Sentenca);
 
             } else {
@@ -421,6 +531,7 @@ public class Automato {
                 t.setCodigo(6);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 inicio(Sentenca);
             } else {
                 err.setLinha(qtd_linha);
@@ -456,6 +567,7 @@ public class Automato {
                 t.setCodigo(9);
                 t.setToken(token);
                 t.setLinha(contAux);
+                teste();
 
             } else {
                 err.setLinha(qtd_linha);
@@ -491,6 +603,7 @@ public class Automato {
             t.setCodigo(11);
             t.setLinha(contAux);
             t.setToken(token);
+            teste();
             i++;
             inicio(Sentenca);
         }
@@ -530,6 +643,7 @@ public class Automato {
             t.setCodigo(8);
             t.setToken(token);
             t.setLinha(contAux);
+            teste();
             i++;
             inicio(Sentenca);
         }
@@ -543,6 +657,7 @@ public class Automato {
             t.setCodigo(28);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             i++;
             inicio(Sentenca);
         } else {
@@ -550,6 +665,7 @@ public class Automato {
             t.setCodigo(29);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             inicio(Sentenca);
         }
     }
@@ -562,6 +678,7 @@ public class Automato {
             t.setCodigo(34);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             i++;
             inicio(Sentenca);
         } else {
@@ -569,6 +686,7 @@ public class Automato {
             t.setCodigo(33);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             inicio(Sentenca);
         }
     }
@@ -580,6 +698,7 @@ public class Automato {
             t.setCodigo(47);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             i++;
             inicio(Sentenca);
 
@@ -587,6 +706,7 @@ public class Automato {
             t.setCodigo(46);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             inicio(Sentenca);
         }
     }
@@ -599,6 +719,7 @@ public class Automato {
                 t.setCodigo(25);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 i++;
                 inicio(Sentenca);
                 break;
@@ -607,6 +728,7 @@ public class Automato {
                 t.setCodigo(26);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 i++;
                 inicio(Sentenca);
                 break;
@@ -614,6 +736,7 @@ public class Automato {
                 t.setCodigo(27);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 inicio(Sentenca);
                 break;
         }
@@ -627,6 +750,7 @@ public class Automato {
                 t.setCodigo(31);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 i++;
                 inicio(Sentenca);
                 break;
@@ -635,6 +759,7 @@ public class Automato {
                 t.setCodigo(30);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 i++;
                 inicio(Sentenca);
                 break;
@@ -642,6 +767,7 @@ public class Automato {
                 t.setCodigo(32);
                 t.setToken(token);
                 t.setLinha(qtd_linha);
+                teste();
                 inicio(Sentenca);
                 break;
         }
@@ -654,10 +780,11 @@ public class Automato {
             t.setCodigo(45);
             t.setToken(token);
             t.setLinha(qtd_linha);
+            teste();
             i++;
             inicio(Sentenca);
         } else {
-            // i++;
+
             ComentarioLinha(Sentenca);
         }
 
