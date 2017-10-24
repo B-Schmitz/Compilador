@@ -483,7 +483,6 @@ public class Tela extends javax.swing.JFrame {
             new Tela().setVisible(true);
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JInternalFrame JanelaTexto;
     private javax.swing.JTable TabelaErro;
