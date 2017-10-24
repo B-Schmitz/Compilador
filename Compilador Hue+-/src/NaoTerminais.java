@@ -5,7 +5,7 @@ import java.util.List;
 public class NaoTerminais {
 
     private Integer NaoTerminais;
-    private List<Integer> producao = new ArrayList<>();
+    private final List<Integer> producao = new ArrayList<>();
 
     public Integer getNaoTerminais() {
         return NaoTerminais;

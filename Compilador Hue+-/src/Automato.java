@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
 public class Automato {
@@ -10,11 +11,11 @@ public class Automato {
     private Integer i, qtd_linha, contAux;
     private String token;
     private Integer encerra;
-    private ListaProducoes lis = new ListaProducoes();
-    private NaoTerminais[] Nterminais;
-    private TabelaDeParsing tabParsing;
-    private Integer parsing[][];
-    private Stack pilha;
+    private final ListaProducoes lis = new ListaProducoes();
+    private final NaoTerminais[] Nterminais;
+    private final TabelaDeParsing tabParsing;
+    private final Integer parsing[][];
+    private final Stack pilha;
     private List<Integer> producao = new ArrayList<>();
     Integer X, a;
 
@@ -28,20 +29,20 @@ public class Automato {
 
     }
 
-   
-
     public void Sintatico() {
 
         //Início
         //  X recebe o topo da pilha
         X = (Integer) pilha.peek();
+        t.setX(X);
         //a  recebe o símbolo da entrada
-        
-        if(t.getCodigo().size() > 0){
-        a = t.getCodigo().get(t.getCodigo().size() - 1);
+
+        if (t.getCodigo().size() > 0) {
+            a = t.getCodigo().get(t.getCodigo().size() - 1);
+            t.setA(a);
+        } else {
+            return;
         }
-        else{
-        return;}
         System.out.println("Token: " + a);
         //Repita
         do {
@@ -56,7 +57,7 @@ public class Automato {
                 //Se X == terminal então
                 if (X < 48) {
                     //Se X==a então
-                    if (X == a) {
+                    if (Objects.equals(X, a)) {
 
                         //Retire o elemento do topo da pilha
                         pilha.pop();
@@ -75,7 +76,7 @@ public class Automato {
                 else {
 
                     //e M(X,a) <> null então
-                    System.out.println(X+"com" +a);
+                    System.out.println(X + "com" + a);
                     if (parsing[X - 48][a - 1] != null) {
 
                         int pos = parsing[X - 48][a - 1];
@@ -84,10 +85,10 @@ public class Automato {
 
                         producao = Nterminais[pos - 1].getProducao();
                         //Coloque o conteúdo da regra na pilha
-                        for (int i = 0; i < producao.size(); i++) {
+                        for (int j = 0; j < producao.size(); j++) {
 
-                            //Coloquando o conteúdo da regra na pilha
-                            pilha.push(producao.get(i));
+                            //Colocando o conteúdo da regra na pilha
+                            pilha.push(producao.get(j));
 
                         }
                         //X recebe o topo da pilha
@@ -96,8 +97,6 @@ public class Automato {
                     } //Senão
                     else {
 
-                        //Erro. Encerra o programa
-                        //Falta coisa
                         System.out.println("Erro2");
                         encerra = 1;
                         break;
@@ -131,181 +130,181 @@ public class Automato {
 
     public void inicio(String Sentenca) {
 
-        if(encerra.equals(0)){
-        if (!"@".equals(token)) {
-            token = "";
-            token += String.valueOf(Sentenca.charAt(i));
-            if (Sentenca.charAt(i) == ' ') {
-                i++;
-                inicio(Sentenca);
-
-            } else if (Sentenca.charAt(i) == '\n') {
-                qtd_linha++;
-                i++;
-                inicio(Sentenca);
-
-            } else if (Sentenca.charAt(i) == '\t') {
-                i++;
-                inicio(Sentenca);
-
-            } else if (Sentenca.charAt(i) != '@') {
-
-                if (Sentenca.charAt(i) == '#') {
-                    i++;
-                    LetraVar(Sentenca);
-                } // Esse vai verificar if, while, for, etc...
-                else if (Character.isLetter(Sentenca.charAt(i))) {
-                    i++;
-                    // Esse metodo vai verificar se o proximo é letra
-                    Letra(Sentenca);
-
-                } else if (Character.isDigit(Sentenca.charAt(i))) {
-                    i++;
-                    Digit(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '$') {
-
-                    i++;
-                    contAux = qtd_linha;
-                    cifrao(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '"') {
-                    i++;
-                    contAux = qtd_linha;
-                    aspasDuplas(Sentenca);
-
-                } else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
-                    token = "";
-                    contAux = qtd_linha;
-                    i++;
-                    LetraAspas(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '=') {
-                    i++;
-                    Igual(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '+') {
-                    i++;
-                    Mais(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '*') {
-
-                    t.setToken(token);
-                    t.setCodigo(41);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
+        if (encerra.equals(0)) {
+            if (!"@".equals(token)) {
+                token = "";
+                token += String.valueOf(Sentenca.charAt(i));
+                if (Sentenca.charAt(i) == ' ') {
                     i++;
                     inicio(Sentenca);
 
-                } else if (Sentenca.charAt(i) == '/') {
-
-                    t.setCodigo(39);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
+                } else if (Sentenca.charAt(i) == '\n') {
+                    qtd_linha++;
                     i++;
                     inicio(Sentenca);
 
-                } else if (Sentenca.charAt(i) == '>') {
-                    i++;
-                    MaiorOuIgual(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '<') {
-                    i++;
-                    MenorOuIgual(Sentenca);
-
-                } else if (Sentenca.charAt(i) == '{') {
-
-                    t.setCodigo(36);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
+                } else if (Sentenca.charAt(i) == '\t') {
                     i++;
                     inicio(Sentenca);
 
-                } else if (Sentenca.charAt(i) == '}') {
+                } else if (Sentenca.charAt(i) != '@') {
 
-                    t.setCodigo(35);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
-                } else if (Sentenca.charAt(i) == '(') {
+                    if (Sentenca.charAt(i) == '#') {
+                        i++;
+                        LetraVar(Sentenca);
+                    } // Esse vai verificar if, while, for, etc...
+                    else if (Character.isLetter(Sentenca.charAt(i))) {
+                        i++;
+                        // Esse metodo vai verificar se o proximo é letra
+                        Letra(Sentenca);
 
-                    t.setCodigo(43);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
-                } else if (Sentenca.charAt(i) == ')') {
+                    } else if (Character.isDigit(Sentenca.charAt(i))) {
+                        i++;
+                        Digit(Sentenca);
 
-                    t.setCodigo(42);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == '$') {
 
-                } else if (Sentenca.charAt(i) == ',') {
+                        i++;
+                        contAux = qtd_linha;
+                        cifrao(Sentenca);
 
-                    t.setCodigo(40);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == '"') {
+                        i++;
+                        contAux = qtd_linha;
+                        aspasDuplas(Sentenca);
 
-                } else if (Sentenca.charAt(i) == ':') {
+                    } else if (String.valueOf(Sentenca.charAt(i)).equals("'")) {
+                        token = "";
+                        contAux = qtd_linha;
+                        i++;
+                        LetraAspas(Sentenca);
 
-                    t.setCodigo(38);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == '=') {
+                        i++;
+                        Igual(Sentenca);
 
-                } else if (Sentenca.charAt(i) == ';') {
+                    } else if (Sentenca.charAt(i) == '+') {
+                        i++;
+                        Mais(Sentenca);
 
-                    t.setCodigo(37);
-                    t.setToken(token);
-                    t.setLinha(qtd_linha);
-                    Sintatico();
-                    i++;
-                    inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == '*') {
 
-                } else if (Sentenca.charAt(i) == '-') {
-                    i++;
-                    Menos(Sentenca);
+                        t.setToken(token);
+                        t.setCodigo(41);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
 
-                } else if (Sentenca.charAt(i) == '!') {
+                    } else if (Sentenca.charAt(i) == '/') {
 
-                    i++;
-                    Diferente(Sentenca);
+                        t.setCodigo(39);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
 
-                } else if (Sentenca.charAt(i) == '[') {
+                    } else if (Sentenca.charAt(i) == '>') {
+                        i++;
+                        MaiorOuIgual(Sentenca);
 
-                    i++;
-                    token = "";
-                    contAux = qtd_linha;
-                    ComentarioBloco(Sentenca);
+                    } else if (Sentenca.charAt(i) == '<') {
+                        i++;
+                        MenorOuIgual(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == '{') {
+
+                        t.setCodigo(36);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == '}') {
+
+                        t.setCodigo(35);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == '(') {
+
+                        t.setCodigo(43);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+                    } else if (Sentenca.charAt(i) == ')') {
+
+                        t.setCodigo(42);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == ',') {
+
+                        t.setCodigo(40);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == ':') {
+
+                        t.setCodigo(38);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == ';') {
+
+                        t.setCodigo(37);
+                        t.setToken(token);
+                        t.setLinha(qtd_linha);
+                        Sintatico();
+                        i++;
+                        inicio(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == '-') {
+                        i++;
+                        Menos(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == '!') {
+
+                        i++;
+                        Diferente(Sentenca);
+
+                    } else if (Sentenca.charAt(i) == '[') {
+
+                        i++;
+                        token = "";
+                        contAux = qtd_linha;
+                        ComentarioBloco(Sentenca);
+
+                    } else {
+                        i++;
+                        tokens(Sentenca);
+                    }
 
                 } else {
-                    i++;
-                    tokens(Sentenca);
+
+                    t.setCodigo(44);
+                    t.setToken(token);
+                    t.setLinha(qtd_linha);
+                    System.out.println("Fim");
                 }
-
-            } else {
-
-                t.setCodigo(44);
-                t.setToken(token);
-                t.setLinha(qtd_linha);
-                System.out.println("Fim");
             }
         }
-        }
-        
+
     }
 
     // Verifica letra de uma possivel variavel

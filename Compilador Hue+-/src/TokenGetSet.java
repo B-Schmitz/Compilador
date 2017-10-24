@@ -7,6 +7,9 @@ public class TokenGetSet {
     private final List<Integer> Codigo = new ArrayList<>();
     private final List<Integer> Linha = new ArrayList<>();
     private final List<String> Token = new ArrayList<>();
+    private final List<Integer> X = new ArrayList<>();
+    private final List<Integer> A = new ArrayList<>();
+    private final List<Integer> P = new ArrayList<>();
     private ErroGetSet err;
 
     public List<Integer> getCodigo() {
@@ -44,6 +47,36 @@ public class TokenGetSet {
     public void setToken(String Token) {
 
         this.Token.add(Token);
+
+    }
+
+    public List<Integer> getX() {
+        return X;
+    }
+
+    public void setX(Integer X) {
+
+        this.X.add(X);
+
+    }
+
+    public List<Integer> getA() {
+        return A;
+    }
+
+    public void setA(Integer A) {
+
+        this.A.add(A);
+
+    }
+
+    public List<Integer> getP() {
+        return P;
+    }
+
+    public void setP(Integer P) {
+
+        this.P.add(P);
 
     }
 }

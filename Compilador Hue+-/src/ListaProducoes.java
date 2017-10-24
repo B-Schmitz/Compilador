@@ -1,17 +1,17 @@
 
 public class ListaProducoes {
-    
-        private NaoTerminais[] nterminal;
+
+    private NaoTerminais[] nterminal;
 
     public NaoTerminais[] getNterminal() {
         return nterminal;
     }
-    
+
     public void setNterminal(NaoTerminais[] nterminal) {
         this.nterminal = nterminal;
     }
-    
-         public void IniciarLista() {
+
+    public void IniciarLista() {
 
         nterminal = new NaoTerminais[89];
         int i = 0;
@@ -600,9 +600,5 @@ public class ListaProducoes {
         nterminal[i].setProducao(43);
 
     }
-         
-         
-        
-    
-    
+
 }

@@ -23,7 +23,7 @@ public class TextLineNumber extends JPanel
     public final static float CENTER = 0.5f;
     public final static float RIGHT = 1.0f;
 
-    private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.DARK_GRAY);
+    private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);
     private final static int HEIGHT = Integer.MAX_VALUE - 1000000;
 
     //  Text component this TextTextLineNumber component is in sync with
@@ -67,7 +67,7 @@ public class TextLineNumber extends JPanel
         setFont(component.getFont());
 
         setBorderGap(0);
-        setCurrentLineForeground(Color.red);
+        setCurrentLineForeground(Color.blue);
         setDigitAlignment(CENTER);
         setMinimumDisplayDigits(minimumDisplayDigits);
 
@@ -379,14 +379,14 @@ public class TextLineNumber extends JPanel
             try {
                 int endPos = component.getDocument().getLength();
                 java.awt.Rectangle rect = component.modelToView(endPos);
-                
+
                 if (rect != null && rect.y != lastHeight) {
                     setPreferredWidth();
                     repaint();
                     lastHeight = rect.y;
                 }
             } catch (BadLocationException ex) {
-            /* nothing to do */ }
+                /* nothing to do */ }
         });
     }
 

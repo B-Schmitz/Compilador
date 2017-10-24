@@ -31,13 +31,13 @@ public class Tela extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         textobackup = Texto.getText();
         Texto.setDocument(new BloqFimArquivo());
+        ((BasicInternalFrameUI) JanelaTexto.getUI()).setNorthPane(null);
 
         // Linhas do texto
         TextLineNumber tln = new TextLineNumber(Texto);
         javax.swing.JScrollPane sp = new javax.swing.JScrollPane(Texto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         sp.setRowHeaderView(tln);
         JanelaTexto.setContentPane(sp);
-        ((BasicInternalFrameUI) JanelaTexto.getUI()).setNorthPane(null);
 
         // Fechar no X
         addWindowListener(new WindowAdapter() {
@@ -138,9 +138,16 @@ public class Tela extends javax.swing.JFrame {
         DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
         modeloTok.setRowCount(0);
         for (int i = 0; i < t.getCodigo().size(); i++) {
-
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
         }
+
+        TabelaPainel.setSelectedIndex(0);
+        DefaultTableModel modeloSint = (DefaultTableModel) TabelaSintatico.getModel();
+        modeloSint.setRowCount(0);
+        for (int i = 0; i < t.getX().size(); i++) {
+            modeloSint.addRow(new Object[]{t.getX().get(i), t.getA().get(i)});
+        }
+
         if (t.getErr() != null) {
             ErroGetSet err = t.getErr();
             DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
@@ -171,6 +178,8 @@ public class Tela extends javax.swing.JFrame {
         TabelaTokens = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         TabelaErro = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TabelaSintatico = new javax.swing.JTable();
         menu_bar = new javax.swing.JMenuBar();
         menu_arquivo = new javax.swing.JMenu();
         menu_novo = new javax.swing.JMenuItem();
@@ -253,6 +262,31 @@ public class Tela extends javax.swing.JFrame {
         jScrollPane4.setViewportView(TabelaErro);
 
         TabelaPainel.addTab("Erros", jScrollPane4);
+
+        TabelaSintatico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "X", "A", "Pilha"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaSintatico.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(TabelaSintatico);
+        if (TabelaSintatico.getColumnModel().getColumnCount() > 0) {
+            TabelaSintatico.getColumnModel().getColumn(0).setResizable(false);
+            TabelaSintatico.getColumnModel().getColumn(2).setResizable(false);
+        }
+
+        TabelaPainel.addTab("Sintático", jScrollPane3);
 
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
         menu_arquivo.setText("Arquivo");
@@ -454,11 +488,13 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JInternalFrame JanelaTexto;
     private javax.swing.JTable TabelaErro;
     private javax.swing.JTabbedPane TabelaPainel;
+    private javax.swing.JTable TabelaSintatico;
     private javax.swing.JTable TabelaTokens;
     private javax.swing.JTextArea Texto;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JMenuItem menu_abrir;
     private javax.swing.JMenuItem menu_ajuda;
