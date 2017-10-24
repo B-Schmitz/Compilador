@@ -12,11 +12,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 public class Tela extends javax.swing.JFrame {
 
     private final ImageIcon icone;
-    private Tokens tokens = new Tokens();
     private final Automato automato = new Automato();
     private final JFileChooser fc = new JFileChooser();
     private String arquivo, texto, textobackup;
@@ -36,9 +36,8 @@ public class Tela extends javax.swing.JFrame {
         TextLineNumber tln = new TextLineNumber(Texto);
         javax.swing.JScrollPane sp = new javax.swing.JScrollPane(Texto, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         sp.setRowHeaderView(tln);
-        pane.setContentPane(sp);
-        ((BasicInternalFrameUI)pane.getUI()).setNorthPane(null);
-       
+        JanelaTexto.setContentPane(sp);
+        ((BasicInternalFrameUI) JanelaTexto.getUI()).setNorthPane(null);
 
         // Fechar no X
         addWindowListener(new WindowAdapter() {
@@ -134,6 +133,26 @@ public class Tela extends javax.swing.JFrame {
         }
     }
 
+    public void setToken(TokenGetSet t) {
+        TabelaPainel.setSelectedIndex(0);
+        DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
+        modeloTok.setRowCount(0);
+        for (int i = 0; i < t.getCodigo().size(); i++) {
+
+            modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
+        }
+        if (t.getErr() != null) {
+            ErroGetSet err = t.getErr();
+            DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
+            modeloErr.setRowCount(0);
+            for (int i = 0; i < err.getErro().size(); i++) {
+
+                modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
+                TabelaPainel.setSelectedIndex(1);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,10 +163,14 @@ public class Tela extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollBar1 = new javax.swing.JScrollBar();
-        jPanel1 = new javax.swing.JPanel();
-        pane = new javax.swing.JInternalFrame();
+        JanelaTexto = new javax.swing.JInternalFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
         Texto = new javax.swing.JTextArea();
+        TabelaPainel = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TabelaTokens = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TabelaErro = new javax.swing.JTable();
         menu_bar = new javax.swing.JMenuBar();
         menu_arquivo = new javax.swing.JMenu();
         menu_novo = new javax.swing.JMenuItem();
@@ -156,40 +179,80 @@ public class Tela extends javax.swing.JFrame {
         menu_sair = new javax.swing.JMenuItem();
         menu_executar = new javax.swing.JMenu();
         menu_compilar = new javax.swing.JMenuItem();
-        menu_tokens = new javax.swing.JMenuItem();
         menu_sobre = new javax.swing.JMenu();
         menu_ajuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Compilador Hue+-");
 
-        pane.setVisible(true);
+        JanelaTexto.setBorder(null);
+        JanelaTexto.setVisible(true);
 
         Texto.setColumns(20);
         Texto.setRows(5);
         jScrollPane1.setViewportView(Texto);
 
-        javax.swing.GroupLayout paneLayout = new javax.swing.GroupLayout(pane.getContentPane());
-        pane.getContentPane().setLayout(paneLayout);
-        paneLayout.setHorizontalGroup(
-            paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+        javax.swing.GroupLayout JanelaTextoLayout = new javax.swing.GroupLayout(JanelaTexto.getContentPane());
+        JanelaTexto.getContentPane().setLayout(JanelaTextoLayout);
+        JanelaTextoLayout.setHorizontalGroup(
+            JanelaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
         );
-        paneLayout.setVerticalGroup(
-            paneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+        JanelaTextoLayout.setVerticalGroup(
+            JanelaTextoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pane)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pane)
-        );
+        TabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Linha", "Código", "Token"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaTokens.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(TabelaTokens);
+
+        TabelaPainel.addTab("Saída", jScrollPane2);
+
+        TabelaErro.setBackground(new java.awt.Color(255, 0, 0));
+        TabelaErro.setForeground(new java.awt.Color(255, 255, 255));
+        TabelaErro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Linha", "Erro"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TabelaErro.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(TabelaErro);
+
+        TabelaPainel.addTab("Erros", jScrollPane4);
 
         menu_arquivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/folder_vertical_document.png"))); // NOI18N
         menu_arquivo.setText("Arquivo");
@@ -256,16 +319,6 @@ public class Tela extends javax.swing.JFrame {
         });
         menu_executar.add(menu_compilar);
 
-        menu_tokens.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/token_comment.png"))); // NOI18N
-        menu_tokens.setText("Tokens");
-        menu_tokens.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_tokens.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_tokensActionPerformed(evt);
-            }
-        });
-        menu_executar.add(menu_tokens);
-
         menu_bar.add(menu_executar);
 
         menu_sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icones/support.png"))); // NOI18N
@@ -290,13 +343,19 @@ public class Tela extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(JanelaTexto)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(TabelaPainel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 138, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(JanelaTexto)
+                .addGap(163, 163, 163))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 310, Short.MAX_VALUE)
+                    .addComponent(TabelaPainel, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -337,10 +396,6 @@ public class Tela extends javax.swing.JFrame {
 
     }//GEN-LAST:event_menu_ajudaActionPerformed
 
-    private void menu_tokensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tokensActionPerformed
-        tokens.setVisible(true);
-    }//GEN-LAST:event_menu_tokensActionPerformed
-
     private void menu_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sairActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Deseja salvar o arquivo antes?", "Sair", 1);
         if (textobackup.equals(Texto.getText())) {
@@ -357,18 +412,10 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_menu_sairActionPerformed
     }
     private void menu_compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_compilarActionPerformed
-
-      
         TokenGetSet t = automato.getToken(Texto.getText() + "@");
-
-        tokens.dispose();
-        tokens = new Tokens();
-        tokens.setVisible(true);
-        tokens.setToken(t);
+        setToken(t);
 
     }//GEN-LAST:event_menu_compilarActionPerformed
-
-   
 
     /**
      * @param args the command line arguments
@@ -404,10 +451,15 @@ public class Tela extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame JanelaTexto;
+    private javax.swing.JTable TabelaErro;
+    private javax.swing.JTabbedPane TabelaPainel;
+    private javax.swing.JTable TabelaTokens;
     private javax.swing.JTextArea Texto;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JMenuItem menu_abrir;
     private javax.swing.JMenuItem menu_ajuda;
     private javax.swing.JMenu menu_arquivo;
@@ -418,7 +470,5 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_sair;
     private javax.swing.JMenuItem menu_salvar;
     private javax.swing.JMenu menu_sobre;
-    private javax.swing.JMenuItem menu_tokens;
-    private javax.swing.JInternalFrame pane;
     // End of variables declaration//GEN-END:variables
 }
