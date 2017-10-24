@@ -133,27 +133,30 @@ public class Tela extends javax.swing.JFrame {
         }
     }
 
+    // Tabelas
     public void setToken(TokenGetSet t) {
-        TabelaPainel.setSelectedIndex(0);
+        
+        // Define 
         DefaultTableModel modeloTok = (DefaultTableModel) TabelaTokens.getModel();
-        modeloTok.setRowCount(0);
+        DefaultTableModel modeloSint = (DefaultTableModel) TabelaSintatico.getModel();
+        DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
+        TabelaPainel.setSelectedIndex(0);
+        
+        // Limpa
+         modeloErr.setRowCount(0);
+         modeloTok.setRowCount(0);
+         modeloSint.setRowCount(0);
         for (int i = 0; i < t.getCodigo().size(); i++) {
             modeloTok.addRow(new Object[]{t.getLinha().get(i), t.getCodigo().get(i), t.getToken().get(i)});
         }
-
-        TabelaPainel.setSelectedIndex(0);
-        DefaultTableModel modeloSint = (DefaultTableModel) TabelaSintatico.getModel();
-        modeloSint.setRowCount(0);
+        
         for (int i = 0; i < t.getX().size(); i++) {
             modeloSint.addRow(new Object[]{t.getX().get(i), t.getA().get(i)});
         }
 
         if (t.getErr() != null) {
             ErroGetSet err = t.getErr();
-            DefaultTableModel modeloErr = (DefaultTableModel) TabelaErro.getModel();
-            modeloErr.setRowCount(0);
             for (int i = 0; i < err.getErro().size(); i++) {
-
                 modeloErr.addRow(new Object[]{err.getLinha().get(i), err.getErro().get(i)});
                 TabelaPainel.setSelectedIndex(1);
             }
