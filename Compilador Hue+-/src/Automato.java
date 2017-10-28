@@ -34,22 +34,28 @@ public class Automato {
         //Início
         //  X recebe o topo da pilha
         X = (Integer) pilha.peek();
-        t.setX(X);
-        //a  recebe o símbolo da entrada
 
+        //a  recebe o símbolo da entrada
         if (t.getCodigo().size() > 0) {
             a = t.getCodigo().get(t.getCodigo().size() - 1);
-            t.setA(a);
+
         } else {
             return;
         }
-        System.out.println("Token: " + a);
+        t.setX(X);
+        t.setA(a);
+        t.setP(pilha.toString());
+        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
         //Repita
         do {
             //Se X== vazio então
             if (X == 15) {
                 //Retire o elemento do topo da pilha
                 pilha.pop();
+                System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                t.setX(X);
+                t.setA(a);
+                t.setP(pilha.toString());
                 //X recebe o topo da pilha
                 X = (Integer) pilha.peek();
             } //Senão
@@ -61,6 +67,10 @@ public class Automato {
 
                         //Retire o elemento do topo da pilha
                         pilha.pop();
+                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                        t.setX(X);
+                        t.setA(a);
+                        t.setP(pilha.toString());
                         //Volta para o Léxico
                         break;
                     } //Senão 
@@ -76,7 +86,6 @@ public class Automato {
                 else {
 
                     //e M(X,a) <> null então
-                    System.out.println(X + "com" + a);
                     if (parsing[X - 48][a - 1] != null) {
 
                         int pos = parsing[X - 48][a - 1];
@@ -93,6 +102,10 @@ public class Automato {
                         }
                         //X recebe o topo da pilha
                         X = (Integer) pilha.peek();
+                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                        t.setX(X);
+                        t.setA(a);
+                        t.setP(pilha.toString());
 
                     } //Senão
                     else {
@@ -109,6 +122,33 @@ public class Automato {
         } while (X != 44);
         //Enquanto for diferende do simbolo de final de arquivo
 
+        if (encerra.equals(1)) {
+            switch (X) {
+                case 37: {
+                    err.setErro("Faltando ' ; '");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 25: {
+                    err.setErro("Faltando ' >> '");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 31: {
+                    err.setErro("Faltando ' << '");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+
+                default: {
+                    err.setErro("Erro sintatico");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+            }
+
+            t.setErr(err);
+        }
     }
 
     public TokenGetSet getToken(String Sentenca) {
@@ -300,6 +340,7 @@ public class Automato {
                     t.setCodigo(44);
                     t.setToken(token);
                     t.setLinha(qtd_linha);
+                    Sintatico();
                     System.out.println("Fim");
                 }
             }
@@ -490,7 +531,9 @@ public class Automato {
                 // inicio(Sentenca);
                 break;
         }
-        Sintatico();
+        if (encerra.equals(0)) {
+            Sintatico();
+        }
     }
 
     public void Digit(String Sentenca) {
@@ -681,7 +724,7 @@ public class Automato {
         if (Sentenca.charAt(i) == '+') {
 
             token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(34);
+            t.setCodigo(33);
             t.setToken(token);
             t.setLinha(qtd_linha);
             Sintatico();
@@ -689,7 +732,7 @@ public class Automato {
             inicio(Sentenca);
         } else {
 
-            t.setCodigo(33);
+            t.setCodigo(34);
             t.setToken(token);
             t.setLinha(qtd_linha);
             Sintatico();
@@ -701,7 +744,7 @@ public class Automato {
 
         if (Sentenca.charAt(i) == '-') {
             token += String.valueOf(Sentenca.charAt(i));
-            t.setCodigo(47);
+            t.setCodigo(46);
             t.setToken(token);
             t.setLinha(qtd_linha);
             Sintatico();
@@ -709,7 +752,7 @@ public class Automato {
             inicio(Sentenca);
 
         } else {
-            t.setCodigo(46);
+            t.setCodigo(47);
             t.setToken(token);
             t.setLinha(qtd_linha);
             Sintatico();

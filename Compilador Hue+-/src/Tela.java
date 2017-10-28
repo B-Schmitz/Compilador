@@ -151,7 +151,7 @@ public class Tela extends javax.swing.JFrame {
         }
         
         for (int i = 0; i < t.getX().size(); i++) {
-            modeloSint.addRow(new Object[]{t.getX().get(i), t.getA().get(i)});
+            modeloSint.addRow(new Object[]{t.getX().get(i), t.getA().get(i), t.getP().get(i)});
         }
 
         if (t.getErr() != null) {

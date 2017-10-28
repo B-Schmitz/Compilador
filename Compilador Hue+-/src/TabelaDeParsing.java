@@ -72,7 +72,8 @@ public class TabelaDeParsing {
         tabParsing[61 - t][37 - y] = 38;
         tabParsing[61 - t][43 - y] = 37;
         tabParsing[62 - t][18 - y] = 32;
-        tabParsing[62 - t][35 - y] = 33;
+        tabParsing[62 - t][35 - y] = 32;//modificada
+        //tabParsing[62 - t][35 - y] = 33;
         tabParsing[63 - t][5 - y] = 75;
         tabParsing[63 - t][6 - y] = 75;
         tabParsing[63 - t][7 - y] = 75;

@@ -9,7 +9,7 @@ public class TokenGetSet {
     private final List<String> Token = new ArrayList<>();
     private final List<Integer> X = new ArrayList<>();
     private final List<Integer> A = new ArrayList<>();
-    private final List<Integer> P = new ArrayList<>();
+    private final List<String> P = new ArrayList<>();
     private ErroGetSet err;
 
     public List<Integer> getCodigo() {
@@ -70,11 +70,11 @@ public class TokenGetSet {
 
     }
 
-    public List<Integer> getP() {
+    public List<String> getP() {
         return P;
     }
 
-    public void setP(Integer P) {
+    public void setP(String P) {
 
         this.P.add(P);
 
