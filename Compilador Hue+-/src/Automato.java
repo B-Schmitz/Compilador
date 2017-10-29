@@ -139,6 +139,32 @@ public class Automato {
                     err.setLinha(qtd_linha);
                     break;
                 }
+                case 35: {
+                    err.setErro("Faltando ' } '");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 36: {
+                    err.setErro("Faltando ' { '");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 10: {
+                    err.setErro("Faltando ' main ' no inicio do programa");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 18: {
+                    err.setErro("Faltando ' fim ' ");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                case 4: {
+                    err.setErro("Faltando ' return ' ");
+                    err.setLinha(qtd_linha);
+                    break;
+                }
+                
 
                 default: {
                     err.setErro("Erro sintatico");
