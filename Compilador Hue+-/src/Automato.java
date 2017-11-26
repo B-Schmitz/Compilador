@@ -14,13 +14,14 @@ public class Automato {
     private final ListaProducoes lis = new ListaProducoes();
     private final NaoTerminais[] Nterminais;
     private final TabelaDeParsing tabParsing;
+    private TabelaSemantico semantico;
     private final Integer parsing[][];
     private final Stack pilha;
     private List<Integer> producao = new ArrayList<>();
     Integer X, a;
 
     public Automato() {
-
+       
         tabParsing = new TabelaDeParsing();
         parsing = tabParsing.getParsing();
         lis.IniciarLista();
@@ -36,8 +37,29 @@ public class Automato {
            err.setErro("Não é permitido a divizão por zero");
            err.setLinha(qtd_linha);
            t.setErr(err);
+           encerra = 1;
            
        }
+        
+    }
+    
+    public void Busca(){
+        
+        if(!semantico.getNome().contains(token)){
+            Insercao();
+        }
+        else{
+           err.setErro("Variavel já declarada");
+           err.setLinha(qtd_linha);
+           t.setErr(err); 
+           encerra = 1;
+        }
+        
+    }
+    
+    public void Insercao(){
+        
+        semantico.setNome(token);
         
     }
 
@@ -195,7 +217,13 @@ public class Automato {
                         if(100 == (Integer)pilha.peek()){
                             
                             DivZero();
-                            encerra = 1;
+                            
+                            
+                        }
+                        
+                        else if(101 == (Integer)pilha.peek()){
+                            
+                           Busca();
                             
                         }
                         
@@ -216,6 +244,7 @@ public class Automato {
         encerra = 0;
         err = new ErroGetSet();
         t = new TokenGetSet();
+        semantico = new TabelaSemantico();
 
         inicio(Sentenca);
         return t;
