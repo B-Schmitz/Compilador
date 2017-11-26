@@ -55,12 +55,23 @@ public class Automato {
            encerra = 1;
         }
         
+        
+        
     }
     
     public void Insercao(){
         
         semantico.setNome(token);
         
+    }
+    
+    public void InsercaoTipo(){
+        
+        for(int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++){
+            
+            semantico.setTipo(token);
+            
+        }
     }
 
     public void Sintatico() {
@@ -224,6 +235,12 @@ public class Automato {
                         else if(101 == (Integer)pilha.peek()){
                             
                            Busca();
+                            
+                        }
+                        
+                        else if(102 == (Integer)pilha.peek()){
+                            
+                            InsercaoTipo();
                             
                         }
                         
