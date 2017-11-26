@@ -21,7 +21,7 @@ public class Automato {
     Integer X, a;
 
     public Automato() {
-       
+
         tabParsing = new TabelaDeParsing();
         parsing = tabParsing.getParsing();
         lis.IniciarLista();
@@ -29,73 +29,86 @@ public class Automato {
         Nterminais = lis.getNterminal();
 
     }
-    
-    public void DivZero(){
-        
-       if(Integer.valueOf(token) == 0){
-           
-           err.setErro("Não é permitido a divizão por zero");
-           err.setLinha(qtd_linha);
-           t.setErr(err);
-           encerra = 1;
-           
-       }
-        
-    }
-    
-    public void Busca(Integer X){
-        
-        if(!semantico.getNome().contains(token)){
-            Insercao(X);
+
+    public void DivZero() {
+
+        if (Integer.valueOf(token) == 0) {
+
+            err.setErro("Não é permitido a divizão por zero");
+            err.setLinha(qtd_linha);
+            t.setErr(err);
+            encerra = 1;
+
         }
-        else{
-           err.setErro("Variavel já declarada");
-           err.setLinha(qtd_linha);
-           t.setErr(err); 
-           encerra = 1;
+
+    }
+
+    public void BuscaVariavel(Integer X) {
+
+        if (!semantico.getNome().contains(token)) {
+            InsereVariavel(X);
+        } else {
+            err.setErro("Variavel já declarada");
+            err.setLinha(qtd_linha);
+            t.setErr(err);
+            encerra = 1;
         }
-        
+
     }
-    
-    public void VerificaDeclaracao(){
-        
-           if(!semantico.getNome().contains(token)){
-                
-           err.setErro("Variavel não declarada");
-           err.setLinha(qtd_linha);
-           t.setErr(err); 
-           encerra = 1;
-                
-            }
-            
-        
+    public void BuscaFuncao(Integer X) {
+
+        if (!semantico.getNome().contains(token)) {
+            InsereFuncao(X);
+        } else {
+            err.setErro("Variavel já declarada");
+            err.setLinha(qtd_linha);
+            t.setErr(err);
+            encerra = 1;
+        }
+
     }
-    
-    public void Insercao(Integer X){
-        
+
+
+    public void InsereVariavel(Integer X) {
+
         semantico.setNome(token);
-        if(X == 7){
-         
-            semantico.setCategoria("Variavel");
-            
-        }
-        
+
+        semantico.setCategoria("Variavel");
+
     }
-    
-    public void InsercaoTipo(){
-        
-        for(int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++){
-            
+
+    public void InsereFuncao(Integer X) {
+
+        semantico.setNome(token);
+
+        semantico.setCategoria("Função");
+
+    }
+    public void VerificaDeclaracao() {
+
+        if (!semantico.getNome().contains(token)) {
+
+            err.setErro("Variavel não declarada");
+            err.setLinha(qtd_linha);
+            t.setErr(err);
+            encerra = 1;
+
+        }
+
+    }
+
+    public void InsercaoTipo() {
+
+        for (int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++) {
+
             semantico.setTipo(token);
-            
+
         }
     }
 
     public void Sintatico() {
 
         //Início
-        
-                  
         //  X recebe o topo da pilha
         X = (Integer) pilha.peek();
 
@@ -123,66 +136,57 @@ public class Automato {
                 //X recebe o topo da pilha
                 X = (Integer) pilha.peek();
             } //Senão
-            else {
-                //Se X == terminal então
-                if (X < 48) {
-                    //Se X==a então
-                    if (Objects.equals(X, a)) {
+            else //Se X == terminal então
+            if (X < 48) {
+                //Se X==a então
+                if (Objects.equals(X, a)) {
 
-                        //Retire o elemento do topo da pilha
-                        pilha.pop();
-                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
-                        t.setX(X);
-                        t.setA(a);
-                        t.setP(pilha.toString());
-                        //Volta para o Léxico
-                        break;
-                    } //Senão 
-                    else {
-
-                        //Erro. Encerra o programa 
-                        //Falta coisa
-                        encerra = 1;
-                        System.out.println("Erro");
-                        break;
-                    }
+                    //Retire o elemento do topo da pilha
+                    pilha.pop();
+                    System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                    t.setX(X);
+                    t.setA(a);
+                    t.setP(pilha.toString());
+                    //Volta para o Léxico
+                    break;
                 } //Senão 
                 else {
-                    
 
-                    //e M(X,a) <> null então
-                    if (parsing[X - 48][a - 1] != null) {
+                    //Erro. Encerra o programa 
+                    //Falta coisa
+                    encerra = 1;
+                    System.out.println("Erro");
+                    break;
+                }
+            } //Senão 
+            else //e M(X,a) <> null então
+            if (parsing[X - 48][a - 1] != null) {
 
-                        int pos = parsing[X - 48][a - 1];
-                        //Retire o elemento do topo da pilha 
-                        pilha.pop();
+                int pos = parsing[X - 48][a - 1];
+                //Retire o elemento do topo da pilha 
+                pilha.pop();
 
-                        producao = Nterminais[pos - 1].getProducao();
-                        //Coloque o conteúdo da regra na pilha
-                        for (int j = 0; j < producao.size(); j++) {
+                producao = Nterminais[pos - 1].getProducao();
+                //Coloque o conteúdo da regra na pilha
+                for (int j = 0; j < producao.size(); j++) {
 
-                            //Colocando o conteúdo da regra na pilha
-                            pilha.push(producao.get(j));
-
-                        }
-                        //X recebe o topo da pilha
-                        X = (Integer) pilha.peek();
-                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
-                        t.setX(X);
-                        t.setA(a);
-                        t.setP(pilha.toString());
-
-                    } //Senão
-                    else {
-
-                        System.out.println("Erro2");
-                        encerra = 1;
-                        break;
-                    }
-                    
+                    //Colocando o conteúdo da regra na pilha
+                    pilha.push(producao.get(j));
 
                 }
+                //X recebe o topo da pilha
+                X = (Integer) pilha.peek();
+                System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                t.setX(X);
+                t.setA(a);
+                t.setP(pilha.toString());
 
+            } //Senão
+            else {
+
+                System.out.println("Erro2");
+                encerra = 1;
+                break;
             }
 
         } while (X != 44);
@@ -230,7 +234,6 @@ public class Automato {
                     err.setLinha(qtd_linha);
                     break;
                 }
-                
 
                 default: {
                     err.setErro("Erro sintatico");
@@ -241,34 +244,30 @@ public class Automato {
 
             t.setErr(err);
         }
-          while(!pilha.isEmpty() && 99 < (Integer)pilha.peek()){
-                        if(100 == (Integer)pilha.peek()){
-                            
-                            DivZero();
-                            
-                            
-                        }
-                        
-                        else if(101 == (Integer)pilha.peek()){
-                            
-                           Busca(X);
-                            
-                        }
-                        
-                        else if(102 == (Integer)pilha.peek()){
-                            
-                            InsercaoTipo();
-                            
-                        }
-                        
-                         else if(104 == (Integer)pilha.peek()){
-                                    
-                             VerificaDeclaracao();
-                                    }
-                        pilha.pop();
-                        
-                        
-                    }
+        while (!pilha.isEmpty() && 99 < (Integer) pilha.peek()) {
+            if (100 == (Integer) pilha.peek()) {
+
+                DivZero();
+
+            } else if (101 == (Integer) pilha.peek()) {
+
+                BuscaVariavel(X);
+
+            } else if (102 == (Integer) pilha.peek()) {
+
+                InsercaoTipo();
+
+            } else if (103 == (Integer) pilha.peek()) {
+                
+                BuscaFuncao(X);
+
+            } else if (104 == (Integer) pilha.peek()) {
+
+                VerificaDeclaracao();
+            }
+            pilha.pop();
+
+        }
     }
 
     public TokenGetSet getToken(String Sentenca) {
@@ -509,20 +508,16 @@ public class Automato {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             LetraDigitVar(Sentenca);
+        } else if (token.length() < 129) {
+            t.setCodigo(7);
+            t.setToken(token);
+            t.setLinha(qtd_linha);
+            Sintatico();
+            inicio(Sentenca);
         } else {
-
-            if (token.length() < 129) {
-                t.setCodigo(7);
-                t.setToken(token);
-                t.setLinha(qtd_linha);
-                Sintatico();
-                inicio(Sentenca);
-            } else {
-                err.setLinha(qtd_linha);
-                err.setErro("Variável muito grande");
-                t.setErr(err);
-            }
-
+            err.setLinha(qtd_linha);
+            err.setErro("Variável muito grande");
+            t.setErr(err);
         }
 
     }
@@ -668,22 +663,19 @@ public class Automato {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             DigitFloat(Sentenca);
+        } else //O L depois do numero converte para long. Obs: não sabia disso kk
+        if (token.length() < 11 && 2147483649L > Long.parseLong(token)) {
+
+            t.setCodigo(5);
+            t.setToken(token);
+            t.setLinha(qtd_linha);
+            Sintatico();
+            inicio(Sentenca);
+
         } else {
-
-            //O L depois do numero converte para long. Obs: não sabia disso kk
-            if (token.length() < 11 && 2147483649L > Long.parseLong(token)) {
-
-                t.setCodigo(5);
-                t.setToken(token);
-                t.setLinha(qtd_linha);
-                Sintatico();
-                inicio(Sentenca);
-
-            } else {
-                err.setLinha(qtd_linha);
-                err.setErro("Integer muito grande");
-                t.setErr(err);
-            }
+            err.setLinha(qtd_linha);
+            err.setErro("Integer muito grande");
+            t.setErr(err);
         }
 
     }
@@ -695,20 +687,17 @@ public class Automato {
             token += String.valueOf(Sentenca.charAt(i));
             i++;
             DigitFloat(Sentenca);
+        } else if (token.length() < 12) {
+            t.setCodigo(6);
+            t.setToken(token);
+            t.setLinha(qtd_linha);
+            Sintatico();
+            inicio(Sentenca);
         } else {
+            err.setLinha(qtd_linha);
+            err.setErro("Float muito grande");
+            t.setErr(err);
 
-            if (token.length() < 12) {
-                t.setCodigo(6);
-                t.setToken(token);
-                t.setLinha(qtd_linha);
-                Sintatico();
-                inicio(Sentenca);
-            } else {
-                err.setLinha(qtd_linha);
-                err.setErro("Float muito grande");
-                t.setErr(err);
-
-            }
         }
 
     }
