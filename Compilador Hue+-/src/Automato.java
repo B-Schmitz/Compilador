@@ -43,10 +43,10 @@ public class Automato {
         
     }
     
-    public void Busca(){
+    public void Busca(Integer X){
         
         if(!semantico.getNome().contains(token)){
-            Insercao();
+            Insercao(X);
         }
         else{
            err.setErro("Variavel já declarada");
@@ -59,9 +59,14 @@ public class Automato {
         
     }
     
-    public void Insercao(){
+    public void Insercao(Integer X){
         
         semantico.setNome(token);
+        if(X == 7){
+         
+            semantico.setCategoria("Variavel");
+            
+        }
         
     }
     
@@ -234,7 +239,7 @@ public class Automato {
                         
                         else if(101 == (Integer)pilha.peek()){
                             
-                           Busca();
+                           Busca(X);
                             
                         }
                         
