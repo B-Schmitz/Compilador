@@ -64,7 +64,6 @@ public class Automato {
         
             InsereVariavel(X);
      
-
     }
     public void BuscaFuncao(Integer X) {
 
@@ -86,12 +85,8 @@ public class Automato {
             }
         }
         
-        
             InsereFuncao(X);
         
-        
-       
-
     }
 
 
@@ -110,19 +105,51 @@ public class Automato {
         semantico.setCategoria("Função");
 
     }
-    public void VerificaDeclaracao() {
+    public void VerificaDeclaracaoVariavel() {
+        
+        
+         for(int i = 0; i < semantico.getNome().size(); i ++){
+            
+            
+            if(semantico.getCategoria().get(i).equals("Variavel")){
+            if(semantico.getNome().get(i).equals(token)){
 
-        if (!semantico.getNome().contains(token)) {
-
+                return;
+            }
+            
+            }
+        }
+        
             err.setErro("Variavel não declarada");
             err.setLinha(qtd_linha);
             t.setErr(err);
             encerra = 1;
 
-        }
 
     }
+ public void VerificaDeclaracaoFuncao() {
 
+     
+     
+     
+      for(int i = 0; i < semantico.getNome().size(); i ++){
+            
+            
+            if(semantico.getCategoria().get(i).equals("Função")){
+            if(semantico.getNome().get(i).equals(token)){
+
+                return;
+            }
+            
+            }
+        }
+            
+            err.setErro("Função não declarada");
+            err.setLinha(qtd_linha);
+            t.setErr(err);
+            encerra = 1;
+
+    }
     public void InsercaoTipo() {
 
         for (int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++) {
@@ -285,7 +312,11 @@ public class Automato {
                     BuscaFuncao(X);
                     break;
                 case 104:
-                    VerificaDeclaracao();
+                    VerificaDeclaracaoVariavel();
+                    break;
+                 
+                case 105:
+                    VerificaDeclaracaoFuncao();
                     break;
                 default:
                     break;

@@ -266,6 +266,7 @@ public class ListaProducoes {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(61);
         nterminal[i].setProducao(64);
+        nterminal[i].setProducao(105);
         nterminal[i].setProducao(7);
         nterminal[i].setProducao(24);
         i++;
