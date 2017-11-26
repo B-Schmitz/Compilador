@@ -28,10 +28,24 @@ public class Automato {
         Nterminais = lis.getNterminal();
 
     }
+    
+    public void DivZero(){
+        
+       if(Integer.valueOf(token) == 0){
+           
+           err.setErro("Não é permitido a divizão por zero");
+           err.setLinha(qtd_linha);
+           t.setErr(err);
+           
+       }
+        
+    }
 
     public void Sintatico() {
 
         //Início
+        
+                  
         //  X recebe o topo da pilha
         X = (Integer) pilha.peek();
 
@@ -85,16 +99,6 @@ public class Automato {
                 } //Senão 
                 else {
                     
-                  
-                    
-                    if(X > 99){
-                        
-                        pilha.pop();
-                        X = (Integer) pilha.peek();
-                        
-                        
-                    } else{
-                        
 
                     //e M(X,a) <> null então
                     if (parsing[X - 48][a - 1] != null) {
@@ -125,7 +129,7 @@ public class Automato {
                         encerra = 1;
                         break;
                     }
-                    }
+                    
 
                 }
 
@@ -187,6 +191,18 @@ public class Automato {
 
             t.setErr(err);
         }
+          while(!pilha.isEmpty() && 99 < (Integer)pilha.peek()){
+                        if(100 == (Integer)pilha.peek()){
+                            
+                            DivZero();
+                            encerra = 1;
+                            
+                        }
+                        
+                        pilha.pop();
+                        
+                        
+                    }
     }
 
     public TokenGetSet getToken(String Sentenca) {
