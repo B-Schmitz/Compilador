@@ -84,6 +84,17 @@ public class Automato {
                     }
                 } //Senão 
                 else {
+                    
+                  
+                    
+                    if(X > 99){
+                        
+                        pilha.pop();
+                        X = (Integer) pilha.peek();
+                        
+                        
+                    } else{
+                        
 
                     //e M(X,a) <> null então
                     if (parsing[X - 48][a - 1] != null) {
@@ -113,6 +124,7 @@ public class Automato {
                         System.out.println("Erro2");
                         encerra = 1;
                         break;
+                    }
                     }
 
                 }
