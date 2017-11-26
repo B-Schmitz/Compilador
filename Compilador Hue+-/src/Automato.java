@@ -45,26 +45,52 @@ public class Automato {
 
     public void BuscaVariavel(Integer X) {
 
-        if (!semantico.getNome().contains(token)) {
-            InsereVariavel(X);
-        } else {
+        for(int i = 0; i < semantico.getNome().size(); i ++){
+            
+            
+            if(semantico.getCategoria().get(i).equals("Variavel")){
+            if(semantico.getNome().get(i).equals(token)){
+                
+                
             err.setErro("Variavel já declarada");
             err.setLinha(qtd_linha);
             t.setErr(err);
             encerra = 1;
+            return;
+            }
+            
+            }
         }
+        
+            InsereVariavel(X);
+     
 
     }
     public void BuscaFuncao(Integer X) {
 
-        if (!semantico.getNome().contains(token)) {
-            InsereFuncao(X);
-        } else {
-            err.setErro("Variavel já declarada");
+        
+         for(int i = 0; i < semantico.getNome().size(); i ++){
+            
+            
+            if(semantico.getCategoria().get(i).equals("Função")){
+            if(semantico.getNome().get(i).equals(token)){
+                
+                
+            err.setErro("Função já declarada");
             err.setLinha(qtd_linha);
             t.setErr(err);
             encerra = 1;
+            return;
+            }
+            
+            }
         }
+        
+        
+            InsereFuncao(X);
+        
+        
+       
 
     }
 
@@ -245,25 +271,24 @@ public class Automato {
             t.setErr(err);
         }
         while (!pilha.isEmpty() && 99 < (Integer) pilha.peek()) {
-            if (100 == (Integer) pilha.peek()) {
-
-                DivZero();
-
-            } else if (101 == (Integer) pilha.peek()) {
-
-                BuscaVariavel(X);
-
-            } else if (102 == (Integer) pilha.peek()) {
-
-                InsercaoTipo();
-
-            } else if (103 == (Integer) pilha.peek()) {
-                
-                BuscaFuncao(X);
-
-            } else if (104 == (Integer) pilha.peek()) {
-
-                VerificaDeclaracao();
+            if (null != (Integer) pilha.peek()) switch ((Integer) pilha.peek()) {
+                case 100:
+                    DivZero();
+                    break;
+                case 101:
+                    BuscaVariavel(X);
+                    break;
+                case 102:
+                    InsercaoTipo();
+                    break;
+                case 103:
+                    BuscaFuncao(X);
+                    break;
+                case 104:
+                    VerificaDeclaracao();
+                    break;
+                default:
+                    break;
             }
             pilha.pop();
 
