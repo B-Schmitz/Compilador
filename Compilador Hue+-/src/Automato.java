@@ -55,7 +55,19 @@ public class Automato {
            encerra = 1;
         }
         
+    }
+    
+    public void VerificaDeclaracao(){
         
+           if(!semantico.getNome().contains(token)){
+                
+           err.setErro("Variavel não declarada");
+           err.setLinha(qtd_linha);
+           t.setErr(err); 
+           encerra = 1;
+                
+            }
+            
         
     }
     
@@ -249,6 +261,10 @@ public class Automato {
                             
                         }
                         
+                         else if(104 == (Integer)pilha.peek()){
+                                    
+                             VerificaDeclaracao();
+                                    }
                         pilha.pop();
                         
                         
