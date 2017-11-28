@@ -18,6 +18,7 @@ public class Automato {
     private final Integer parsing[][];
     private final Stack pilha;
     private List<Integer> producao = new ArrayList<>();
+    private String atribuicao = null;
     Integer X, a;
 
     public Automato() {
@@ -103,6 +104,8 @@ public class Automato {
         semantico.setNome(token);
 
         semantico.setCategoria("Função");
+        
+        semantico.setTipo("");
 
     }
     public void VerificaDeclaracaoVariavel() {
@@ -129,9 +132,6 @@ public class Automato {
     }
  public void VerificaDeclaracaoFuncao() {
 
-     
-     
-     
       for(int i = 0; i < semantico.getNome().size(); i ++){
             
             
@@ -157,6 +157,63 @@ public class Automato {
             semantico.setTipo(token);
 
         }
+    }
+    
+    public void teste(Integer X){
+        
+
+            
+        semantico.setNome(token);
+
+        semantico.setCategoria("Temporario"); 
+        
+        if(null != X)switch (X) {
+            case 5:
+                semantico.setTipo("integer");
+                break;
+            case 6:
+                semantico.setTipo("float");
+                break;
+            case 8:
+                semantico.setTipo("char");
+                break;
+            case 9:
+                semantico.setTipo("string");
+                break;
+            case 7:
+                for(int i = 0; i < semantico.getNome().size(); i ++){
+                    
+                    
+                    if(semantico.getCategoria().get(i).equals("Variavel")){
+                        if(semantico.getNome().get(i).equals(token)){
+                            
+                            semantico.setTipo(semantico.getTipo().get(i));
+                            
+                        }
+                        
+                    }
+                }       break;
+            default:
+                break;
+        }
+        System.out.println(token);
+        
+    }
+    
+    public void t(){
+        
+        for(int i = 0; i < semantico.getNome().size(); i ++){
+            
+            
+            if(semantico.getCategoria().get(i).equals("Temporario")){
+            if(semantico.getNome().get(i).equals(token)){
+
+                return;
+            }
+            
+            }
+        } 
+        
     }
 
     public void Sintatico() {
@@ -318,6 +375,9 @@ public class Automato {
                 case 105:
                     VerificaDeclaracaoFuncao();
                     break;
+                    
+                case 106:
+                    teste(X);
                 default:
                     break;
             }
