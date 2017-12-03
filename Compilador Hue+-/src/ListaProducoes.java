@@ -212,6 +212,7 @@ public class ListaProducoes {
         nterminal[i].setNaoTerminais(51);
         nterminal[i].setProducao(18);
         nterminal[i].setProducao(62);
+        nterminal[i].setProducao(108);
         nterminal[i].setProducao(37);
         nterminal[i].setProducao(61);
         nterminal[i].setProducao(13);
@@ -547,7 +548,6 @@ public class ListaProducoes {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(74);
         nterminal[i].setProducao(74);
-        nterminal[i].setProducao(107);
         nterminal[i].setProducao(73);
         nterminal[i].setProducao(34);
         i++;
@@ -555,7 +555,6 @@ public class ListaProducoes {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(74);
         nterminal[i].setProducao(74);
-        nterminal[i].setProducao(107);
         nterminal[i].setProducao(73);
         nterminal[i].setProducao(47);
         i++;
@@ -588,8 +587,8 @@ public class ListaProducoes {
         nterminal[i] = new NaoTerminais();
         nterminal[i].setNaoTerminais(76);
         nterminal[i].setProducao(76);
+        nterminal[i].setProducao(106);
         nterminal[i].setProducao(100);
-        nterminal[i].setProducao(107);
         nterminal[i].setProducao(75);
         nterminal[i].setProducao(39);
         i++;

@@ -33,6 +33,7 @@ public class Automato {
 
     public void DivZero() {
 
+        try{
         if (Integer.valueOf(token) == 0) {
 
             err.setErro("Não é permitido a divizão por zero");
@@ -41,55 +42,54 @@ public class Automato {
             encerra = 1;
 
         }
+        }
+        catch(Exception e){
+            
+        }
 
     }
 
     public void BuscaVariavel(Integer X) {
 
-        for(int i = 0; i < semantico.getNome().size(); i ++){
-            
-            
-            if(semantico.getCategoria().get(i).equals("Variavel")){
-            if(semantico.getNome().get(i).equals(token)){
-                
-                
-            err.setErro("Variavel já declarada");
-            err.setLinha(qtd_linha);
-            t.setErr(err);
-            encerra = 1;
-            return;
-            }
-            
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Variavel")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    err.setErro("Variavel já declarada");
+                    err.setLinha(qtd_linha);
+                    t.setErr(err);
+                    encerra = 1;
+                    return;
+                }
+
             }
         }
-        
-            InsereVariavel(X);
-     
+
+        InsereVariavel(X);
+
     }
+
     public void BuscaFuncao(Integer X) {
 
-        
-         for(int i = 0; i < semantico.getNome().size(); i ++){
-            
-            
-            if(semantico.getCategoria().get(i).equals("Função")){
-            if(semantico.getNome().get(i).equals(token)){
-                
-                
-            err.setErro("Função já declarada");
-            err.setLinha(qtd_linha);
-            t.setErr(err);
-            encerra = 1;
-            return;
-            }
-            
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Função")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    err.setErro("Função já declarada");
+                    err.setLinha(qtd_linha);
+                    t.setErr(err);
+                    encerra = 1;
+                    return;
+                }
+
             }
         }
-        
-            InsereFuncao(X);
-        
-    }
 
+        InsereFuncao(X);
+
+    }
 
     public void InsereVariavel(Integer X) {
 
@@ -104,52 +104,51 @@ public class Automato {
         semantico.setNome(token);
 
         semantico.setCategoria("Função");
-        
+
         semantico.setTipo("");
 
     }
+
     public void VerificaDeclaracaoVariavel() {
-        
-        
-         for(int i = 0; i < semantico.getNome().size(); i ++){
-            
-            
-            if(semantico.getCategoria().get(i).equals("Variavel")){
-            if(semantico.getNome().get(i).equals(token)){
 
-                return;
-            }
-            
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Variavel")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    return;
+                }
+
             }
         }
-        
-            err.setErro("Variavel não declarada");
-            err.setLinha(qtd_linha);
-            t.setErr(err);
-            encerra = 1;
 
+        err.setErro("Variavel não declarada");
+        err.setLinha(qtd_linha);
+        t.setErr(err);
+        encerra = 1;
 
     }
- public void VerificaDeclaracaoFuncao() {
 
-      for(int i = 0; i < semantico.getNome().size(); i ++){
-            
-            
-            if(semantico.getCategoria().get(i).equals("Função")){
-            if(semantico.getNome().get(i).equals(token)){
+    public void VerificaDeclaracaoFuncao() {
 
-                return;
-            }
-            
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Função")) {
+                if (semantico.getNome().get(i).equals(token)) {
+
+                    return;
+                }
+
             }
         }
-            
-            err.setErro("Função não declarada");
-            err.setLinha(qtd_linha);
-            t.setErr(err);
-            encerra = 1;
+
+        err.setErro("Função não declarada");
+        err.setLinha(qtd_linha);
+        t.setErr(err);
+        encerra = 1;
 
     }
+
     public void InsercaoTipo() {
 
         for (int i = semantico.getTipo().size(); i < semantico.getNome().size(); i++) {
@@ -158,62 +157,83 @@ public class Automato {
 
         }
     }
-    
-    public void teste(Integer X){
-        
 
-            
+    public void addTemporarios(Integer X) {
+
         semantico.setNome(token);
 
-        semantico.setCategoria("Temporario"); 
-        
-        if(null != X)switch (X) {
-            case 5:
-                semantico.setTipo("integer");
-                break;
-            case 6:
-                semantico.setTipo("float");
-                break;
-            case 8:
-                semantico.setTipo("char");
-                break;
-            case 9:
-                semantico.setTipo("string");
-                break;
-            case 7:
-                for(int i = 0; i < semantico.getNome().size(); i ++){
-                    
-                    
-                    if(semantico.getCategoria().get(i).equals("Variavel")){
-                        if(semantico.getNome().get(i).equals(token)){
-                            
-                            semantico.setTipo(semantico.getTipo().get(i));
-                            
+        semantico.setCategoria("Temporario");
+
+        if (null != X) {
+            switch (X) {
+                case 5:
+                    semantico.setTipo("integer");
+                    break;
+                case 6:
+                    semantico.setTipo("float");
+                    break;
+                case 8:
+                    semantico.setTipo("char");
+                    break;
+                case 9:
+                    semantico.setTipo("string");
+                    break;
+                case 7:
+                    for (int i = 0; i < semantico.getNome().size(); i++) {
+
+                        if (semantico.getCategoria().get(i).equals("Variavel")) {
+                            if (semantico.getNome().get(i).equals(token)) {
+
+                                semantico.setTipo(semantico.getTipo().get(i));
+                                break;
+
+                            }
+
                         }
-                        
                     }
-                }       break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
         System.out.println(token);
-        
-    }
-    
-    public void t(){
-        
-        for(int i = 0; i < semantico.getNome().size(); i ++){
-            
-            
-            if(semantico.getCategoria().get(i).equals("Temporario")){
-            if(semantico.getNome().get(i).equals(token)){
 
-                return;
+    }
+
+    public void VerificaTipo() {
+
+        for (int i = 0; i < semantico.getNome().size(); i++) {
+
+            if (semantico.getCategoria().get(i).equals("Temporario")) {
+
+                if (atribuicao == null) {
+                    atribuicao = semantico.getTipo().get(i);
+                    semantico.getCategoria().remove(i);
+                    semantico.getNome().remove(i);
+                    semantico.getTipo().remove(i);
+                    i--;
+                }
+                else if (semantico.getTipo().get(i).equals(atribuicao)) {
+
+                    semantico.getCategoria().remove(i);
+                    semantico.getNome().remove(i);
+                    semantico.getTipo().remove(i);
+                    i--;
+
+                } else {
+
+                    err.setErro("Variaveis de tipos diferentes ");
+                    err.setLinha(qtd_linha);
+                    t.setErr(err);
+                    encerra = 1;
+                    break;
+
+                }
+                }
+
             }
-            
-            }
-        } 
         
+        atribuicao = null;
     }
 
     public void Sintatico() {
@@ -245,59 +265,66 @@ public class Automato {
                 t.setP(pilha.toString());
                 //X recebe o topo da pilha
                 X = (Integer) pilha.peek();
+                
             } //Senão
             else //Se X == terminal então
-            if (X < 48) {
-                //Se X==a então
-                if (Objects.equals(X, a)) {
+            {
+                if (X < 48) {
+                    //Se X==a então
+                    if (Objects.equals(X, a)) {
 
-                    //Retire o elemento do topo da pilha
-                    pilha.pop();
-                    System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
-                    t.setX(X);
-                    t.setA(a);
-                    t.setP(pilha.toString());
-                    //Volta para o Léxico
-                    break;
+                        //Retire o elemento do topo da pilha
+                        pilha.pop();
+                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                        t.setX(X);
+                        t.setA(a);
+                        t.setP(pilha.toString());
+                        //Volta para o Léxico
+                        break;
+                    } //Senão 
+                    else {
+
+                        //Erro. Encerra o programa 
+                        //Falta coisa
+                        encerra = 1;
+                        System.out.println("Erro");
+                        break;
+                    }
                 } //Senão 
-                else {
+                else //e M(X,a) <> null então
+                {
+                  
+                    if (parsing[X - 48][a - 1] != null) {
 
-                    //Erro. Encerra o programa 
-                    //Falta coisa
-                    encerra = 1;
-                    System.out.println("Erro");
-                    break;
+                        int pos = parsing[X - 48][a - 1];
+                        //Retire o elemento do topo da pilha 
+                        pilha.pop();
+
+                        producao = Nterminais[pos - 1].getProducao();
+                        //Coloque o conteúdo da regra na pilha
+                        for (int j = 0; j < producao.size(); j++) {
+
+                            //Colocando o conteúdo da regra na pilha
+                            pilha.push(producao.get(j));
+
+                        }
+                        //X recebe o topo da pilha
+                        X = (Integer) pilha.peek();
+                        System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
+                        t.setX(X);
+                        t.setA(a);
+                        t.setP(pilha.toString());
+
+                    } //Senão
+                    else {
+
+                        System.out.println("Erro2");
+                        encerra = 1;
+                        break;
+                    }
+                    }
                 }
-            } //Senão 
-            else //e M(X,a) <> null então
-            if (parsing[X - 48][a - 1] != null) {
-
-                int pos = parsing[X - 48][a - 1];
-                //Retire o elemento do topo da pilha 
-                pilha.pop();
-
-                producao = Nterminais[pos - 1].getProducao();
-                //Coloque o conteúdo da regra na pilha
-                for (int j = 0; j < producao.size(); j++) {
-
-                    //Colocando o conteúdo da regra na pilha
-                    pilha.push(producao.get(j));
-
-                }
-                //X recebe o topo da pilha
-                X = (Integer) pilha.peek();
-                System.out.println("a = " + a + "X = " + X + "Pilha = " + pilha.toString());
-                t.setX(X);
-                t.setA(a);
-                t.setP(pilha.toString());
-
-            } //Senão
-            else {
-
-                System.out.println("Erro2");
-                encerra = 1;
-                break;
-            }
+            
 
         } while (X != 44);
         //Enquanto for diferende do simbolo de final de arquivo
@@ -355,31 +382,38 @@ public class Automato {
             t.setErr(err);
         }
         while (!pilha.isEmpty() && 99 < (Integer) pilha.peek()) {
-            if (null != (Integer) pilha.peek()) switch ((Integer) pilha.peek()) {
-                case 100:
-                    DivZero();
-                    break;
-                case 101:
-                    BuscaVariavel(X);
-                    break;
-                case 102:
-                    InsercaoTipo();
-                    break;
-                case 103:
-                    BuscaFuncao(X);
-                    break;
-                case 104:
-                    VerificaDeclaracaoVariavel();
-                    break;
-                 
-                case 105:
-                    VerificaDeclaracaoFuncao();
-                    break;
-                    
-                case 106:
-                    teste(X);
-                default:
-                    break;
+            if (null != (Integer) pilha.peek()) {
+                switch ((Integer) pilha.peek()) {
+                    case 100:
+                        DivZero();
+                        break;
+                    case 101:
+                        BuscaVariavel(X);
+                        break;
+                    case 102:
+                        InsercaoTipo();
+                        break;
+                    case 103:
+                        BuscaFuncao(X);
+                        break;
+                    case 104:
+                        VerificaDeclaracaoVariavel();
+                        break;
+
+                    case 105:
+                        VerificaDeclaracaoFuncao();
+                        break;
+
+                    case 106:
+                        addTemporarios(X);
+                        break;
+
+                    case 108:
+                        VerificaTipo();
+                        break;
+                    default:
+                        break;
+                }
             }
             pilha.pop();
 
@@ -780,18 +814,20 @@ public class Automato {
             i++;
             DigitFloat(Sentenca);
         } else //O L depois do numero converte para long. Obs: não sabia disso kk
-        if (token.length() < 11 && 2147483649L > Long.parseLong(token)) {
+        {
+            if (token.length() < 11 && 2147483649L > Long.parseLong(token)) {
 
-            t.setCodigo(5);
-            t.setToken(token);
-            t.setLinha(qtd_linha);
-            Sintatico();
-            inicio(Sentenca);
+                t.setCodigo(5);
+                t.setToken(token);
+                t.setLinha(qtd_linha);
+                Sintatico();
+                inicio(Sentenca);
 
-        } else {
-            err.setLinha(qtd_linha);
-            err.setErro("Integer muito grande");
-            t.setErr(err);
+            } else {
+                err.setLinha(qtd_linha);
+                err.setErro("Integer muito grande");
+                t.setErr(err);
+            }
         }
 
     }
